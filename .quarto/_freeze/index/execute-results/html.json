@@ -1,7 +1,7 @@
 {
-  "hash": "b33fb81425429693983243297def14b7",
+  "hash": "0e52617897238d1629db94d797182612",
   "result": {
-    "markdown": "---\ntitle: \"dv4ss\"\nengine: knitr\n---\n\n\nAuthor: Joseph V. Casillas  \nLast update: 2023-09-06\n\n- [Slides](https://www.jvcasillas.com/dv4ss/slides/index.html)\n- [Exercises (R script)](https://github.com/jvcasillas/dv4ss/raw/main/misc/exercises.R)\n",
+    "markdown": "---\ntitle: \"dv4ss\"\nengine: knitr\n---\n\n\nAuthor: Joseph V. Casillas  \nLast update: 2023-09-06\n\n- [Slides](https://www.jvcasillas.com/dv4ss/slides/index.html)\n- [Exercises (R script)](https://raw.githubusercontent.com/jvcasillas/dv4ss/main/misc/exercises.R) (Note: you may have to right-click the link and \"save as\")\n\n\n",
     "supporting": [
       "index_files"
     ],
