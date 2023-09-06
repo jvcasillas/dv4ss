@@ -38,6 +38,9 @@ theme_psllt <- function(...) {
     )
   )
 }
+
+theme_set(theme_grey(base_size = 30))
+
 ```
 
 ## Follow along
@@ -843,9 +846,27 @@ cw_ex +
 
 :::
 
+## A template...
+
+```{r}
+#| label: plotting-template
+#| eval: false
+ggplot(
+  data = DATA_FRAME, 
+  mapping = aes(AESTHETIC)
+) + 
+  geom_xxx()
+```
+
+. . .
+
+- **DATA_FRAME** will be replaced with your dataframe
+- **AESTHETIC** will be replaced with the aesthetic mappings of your choice
+- **geom_xxx** will be replaced with a specific geom, i.e., `geom_point()`
+
 ## It starts with data
 
-- Let's take a look at a new dataframe
+- Let's take a look at a dataframe
 
 ```{r}
 #| label: load-data
@@ -853,38 +874,90 @@ link <- url("https://github.com/jvcasillas/dv4ss/raw/main/misc/new_data.RDS")
 new_data <- readRDS(link)
 ```
 
-- Try using `glimpse(new_data)` and `summary(new_data)`
+- Try using `head(new_data)` and `summary(new_data)`
 
 - What kind of information did you learn about the dataframe?
 
-## Get to know the data {.smaller}
+## Get to know the data
 
-:::: {.columns}
-::: {.column width="50%"}
 ```{r}
 #| label: explore1
-glimpse(new_data)
+head(new_data) # show first 6 rows
 ```
-:::
 
-::: {.column width="50%"}
 ```{r}
 #| label: explore2
-summary(new_data)
+summary(new_data) # get general summary
 ```
-:::
-::::
+
+## Aesthetics (aes())
+
+- Aesthetic mappings: how we map data to color, size, and **axis**...
+
+- Let's update our template
+
+```{r}
+#| label: aes-ex
+#| code-line-numbers: "3-4"
+#| eval: false
+ggplot(
+  data = new_data, 
+  mapping = aes(x = proficiency, y = score)
+) 
+```
+
+## Geometric objects (geom_\*) {.smaller}
+
+```{r}
+#| label: p-geom-ex
+#| eval: false
+#| code-line-numbers: "5"
+ggplot(
+  data = mtcars, 
+  mapping = aes(x = proficiency, y = score)
+) + 
+  geom_point()
+```
+
+There are many types of geoms...
+
+- geom_point()
+- geom_smooth()
+- geom_hist()
+- geom_bar()
+- geom_boxplot()
+- etc. 
+
+## Statistical transformations (stat_\*)
+
+- `stat_summary()` will calculate a value (e.g., mean, median) and overlay it
+
+```{r}
+#| label: p-stat-sum-ex
+#| eval: false
+#| code-line-numbers: "5-7"
+ggplot(
+  data = new_data, 
+  mapping = aes(x = proficiency, y = score)
+) + 
+  stat_summary(
+    fun.data = mean_sdl, 
+    geom = 'pointrange'
+  )
+```
 
 
 
 
 
 
-# Plotting with `ggplot`
+# Walkthrough with [ggplot2]{style="color: blue;"} {.transition}
 
-## Basic plot types
+![](https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png){.absolute top=200 right=0 width=400" height="400"}
 
-- histogram
+## Let's revist some basic plots
+
+- Histogram
 
 - Scatterplots
 
@@ -892,141 +965,174 @@ summary(new_data)
 
 - Point estimate + spread
 
+## Histogram {.smaller}
 
+::: {.panel-tabset}
 
-
-
-## Scatterplot
-
-- When you have two continuous variables
+### Beginner
 
 ```{r}
-#| label: p-scatterplot-ex
-#| eval: false
-mtcars %>%
-  ggplot(., aes(x = disp, y = mpg, fill = factor(am))) + 
-    geom_point(pch = 21, size = 2)  + 
-    scale_fill_brewer(palette = "Set2", name = '', 
-                      labels = c('Automatic', 'Manual')) + 
-    theme_grey(base_size = 18, base_family = 'Times')
+#| label: p-histogram-ex-beg
+#| fig.asp: 1
+#| output-location: column
+#| code-line-numbers: "2|3|5"
+# Continuous variable on the x-axis
+ggplot(
+  data = new_data, 
+  mapping = aes(x = score)
+) + 
+  geom_histogram() 
 ```
 
-
-
-## Boxplot (box and whisker plot)
-
-- Better option than bargraph
+### Intermediate
 
 ```{r}
-#| label: p-boxplot-ex
-#| eval: false
-
-mtcars %>%
-  ggplot(., aes(x = factor(am), y = mpg, fill = factor(am))) + 
-    geom_boxplot() + 
-    ylim(0, 40) + 
-    xlab('') + 
-    scale_x_discrete(breaks = c(0, 1), labels = c('Automatic', 'Manual')) + 
-    scale_fill_brewer(palette = "Set2", name = '', 
-                      labels = c('Automatic', 'Manual')) + 
-    theme_grey(base_size = 18, base_family = 'Times')
+#| label: p-histogram-ex-int
+#| fig.asp: 1
+#| output-location: column
+# Streamline code and adjust options
+ggplot(new_data) + 
+  aes(x = score) + 
+  geom_histogram(
+    color = "black", 
+    fill = "grey70", 
+    bins = 9
+  ) + 
+  theme_bw(
+    base_size = 30, 
+    base_family = "Palatino"
+  )
 ```
 
+:::
 
----
+## Scatterplot {.smaller}
 
-https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_iqr.png
+::: {.panel-tabset}
 
-
-
-## Point estimate + spread
-
-- Point estimate can be mean, median, mode, 
-- Spread can be SD, SE, 95% CI, etc.
+### Beginner
 
 ```{r}
-#| label: p-point-estimate-spread-ex,
-#| eval: false
-mtcars %>%
-  ggplot(., aes(x = factor(am), y = mpg, fill = factor(am))) + 
-    stat_summary(fun.data = mean_sdl, geom = 'pointrange', pch = 21, 
-                 size = 1.5) + 
-    ylim(0, 40) + 
-    xlab('') + 
-    scale_x_discrete(breaks = c(0, 1), labels = c('Automatic', 'Manual')) + 
-    scale_fill_brewer(palette = "Set2", name = '', 
-                      labels = c('Automatic', 'Manual')) + 
-    theme_grey(base_size = 18, base_family = 'Times')
+#| label: p-scatterplot-ex-beg
+#| fig.asp: 1
+#| output-location: column
+#| code-line-numbers: "2|3|5"
+# Continuous variables on both axis
+ggplot(
+  data = new_data, 
+  mapping = aes(x = proficiency, y = score)
+) + 
+  geom_point() 
 ```
 
-
-## Aesthetics (aes)
-
-- aesthetic mappings: how data are mapped to color, size, and **axis**
-- Let's update our code: 
+### Intermediate
 
 ```{r}
-#| label: aes-ex
-#| eval: false
-# Call dataframe and 'pipe' into ggplot function
-# Add aesthetic mapping to x and y axis
-mtcars %>%  
-  ggplot(., aes(x = disp, y = mpg)) #<<
+#| label: p-scatterplot-ex-int
+#| fig.asp: 1
+#| output-location: column
+# Include aesthetic mapping from inside
+# geom_point()
+ggplot(new_data) + 
+  aes(x = proficiency, y = score) + 
+  geom_point(aes(color = group), size = 4) + 
+  theme_minimal(
+    base_size = 30, 
+    base_family = "Palatino"
+  ) + 
+  theme(legend.position = c(.15, .85))
 ```
 
+:::
 
-## Geometric objects (geom_)
 
-- Whenever you want to make a plot you have to think about what kind of geometric object makes sense for your needs. What do we need here?
+## Boxplot (box and whisker plot) {.smaller}
+
+::: {.panel-tabset}
+
+### Beginner
 
 ```{r}
-#| label: p-geom-ex
-#| eval: false
-# Call dataframe and 'pipe' into ggplot function
-# Add aesthetic mapping to x and y axis
-# Add geometric object (geom_point)
-mtcars %>%  
-  ggplot(., aes(x = disp, y = mpg)) + # We 'add' a layer to the plot
-    geom_point() #<<
+#| label: p-boxplot-ex-beg
+#| fig.asp: 1
+#| output-location: column
+# Try a different geom
+ggplot(
+  data = new_data, 
+  mapping = aes(x = group, y = score)
+) + 
+  geom_boxplot() 
 ```
 
-
-## Geometric objects (geom_)
-
-- There are many types of geoms
-  - `geom_point()`
-  - `geom_smooth()`
-  - `geom_hist()`
-  - `geom_bar()`
-  - `geom_boxplot()`
-  - etc. 
-
-- Exercise
-  - Recall that `mtcars` has a lot of variables (see `glimpse(mtcars)`)
-  - Try swapping other variables for x and y
-  - Add a smoother to the plot (`geom_smooth()`)
-  - Add more aesthetics (try `color` and `shape`). What happens?
-  - Add a geom to make a boxplot
-
-
-## Statistical transformations (stat_)
-
-- We can use the `stat_summary()` function to calculate a value and overlay it 
-on the plot
+### Intermediate
 
 ```{r}
-#| label: p-stat-sum-ex
-#| eval: false
-mtcars %>%
-  ggplot(., aes(x = am, y = mpg)) + 
-    stat_summary(fun.data = mean_sdl, 
-                 geom = 'pointrange')
+#| label: p-boxplot-ex-int
+#| fig.asp: 1
+#| output-location: column
+# Adjust colors, new theme
+ggplot(new_data) + 
+  aes(x = group, y = score, fill = group) + 
+  geom_boxplot() + 
+  scale_fill_viridis_d(option = "C", end = 0.85) + 
+  theme_classic(base_size = 30) + 
+  theme(legend.position = c(0.8, 0.85))
 ```
 
+:::
+
+## {background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_iqr.png" background-size="contain" data-menu-title="What's a boxplot anyway?"}
+
+## A better way... point estimate + spread {.smaller}
+
+::: {.panel-tabset}
+
+### Beginner
+
+```{r}
+#| label: p-point-estimate-spread-ex-beg
+#| fig.asp: 1
+#| output-location: column
+# Point estimate can be mean, median, mode, 
+# Spread can be SD, SE, 95% CI, etc.
+ggplot(
+  data = new_data, 
+  mapping = aes(x = group, y = score) 
+) + 
+  stat_summary(
+    fun.data = mean_sdl, 
+    geom = 'pointrange', 
+    size = 2, 
+    linewidth = 2
+  ) 
+```
+
+### Intermediate
+
+```{r}
+#| label: p-point-estimate-spread-ex-int
+#| fig.asp: 1
+#| output-location: column
+# Customize, add caption
+ggplot(new_data) + 
+  aes(x = group, y = score) + 
+  geom_point(alpha = 0.3, size = 4) + 
+  stat_summary(
+    fun.data = mean_cl_boot, 
+    geom = 'pointrange', 
+    size = 4, 
+    linewidth = 2
+  ) + 
+  labs(caption = "Mean ±95% CI") + 
+  theme_minimal(base_size = 30)
+```
+
+:::
 
 ## Faceting
 
 - What about when we want to see more factors at once?
+
 - For example, what if we want to see **mpg** as a function of **am** and **cyl**?
 
 . . .
