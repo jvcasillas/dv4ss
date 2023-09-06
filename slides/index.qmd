@@ -14,7 +14,7 @@ bibliography: ../bib/refs.bib
 #| include: false
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(
-  echo = FALSE, 
+  echo = TRUE, 
   fig.asp = 0.5625,
   out.width = "100%", 
   fig.retina = 2, 
@@ -848,34 +848,32 @@ cw_ex +
 - Let's take a look at a new dataframe
 
 ```{r}
-
+#| label: load-data
+link <- url("https://github.com/jvcasillas/dv4ss/raw/main/misc/new_data.RDS")
+new_data <- readRDS(link)
 ```
 
-- Try using `glimpse(new_data)`, , `head(new_data)`, `dim(new_data)`, and `summary(new_data)`
+- Try using `glimpse(new_data)` and `summary(new_data)`
 
 - What kind of information did you learn about the dataframe?
 
+## Get to know the data {.smaller}
+
+:::: {.columns}
+::: {.column width="50%"}
 ```{r}
 #| label: explore1
-#| eval: false
-glimpse(mtcars)
-dim(mtcars)
+glimpse(new_data)
 ```
+:::
 
+::: {.column width="50%"}
 ```{r}
 #| label: explore2
-#| eval: false
-head(mtcars, 15)
+summary(new_data)
 ```
-
-```{r}
-#| label: explore3
-#| eval: false
-summary(mtcars)
-```
-
-
-
+:::
+::::
 
 
 

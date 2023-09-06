@@ -4,7 +4,8 @@ dat <- mtcars |>
     score = (score - min(score)) / (max(score) - min(score)), 
     proficiency = ((proficiency - mean(proficiency)) / sd(proficiency)), 
     group = if_else(group == 1, "bilingual", "monolingual")
-  )
+  ) |>
+  mutate_if(is.numeric, round, digits = 2)
 
 rownames(dat) <- NULL
 
