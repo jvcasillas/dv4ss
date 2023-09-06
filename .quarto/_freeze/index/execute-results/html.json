@@ -1,8 +1,10 @@
 {
-  "hash": "4757d58f93521c8aac1e0ea561befd89",
+  "hash": "b33fb81425429693983243297def14b7",
   "result": {
-    "markdown": "---\ntitle: \"dv4ss\"\n---\n\n\n## Quarto\n\nQuarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 2\n```\n:::\n:::\n",
-    "supporting": [],
+    "markdown": "---\ntitle: \"dv4ss\"\nengine: knitr\n---\n\n\nAuthor: Joseph V. Casillas  \nLast update: 2023-09-06\n\n- [Slides](https://www.jvcasillas.com/dv4ss/slides/index.html)\n- [Exercises (R script)](https://github.com/jvcasillas/dv4ss/raw/main/misc/exercises.R)\n",
+    "supporting": [
+      "index_files"
+    ],
     "filters": [
       "rmarkdown/pagebreak.lua"
     ],

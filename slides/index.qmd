@@ -50,7 +50,7 @@ theme_set(theme_grey(base_size = 30))
 ::: {.column width="33%"}
 :::
 ::: {.column width="33%"}
-{{< qrcode https://www.jvcasillas.com/dv4ss/slides/ qrsite width=300 height=300 colorDark='#cc0033' colorLight='#fff' >}}
+{{< qrcode https://www.jvcasillas.com/dv4ss/index.html qrsite width=300 height=300 colorDark='#cc0033' colorLight='#fff' >}}
 :::
 ::: {.column width="33%"}
 :::
@@ -913,7 +913,7 @@ ggplot(
 #| eval: false
 #| code-line-numbers: "5"
 ggplot(
-  data = mtcars, 
+  data = new_data, 
   mapping = aes(x = proficiency, y = score)
 ) + 
   geom_point()
@@ -938,7 +938,7 @@ There are many types of geoms...
 #| code-line-numbers: "5-7"
 ggplot(
   data = new_data, 
-  mapping = aes(x = proficiency, y = score)
+  mapping = aes(x = group, y = score)
 ) + 
   stat_summary(
     fun.data = mean_sdl, 
@@ -1288,7 +1288,7 @@ Using `new_data`, create the following
 
 ### Materials available here: 
 
-### [bit.ly/psllt_dataviz](https://bit.ly/psllt_dataviz)
+### [bit.ly/psllt_2023](https://bit.ly/psllt_2023)
 
 |                                                                             |                                    |
 |----------------------------------------------------------------------------:|:-----------------------------------|

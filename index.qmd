@@ -1,11 +1,10 @@
 ---
 title: "dv4ss"
+engine: knitr
 ---
 
-## Quarto
+Author: Joseph V. Casillas  
+Last update: `r Sys.Date()`
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-```{r}
-1 + 1
-```
+- [Slides](https://www.jvcasillas.com/dv4ss/slides/index.html)
+- [Exercises (R script)](https://github.com/jvcasillas/dv4ss/raw/main/misc/exercises.R)
