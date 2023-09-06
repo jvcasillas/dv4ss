@@ -8,7 +8,9 @@
 <link href="index_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="index_files/libs/quarto-contrib/qrcodejs-v1.0.0/qrcode.js"></script><meta charset="utf-8">
+<script src="index_files/libs/quarto-contrib/qrcodejs-v1.0.0/qrcode.js"></script>
+<link href="index_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
+<link href="index_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.3.299">
 
   <meta name="author" content="Joseph V. Casillas | Rutgers University">
@@ -31,7 +33,26 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
-  </style>
+    /* CSS for citations */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging-indent div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }  </style>
   <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css" id="theme">
   <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -350,7 +371,7 @@
 </div><div class="column" style="width:33%;">
 <div id="qrsite" class="qrcode"></div>
 <script type="text/javascript">
-var qrcode = new QRCode("qrsite", {"colorLight":"#fff","text":"www.jvcasillas.com","height":"300","width":"300","colorDark":"#cc0033"});
+var qrcode = new QRCode("qrsite", {"colorDark":"#cc0033","colorLight":"#fff","text":"https://www.jvcasillas.com/dv4ss/slides/","width":"300","height":"300"});
 </script>
     
 </div><div class="column" style="width:33%;">
@@ -386,279 +407,118 @@ var qrcode = new QRCode("qrsite", {"colorLight":"#fff","text":"www.jvcasillas.co
 </div>
 </div>
 </section>
-<section id="goals-1-id" class="slide level2 transition" data-auto-animate="true" data-menu-title="Goals">
-<h2 data-id="quarto-animate-title"></h2>
-<p><span class="emph">Goals</span></p>
-<div style="margin-top: 200px; font-size: 1.25em; color: #fff;">
-<p>make elegant, truthful plots</p>
-</div>
+<section>
+<section id="goals" class="title-slide slide level1 transition center">
+<h1>Goals</h1>
+
 </section>
-<section id="goals-2-id" class="slide level2 transition" data-auto-animate="true" data-menu-title="Goals">
-<h2 data-id="quarto-animate-title"></h2>
-<p><span class="emph">Goals</span></p>
-<div style="margin-top: 70px; font-size: 1em; color: #B0B0B0;">
+<section id="section" class="slide level2 transition" data-menu-title="Goals (as researchers)">
+<h2></h2>
+<p><span class="emph">Goals (as researchers)</span></p>
+<div class="r-fit-text">
+<div class="fragment fade-up">
+<div class="fragment semi-fade-out">
 <p>make elegant, truthful plots</p>
 </div>
-<div style="margin-top: 71px; font-size: 1.5em; color: #fff;">
+</div>
+<div class="fragment fade-up">
+<div class="fragment semi-fade-out">
 <p>help reader understand data</p>
 </div>
-</section>
-<section id="goals-3-id" class="slide level2 transition" data-auto-animate="true" data-menu-title="Goals">
-<h2 data-id="quarto-animate-title"></h2>
-<p><span class="emph">Goals</span></p>
-<div style="margin-top: 60px; font-size: 1em; color: #C0C0C0;">
-<p>make elegant, truthful plots</p>
 </div>
-<div style="margin-top: 10px; font-size: 1em; color: #C0C0C0;">
-<p>help reader understand data</p>
-</div>
-<div style="margin-top: 10px; font-size: 1.5em; color: #fff;">
+<div class="fragment fade-up">
+<div class="fragment semi-fade-out">
 <p>make process repeatable, shareable</p>
 </div>
-</section>
-<section id="goals-today-1-id" class="slide level2" data-auto-animate="true" data-menu-title="Goals today">
-<h2 data-id="quarto-animate-title">Goals (today)</h2>
-<div style="margin-top: 200px; font-size: 1.5em;">
-<p>get you started making elegant, truthful plots</p>
+</div>
 </div>
 </section>
-<section id="goals-today-2-id" class="slide level2" data-auto-animate="true" data-menu-title="Goals today">
-<h2 data-id="quarto-animate-title">Goals (today)</h2>
-<div style="margin-top: 70px; font-size: 1.5em; color: #D0D0D0;">
-<p>get you started making elegant, truthful plots</p>
+<section id="goals-today" class="slide level2">
+<h2>Goals (today)</h2>
+<div class="r-fit-text">
+<div class="fragment fade-up">
+<div class="fragment semi-fade-out">
+<p>get you started making elegant, <br>truthful plots</p>
 </div>
-<div style="margin-top: 71px; font-size: 1.5em;">
+</div>
+<div class="fragment fade-up">
+<div class="fragment semi-fade-out">
 <p>discuss pitfalls, bad practices</p>
 </div>
-</section>
-<section id="goals-today-3-id" class="slide level2" data-auto-animate="true" data-menu-title="Goals today">
-<h2 data-id="quarto-animate-title">Goals (today)</h2>
-<div style="margin-top: 60px; font-size: 1.5em; color: #D0D0D0;">
-<p>get you started making elegant, truthful plots</p>
 </div>
-<div style="margin-top: 20px; font-size: 1.5em; color: #D0D0D0;">
-<p>discuss pitfalls, bad practices</p>
-</div>
-<div style="margin-top: 20px; font-size: 1.5em;">
-<p>provide resources to help you continue learning</p>
-</div>
-</section>
-<section id="section" class="title-slide slide level1 transition center">
-<h1></h1>
-<p>Just use a table…<br>
-the data speaks for itself</p>
-</section>
-
-<section id="section-1" class="title-slide slide level1 center" data-background-color="black" data-background-image="./assets/img/dino_data.gif" data-background-size="contain">
-<h1></h1>
-<div class="footer">
-<p><a href="https://www.research.autodesk.com/publications/same-stats-different-graphs/">datasaurus: same stats, different graph</a></p>
-</div>
-</section>
-
-<section id="section-2" class="title-slide slide level1 transition center">
-<h1></h1>
-<p>“Stats don’t lie, but liars use stats”<br>
-(same idea)</p>
-<!--
-who said this?
--->
-</section>
-
-<section id="section-3" class="title-slide slide level1 center" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/os_heartbreak.png">
-<h1></h1>
-<!--
-getting good takes time
-  be patient
-  be kind to yourself
-  do the best you can at the time
--->
-</section>
-
-<section>
-<section id="section-4" class="title-slide slide level1 center" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/general/memes/sucking1.png" data-background-size="90%">
-<h1></h1>
-<!--
-its ok to suck
--->
-</section>
-<section class="slide level2">
-
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p>&nbsp;</p>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/p-goals-1-1.png" style="width:100.0%"></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p>&nbsp;</p>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/p-goals-2-1.png" style="width:100.0%"></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p>&nbsp;</p>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/p-goals-3-1.png" style="width:100.0%"></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p>&nbsp;</p>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/p-goals-4-1.png" style="width:100.0%"></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p>&nbsp;</p>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/p-goals-5-1.png" style="width:100.0%"></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p>&nbsp;</p>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/p-goals-6-1.png" style="width:100.0%"></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p>&nbsp;</p>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/p-goals-7-1.png" style="width:100.0%"></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p>&nbsp;</p>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/p-goals-8-1.png" style="width:100.0%"></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p>&nbsp;</p>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/p-goals-9-1.png" style="width:100.0%"></p>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<p>&nbsp;</p>
-</div>
-</div>
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
-<div class="cell-output-display">
-<p><img data-src="index_files/figure-revealjs/p-goals-10-1.png" style="width:100.0%"></p>
-</div>
+<div class="fragment fade-up">
+<div class="fragment semi-fade-out">
+<p>provide resources to help you <br>continue learning</p>
 </div>
 </div>
 </div>
 </section></section>
 <section>
-<section id="section-5" class="title-slide slide level1 center" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/general/memes/draw_owl.png" data-background-size="65%">
+<section id="section-1" class="title-slide slide level1 transition center" data-menu-title="Speak for yourself">
 <h1></h1>
+<p>Just use a table…<br>
+the data speaks for itself…</p>
+</section>
+<section id="section-2" class="slide level2" data-background-color="black" data-background-image="./assets/img/dino_data.gif" data-background-size="contain" data-menu-title="The datasaurus">
+<h2></h2>
+<div class="footer">
+<p><a href="https://www.research.autodesk.com/publications/same-stats-different-graphs/">datasaurus: same stats, different graph</a></p>
+</div>
+</section>
+<section id="section-3" class="slide level2 transition" data-menu-title="Liars">
+<h2></h2>
+<p><br><br><br></p>
+<p>“Stats don’t lie, but liars use stats”<br>
+“The numbers don’t lie, but liars use numbers”<br>
+<span style="color: grey;">(same idea)</span></p>
+</section></section>
+<section>
+<section id="its-not-easy" class="title-slide slide level1 center">
+<h1>It’s not easy…</h1>
 
 </section>
-<section class="slide level2">
-
+<section id="section-4" class="slide level2" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/os_heartbreak.png" data-menu-title="Be kind">
+<h2></h2>
+<aside class="notes">
+<ul>
+<li>getting good takes time</li>
+<li>be patient</li>
+<li>be kind to yourself</li>
+<li>do the best you can at the time</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section-5" class="slide level2" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/general/memes/sucking1.png" data-background-size="90%" data-menu-title="Sucking...">
+<h2></h2>
+<aside class="notes">
+<p>its ok to suck</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="section-6" class="slide level2" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/general/memes/draw_owl.png" data-background-size="65%" data-menu-title="Drawing the owl">
+<h2></h2>
+</section>
+<section id="section-7" class="slide level2" data-menu-title="Choose your fighter">
+<h2></h2>
 <div class="quarto-layout-panel">
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
@@ -674,26 +534,508 @@ its ok to suck
 </div>
 </div>
 </section>
-<section class="slide level2">
+<section id="section-8" class="slide level2" data-menu-title="Learning process">
+<h2></h2>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="r-stack quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p><img data-src="./index_files/figure-revealjs/p-goals-1-1.png"></p>
+<p><img data-src="./index_files/figure-revealjs/p-goals-2-1.png" class="fragment" style="width:100.0%;height:100.0%"></p>
+<p><img data-src="./index_files/figure-revealjs/p-goals-3-1.png" class="fragment" style="width:100.0%;height:100.0%"></p>
+<p><img data-src="./index_files/figure-revealjs/p-goals-4-1.png" class="fragment" style="width:100.0%;height:100.0%"></p>
+<p><img data-src="./index_files/figure-revealjs/p-goals-5-1.png" class="fragment" style="width:100.0%;height:100.0%"></p>
+<p><img data-src="./index_files/figure-revealjs/p-goals-6-1.png" class="fragment" style="width:100.0%;height:100.0%"></p>
+<p><img data-src="./index_files/figure-revealjs/p-goals-7-1.png" class="fragment" style="width:100.0%;height:100.0%"></p>
+<p><img data-src="./index_files/figure-revealjs/p-goals-8-1.png" class="fragment" style="width:100.0%;height:100.0%"></p>
+<p><img data-src="./index_files/figure-revealjs/p-goals-9-1.png" class="fragment" style="width:100.0%;height:100.0%"></p>
+<p><img data-src="./index_files/figure-revealjs/p-goals-10-1.png" class="fragment" style="width:100.0%;height:100.0%"></p>
+</div>
+</div>
+</div>
+</section>
+<section id="section-9" class="slide level2" data-background-image="./assets/img/bad_plot_0.png" data-background-size="contain" data-menu-title="The ugliest plot in the world">
+<h2></h2>
+</section></section>
+<section>
+<section id="some-principles-of-graphic-design" class="title-slide slide level1 center">
+<h1>Some principles of graphic design</h1>
+<p><span style="font-size: 2em;">💩</span></p>
+</section>
+<section id="crap" class="slide level2">
+<h2>CRAP 💩</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><span class="emph" style="font-size: 2.5em;">C</span><span style="font-size: 2.5em;">ontrast</span><br>
+<span class="emph" style="font-size: 2.5em;">R</span><span style="font-size: 2.5em;">epetition</span><br>
+<span class="emph" style="font-size: 2.5em;">A</span><span style="font-size: 2.5em;">lignment</span><br>
+<span class="emph" style="font-size: 2.5em;">P</span><span style="font-size: 2.5em;">roximity</span></p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="./assets/img/non_designers.png" class="absolute" style="top: 100px; right: 10px; width: 350px; height: 500px; "></p>
+<p><span class="absolute" style="bottom: 5px; right: 10px; "><span class="citation" data-cites="williams2015">Williams (<a href="#/references" role="doc-biblioref" onclick="">2015</a>)</span></span></p>
+</div>
+</div>
+</section>
+<section id="contrast" class="slide level2">
+<h2>Contrast</h2>
+<p>If two things aren’t the same, make them <em>very</em> different</p>
+<div class="fragment">
+<ul>
+<li>Colors
+<ul>
+<li>complex</li>
+<li>accessibility for color blindness (color.adobe.com)</li>
+</ul></li>
+<li>Fonts
+<ul>
+<li>weight</li>
+<li>size</li>
+<li>family</li>
+</ul></li>
+<li>Shapes</li>
+</ul>
+</div>
+</section>
+<section id="section-10" class="slide level2" data-menu-title="Contrast ex.">
+<h2></h2>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="columns quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/contrast-ex1-1.png" style="width:100.0%"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/contrast-ex2-1.png" style="width:100.0%"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="repetition" class="slide level2">
+<h2>Repetition</h2>
+<p>Repeat <em>themes</em> throughout doc, presentation, article, etc.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><br></p>
+<ul>
+<li>Colors palettes</li>
+<li>Fonts (families, weights, sizes)</li>
+<li>Other graphical elements (alignments, etc.)</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/contrast-repeat-1.png" style="width:100.0%"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="alignment" class="slide level2">
+<h2>Alignment</h2>
+<p>Elements on page/screen/plot have visual connection with something else on page/screen/plot</p>
+<div class="r-stack">
+<p><img data-src="./assets/img/alignment_0.png" class="fragment absolute" style="top: 205px; right: 200px; width: 70%; height: 70%; "></p>
+<p><img data-src="./assets/img/alignment_1.png" class="fragment absolute" style="top: 205px; right: 200px; width: 70%; height: 70%; "></p>
+<p><img data-src="./assets/img/alignment_2.png" class="fragment absolute" style="top: 205px; right: 200px; width: 70%; height: 70%; "></p>
+</div>
+<div class="footer">
+<p>Heiss (2023)</p>
+</div>
+</section>
+<section id="proximity" class="slide level2">
+<h2>Proximity</h2>
+<p>Group related items together</p>
+<ul>
+<li><p>Focus on document layout</p></li>
+<li><p>Probably less applicable to dataviz</p></li>
+</ul>
+</section>
+<section id="section-11" class="slide level2 transition" data-menu-title="You can learn to CRAP 💩">
+<h2></h2>
+<p><br><br><br><br> <span style="font-size: 1.5em;">You can learn to CRAP 💩</span></p>
+<aside class="notes">
+<p>learnable takes practice</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="example-plots" class="title-slide slide level1 center">
+<h1>Example plots</h1>
 
-<p>ugliest plot in the world</p>
+</section>
+<section id="common-types-of-plots" class="slide level2">
+<h2>Common types of plots</h2>
+<ul>
+<li>Pie charts</li>
+<li>Bar graphs</li>
+<li>Boxplots<br>
+</li>
+<li>Historgrams, density plots</li>
+<li>Scatterplots<br>
+</li>
+<li>Heatmaps</li>
+<li>Etc.</li>
+</ul>
+</section>
+<section id="pie-charts" class="slide level2" data-background-image="./assets/img/plots_pie.png" data-background-size="contain" data-background-color="black">
+<h2>Pie charts</h2>
+</section>
+<section id="bar-graphs" class="slide level2" data-visibility="uncounted">
+<h2>Bar graphs</h2>
+
+<img data-src="index_files/figure-revealjs/bargraph-ex-1.png" style="width:100.0%" class="r-stretch"></section>
+<section id="section-12" class="slide level2" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_bargraphs.png" data-background-size="50%" data-background-color="black" data-menu-title="Bar graph push back" data-visibility="uncounted">
+<h2></h2>
+</section>
+<section id="boxplots" class="slide level2" data-visibility="uncounted">
+<h2>Boxplots</h2>
+
+<img data-src="index_files/figure-revealjs/boxplot-ex-1.png" style="width:100.0%" class="r-stretch"></section>
+<section id="historgrams-density-plots" class="slide level2" data-visibility="uncounted">
+<h2>Historgrams, density plots</h2>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="columns quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/histogram-ex-1.png" style="width:100.0%"></p>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/density-ex-1.png" style="width:100.0%"></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="scatterplots" class="slide level2" data-visibility="uncounted">
+<h2>Scatterplots</h2>
+
+<img data-src="index_files/figure-revealjs/scatter-plot-ex-1.png" style="width:100.0%" class="r-stretch"></section>
+<section id="heatmaps" class="slide level2" data-visibility="uncounted">
+<h2>Heatmaps</h2>
+<div class="r-stack">
+<p><img data-src="./assets/img/plot_heatmap_0.png" class="absolute" style="top: 150px; right: 60px; width: 80%; "></p>
+<p><img data-src="./assets/img/plot_heatmap_1.png" class="fragment absolute" style="top: 65px; right: 65px; width: 80%; "></p>
+</div>
+</section></section>
+<section>
+<section id="grammar-of-graphics" class="title-slide slide level1 center">
+<h1>Grammar of graphics</h1>
+
+</section>
+<section id="what-you-need-to-know" class="slide level2">
+<h2>What you need to know</h2>
+<p><img data-src="./assets/img/gog.png" class="absolute" style="top: 100px; right: 0px; height: 75%; "></p>
+<p><span class="absolute" style="bottom: 5px; right: 10px; "><span class="citation" data-cites="wilkinson2012grammar">Wilkinson (<a href="#/references" role="doc-biblioref" onclick="">2012</a>)</span></span></p>
+<p>We are interesting in mapping <br><strong>data</strong> to <strong>aesthetics</strong></p>
+<div class="fragment">
+<p><span style="color: blue;">What is data?</span></p>
+<ul>
+<li>a column(s) in a dataframe <br>(excel, .csv, .tsv, etc.)</li>
+</ul>
+</div>
+<div class="fragment">
+<p><span style="color: blue;">Aesthetics?</span></p>
+<ul>
+<li>a visual property of a plot, <br>i.e., position, shape, color, etc.</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="section-13" class="title-slide slide level1 center" data-background-color="black" data-menu-title="ggplot2" data-background-image="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/tidyverse.png" data-background-size="45%">
+<h1></h1>
+<p><img data-src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png" class="absulute" style="width:20.0%;height:20.0%" data-top="400" data-left="0"></p>
+</section>
+<section id="section-14" class="slide level2" data-background-image="./assets/img/ggplot_layers.png" data-background-size="contain" data-menu-title="GoG applied - ggplot2">
+<h2></h2>
+</section>
+<section id="ggplot2-overview" class="slide level2">
+<h2>ggplot2 overview</h2>
+<ul>
+<li><p>Written by Hadley Wickham when he was a graduate student at Iowa State</p></li>
+<li><p>Automatically deals with spacings, text, titles but also allows you to annotate by “adding”</p></li>
+<li><p>Plots are built up in layers</p></li>
+<li><p>Plot the data, overlay a summary, meta data and/or annotation</p></li>
+</ul>
+</section>
+<section id="components" class="slide level2">
+<h2>Components</h2>
+<ul>
+<li><p>Works with a dataframe</p></li>
+<li><p>aesthetic mappings: how data are mapped to coordinates, color, size, shape, etc.</p></li>
+<li><p>geoms: geometric objects like points, lines, boxplots, etc.</p></li>
+<li><p>stats: statistical transformations</p></li>
+<li><p>facets: ‘panels’ for conditional plots</p></li>
+</ul>
+</section>
+<section id="section-15" class="slide level2" data-menu-title="Back to the chicks...">
+<h2></h2>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/chicks-repeat-1.png" style="width:100.0%"></p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="section-16" class="slide level2" data-menu-title="Data to aesthetic mapping">
+<h2></h2>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Data</th>
+<th style="text-align: left;">Aesthetic</th>
+<th style="text-align: left;">Geometry</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Time</td>
+<td style="text-align: left;">x-axis</td>
+<td style="text-align: left;">point, line</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Weight</td>
+<td style="text-align: left;">y-axis</td>
+<td style="text-align: left;">point, line</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Chick</td>
+<td style="text-align: left;">point</td>
+<td style="text-align: left;">point, line</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Diet</td>
+<td style="text-align: left;">color, shape</td>
+<td style="text-align: left;">point, shape</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="section-17" class="slide level2" data-menu-title="Aesthetic to geom mapping">
+<h2></h2>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Data</th>
+<th style="text-align: left;">aes()</th>
+<th style="text-align: left;">geom_*</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Time</td>
+<td style="text-align: left;">x</td>
+<td style="text-align: left;">geom_point</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Weight</td>
+<td style="text-align: left;">y</td>
+<td style="text-align: left;">geom_point</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Chick</td>
+<td style="text-align: left;">color</td>
+<td style="text-align: left;">geom_point</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Diet</td>
+<td style="text-align: left;">color, shape</td>
+<td style="text-align: left;">geom_point + geom_line</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="it-starts-with-data" class="slide level2">
+<h2>It starts with data</h2>
+<ul>
+<li><p>We will continue using the <code>mtcars</code> dataframe</p></li>
+<li><p>Fire up RStudio, load the <code>tidyverse</code> and take a look at <code>mtcars</code></p></li>
+<li><p>Try using <code>glimpse(mtcars)</code>, , <code>head(mtcars)</code>, <code>dim(mtcars)</code>, and <code>summary(mtcars)</code></p></li>
+<li><p>What kind of information did you learn about the dataframe?</p></li>
+</ul>
+</section></section>
+<section>
+<section id="plotting-with-ggplot" class="title-slide slide level1 center">
+<h1>Plotting with <code>ggplot</code></h1>
+
+</section>
+<section id="basic-plot-types" class="slide level2">
+<h2>Basic plot types</h2>
+<ul>
+<li><p>histogram</p></li>
+<li><p>Scatterplots</p></li>
+<li><p>Boxplots</p></li>
+<li><p>Point estimate + spread</p></li>
+</ul>
+</section>
+<section id="scatterplot" class="slide level2">
+<h2>Scatterplot</h2>
+<ul>
+<li>When you have two continuous variables</li>
+</ul>
+</section>
+<section id="boxplot-box-and-whisker-plot" class="slide level2">
+<h2>Boxplot (box and whisker plot)</h2>
+<ul>
+<li>Better option than bargraph</li>
+</ul>
 </section>
 <section class="slide level2">
 
-<p>principles of graphic design - CRAP (contrast, alignment, repetition, proximity) - Contrast: two things aren’t the same, then make them very different - fonts (family, weight, size), colors (complex, accessibility for color blindness, color.adobe.com), shapes - Repetition: repeat things throughout doc, pres., etc. - colors palettes, fonts (families, weights, sizes), other graphical elements (alignments, etc.) - Alignment: everything on page/screen/plot has visual connection with something else on page/screen/plot - use guidelines to check - Proximity: group related items together - less applicable to dataviz - learnable, takes practice</p>
+<p>https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_iqr.png</p>
 </section>
-<section class="slide level2">
-
-<p>common types of plots</p>
-<p>pie charts bar graphs historgrams, density plots boxplots scatterplots heatmaps etc.</p>
+<section id="point-estimate-spread" class="slide level2">
+<h2>Point estimate + spread</h2>
+<ul>
+<li>Point estimate can be mean, median, mode,</li>
+<li>Spread can be SD, SE, 95% CI, etc.</li>
+</ul>
 </section>
-<section class="slide level2">
-
-<p>principles of grammar of graphics - map data to aesthetics</p>
+<section id="aesthetics-aes" class="slide level2">
+<h2>Aesthetics (aes)</h2>
+<ul>
+<li>aesthetic mappings: how data are mapped to color, size, and <strong>axis</strong></li>
+<li>Let’s update our code:</li>
+</ul>
 </section>
-<section class="slide level2">
-
-<p>GoG applied, ggplot2 data aesthetics geoms scales facets coordinates labels theme</p>
+<section id="geometric-objects-geom_" class="slide level2">
+<h2>Geometric objects (geom_)</h2>
+<ul>
+<li>Whenever you want to make a plot you have to think about what kind of geometric object makes sense for your needs. What do we need here?</li>
+</ul>
+</section>
+<section id="geometric-objects-geom_-1" class="slide level2">
+<h2>Geometric objects (geom_)</h2>
+<ul>
+<li>There are many types of geoms
+<ul>
+<li><code>geom_point()</code></li>
+<li><code>geom_smooth()</code></li>
+<li><code>geom_hist()</code></li>
+<li><code>geom_bar()</code></li>
+<li><code>geom_boxplot()</code></li>
+<li>etc.</li>
+</ul></li>
+<li>Exercise
+<ul>
+<li>Recall that <code>mtcars</code> has a lot of variables (see <code>glimpse(mtcars)</code>)</li>
+<li>Try swapping other variables for x and y</li>
+<li>Add a smoother to the plot (<code>geom_smooth()</code>)</li>
+<li>Add more aesthetics (try <code>color</code> and <code>shape</code>). What happens?</li>
+<li>Add a geom to make a boxplot</li>
+</ul></li>
+</ul>
+</section>
+<section id="statistical-transformations-stat_" class="slide level2">
+<h2>Statistical transformations (stat_)</h2>
+<ul>
+<li>We can use the <code>stat_summary()</code> function to calculate a value and overlay it on the plot</li>
+</ul>
+</section>
+<section id="faceting" class="slide level2">
+<h2>Faceting</h2>
+<ul>
+<li>What about when we want to see more factors at once?</li>
+<li>For example, what if we want to see <strong>mpg</strong> as a function of <strong>am</strong> and <strong>cyl</strong>?</li>
+</ul>
+<div class="fragment">
+<p>Solution 1a</p>
+</div>
+</section>
+<section id="faceting-1" class="slide level2">
+<h2>Faceting</h2>
+<ul>
+<li>What about when we want to see more factors at once?</li>
+<li>For example, what if we want to see <strong>mpg</strong> as a function of <strong>am</strong> and <strong>cyl</strong>?</li>
+</ul>
+<p>Solution 1b</p>
+</section>
+<section id="faceting-2" class="slide level2">
+<h2>Faceting</h2>
+<ul>
+<li>What about when we want to see more factors at once?</li>
+<li>For example, what if we want to see <strong>mpg</strong> as a function of <strong>am</strong> and <strong>cyl</strong>?</li>
+</ul>
+<p>Solution 2</p>
+</section>
+<section id="more-exercises" class="slide level2">
+<h2>More exercises</h2>
+<p>Using <code>mtcars</code>, create the following</p>
+<ul>
+<li><p>a boxplot with a variable mapped to the <code>fill</code> aesthetic</p></li>
+<li><p>a boxplot with a variable mapped to the <code>color</code> aesthetic and a horizontal facet</p></li>
+<li><p>a scatterplot with a regression line (see <code>?geom_smooth</code>)</p></li>
+<li><p>a scatterplot with a regression line (see <code>?geom_smooth</code>) and a categorical factor (try the aesthetic <code>shape</code>)</p></li>
+<li><p>a histogram of <code>mpg</code></p></li>
+<li><p>What does <code>geom_violin()</code> do? What geom can it replace?</p></li>
+</ul>
 </section>
 <section class="slide level2">
 
@@ -706,656 +1048,71 @@ its ok to suck
 <section class="slide level2">
 
 <p>practical examples take a bad plot and make it better</p>
-</section>
-<section class="slide level2">
+</section></section>
+<section>
+<section id="help" class="title-slide slide level1 center">
+<h1>Help!</h1>
 
-<p>Helpful resources</p>
+</section>
+<section id="resources" class="slide level2">
+<h2>Resources</h2>
 <ul>
 <li>https://datavizf23.classes.andrewheiss.com/syllabus.html</li>
 <li>Alberto Cairo, The Truthful Art: Data, Charts, and Maps for Communication (Berkeley, California: New Riders, 2016).</li>
 <li>Kieran Healy, Data Visualization: A Practical Introduction (Princeton: Princeton University Press, 2018), http://socviz.co/</li>
 <li>Claus E. Wilke, Fundamentals of Data Visualization (Sebastopol, California: O’Reilly Media, 2018), https://serialmentor.com/dataviz/</li>
-<li></li>
 </ul>
 </section>
-<section class="slide level2">
-
-<!--
-
-
-
-background-color: black
-background-image: url(https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/tidyverse.png), url(https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png)
-background-size: 500px, 250px
-background-position: 50% 50%, 5% 50%
-
-
-
----
-class: title-slide-section-grey, center, middle
-
-# Data visualization 101
-
-.big[Plotting with `ggplot`]
-
----
-
-
-
-# Data visualization 101
-
-### Basic plot types
-
-.large[
-
-.pull-left[
-
-- Scatterplots
-
-- Bargraph
-
-- Boxplots
-
-- Point estimate + spread
-
-]
-
-]
-
---
-
-.pull-right[
-
-- Imagine we are interested in learning more about gas mileage. 
-
-- We have the `mtcars` dataset that will allow us to look at miles per gallon 
-(**mpg**), engine displacement (**disp**), and transmission type (**am**)
-
-- **mpg** and **disp** are continuous variables, **am** is categorical
-
-]
-
-
----
-
-# Data visualization 101
-
-### Scatterplot
-
-- When you have two continuous variables
-
-
-::: {.cell layout-align="center"}
-::: {.cell-output-display}
-![](index_files/figure-revealjs/scatterplot-ex-1.png){fig-align='center' width=100%}
-:::
-:::
-
-
-???
-
-```
-mtcars %>%
-  ggplot(., aes(x = disp, y = mpg, fill = factor(am))) + 
-    geom_point(pch = 21, size = 2)  + 
-    scale_fill_brewer(palette = "Set2", name = '', 
-                      labels = c('Automatic', 'Manual')) + 
-    theme_grey(base_size = 18, base_family = 'Times')
-```
-
----
-
-# Data visualization 101
-
-### Bargraph
-
-- Please never make a bargraph
-
-
-::: {.cell layout-align="center"}
-::: {.cell-output-display}
-![](index_files/figure-revealjs/bargraph-ex-1.png){fig-align='center' width=100%}
-:::
-:::
-
-
-???
-
-```
-mtcars %>%
-  group_by(am) %>% 
-  summarize(mean_mpg = mean(mpg)) %>% 
-  ggplot(., aes(x = factor(am), y = mean_mpg, fill = factor(am))) + 
-    geom_bar(stat = 'identity') + 
-    ylim(0, 40) + 
-    xlab('') + 
-    scale_x_discrete(breaks = c(0, 1), labels = c('Automatic', 'Manual')) + 
-    scale_fill_brewer(palette = "Set2", name = '', 
-                      labels = c('Automatic', 'Manual')) + 
-    theme_grey(base_size = 18, base_family = 'Times')
-```
-
-
-
----
-background-color: black
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_bargraphs.png)
-background-size: contain
-background-position: 100% 50%
-
-# Data visualization 101
-
-### Bargraph
-
----
-
-
-
-# Data visualization 101
-
-### Boxplot (box and whisker plot)
-
-- Better option than bargraph
-
-
-::: {.cell layout-align="center"}
-::: {.cell-output-display}
-![](index_files/figure-revealjs/boxplot-ex-1.png){fig-align='center' width=100%}
-:::
-:::
-
-
-???
-
-```
-mtcars %>%
-  ggplot(., aes(x = factor(am), y = mpg, fill = factor(am))) + 
-    geom_boxplot() + 
-    ylim(0, 40) + 
-    xlab('') + 
-    scale_x_discrete(breaks = c(0, 1), labels = c('Automatic', 'Manual')) + 
-    scale_fill_brewer(palette = "Set2", name = '', 
-                      labels = c('Automatic', 'Manual')) + 
-    theme_grey(base_size = 18, base_family = 'Times')
-```
-
-
-
----
-background-color: black
-background-image: url(https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_iqr.png)
-background-size: contain
-
----
-
-
-
-# Data visualization 101
-
-### Point estimate + spread
-
-- Point estimate can be mean, median, mode, 
-- Spread can be SD, SE, 95% CI, etc.
-
-
-::: {.cell layout-align="center"}
-::: {.cell-output-display}
-![](index_files/figure-revealjs/point-estimate-ex-1.png){fig-align='center' width=100%}
-:::
-:::
-
-
-???
-
-```
-mtcars %>%
-  ggplot(., aes(x = factor(am), y = mpg, fill = factor(am))) + 
-    stat_summary(fun.data = mean_sdl, geom = 'pointrange', pch = 21, 
-                 size = 1.5) + 
-    ylim(0, 40) + 
-    xlab('') + 
-    scale_x_discrete(breaks = c(0, 1), labels = c('Automatic', 'Manual')) + 
-    scale_fill_brewer(palette = "Set2", name = '', 
-                      labels = c('Automatic', 'Manual')) + 
-    theme_grey(base_size = 18, base_family = 'Times')
-```
-
-
-
-
----
-class: title-slide-section-grey, center, middle
-
-# What you need to know
-
-.big[A grammar of graphics]
-
----
-
-
-
-# ggplot2
-
-### Overview
-
-- Written by Hadley Wickham when he was a graduate student at Iowa State
-
-- Automatically deals with spacings, text, titles but also allows you to annotate by "adding"
-
-- Plots are built up in layers 
-
-- Plot the data, overlay a summary, meta data and annotation
-
----
-
-# ggplot2
-
-### Components
-
-- Works with a dataframe
-
-- aesthetic mappings: how data are mapped to color, size
-
-- geoms: geometric objects like points, lines, shapes
-
-- stats: statistical transformations
-
-- facets: for conditional plots
-
----
-
-# ggplot2
-
-### It starts with data
-
-- We will continue using the `mtcars` dataframe
-
-- Fire up RStudio, load the `tidyverse` and take a look at `mtcars`
-
-- Try using `glimpse(mtcars)`, , `head(mtcars)`, `dim(mtcars)`, and `summary(mtcars)`
-
-- What kind of information did you learn about the dataframe?
-
----
-
-# ggplot2
-
-### It starts with data
-
-
-::: {.cell}
-::: {.cell-output .cell-output-stdout}
-```
-Rows: 32
-Columns: 11
-$ mpg  <dbl> 21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2, 17.8,…
-$ cyl  <dbl> 6, 6, 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4, 8,…
-$ disp <dbl> 160.0, 160.0, 108.0, 258.0, 360.0, 225.0, 360.0, 146.7, 140.8, 16…
-$ hp   <dbl> 110, 110, 93, 110, 175, 105, 245, 62, 95, 123, 123, 180, 180, 180…
-$ drat <dbl> 3.90, 3.90, 3.85, 3.08, 3.15, 2.76, 3.21, 3.69, 3.92, 3.92, 3.92,…
-$ wt   <dbl> 2.620, 2.875, 2.320, 3.215, 3.440, 3.460, 3.570, 3.190, 3.150, 3.…
-$ qsec <dbl> 16.46, 17.02, 18.61, 19.44, 17.02, 20.22, 15.84, 20.00, 22.90, 18…
-$ vs   <dbl> 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0,…
-$ am   <dbl> 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,…
-$ gear <dbl> 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3,…
-$ carb <dbl> 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1, 2,…
-```
-:::
-
-::: {.cell-output .cell-output-stdout}
-```
-[1] 32 11
-```
-:::
-:::
-
-
----
-
-# ggplot2
-
-### It starts with data
-
-
-::: {.cell}
-::: {.cell-output .cell-output-stdout}
-```
-                    mpg cyl  disp  hp drat    wt  qsec vs am gear carb
-Mazda RX4          21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
-Mazda RX4 Wag      21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
-Datsun 710         22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
-Hornet 4 Drive     21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
-Hornet Sportabout  18.7   8 360.0 175 3.15 3.440 17.02  0  0    3    2
-Valiant            18.1   6 225.0 105 2.76 3.460 20.22  1  0    3    1
-Duster 360         14.3   8 360.0 245 3.21 3.570 15.84  0  0    3    4
-Merc 240D          24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
-Merc 230           22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
-Merc 280           19.2   6 167.6 123 3.92 3.440 18.30  1  0    4    4
-Merc 280C          17.8   6 167.6 123 3.92 3.440 18.90  1  0    4    4
-Merc 450SE         16.4   8 275.8 180 3.07 4.070 17.40  0  0    3    3
-Merc 450SL         17.3   8 275.8 180 3.07 3.730 17.60  0  0    3    3
-Merc 450SLC        15.2   8 275.8 180 3.07 3.780 18.00  0  0    3    3
-Cadillac Fleetwood 10.4   8 472.0 205 2.93 5.250 17.98  0  0    3    4
-```
-:::
-:::
-
-
----
-
-# ggplot2
-
-### It starts with data
-
-
-::: {.cell}
-::: {.cell-output .cell-output-stdout}
-```
-      mpg             cyl             disp             hp       
- Min.   :10.40   Min.   :4.000   Min.   : 71.1   Min.   : 52.0  
- 1st Qu.:15.43   1st Qu.:4.000   1st Qu.:120.8   1st Qu.: 96.5  
- Median :19.20   Median :6.000   Median :196.3   Median :123.0  
- Mean   :20.09   Mean   :6.188   Mean   :230.7   Mean   :146.7  
- 3rd Qu.:22.80   3rd Qu.:8.000   3rd Qu.:326.0   3rd Qu.:180.0  
- Max.   :33.90   Max.   :8.000   Max.   :472.0   Max.   :335.0  
-      drat             wt             qsec             vs        
- Min.   :2.760   Min.   :1.513   Min.   :14.50   Min.   :0.0000  
- 1st Qu.:3.080   1st Qu.:2.581   1st Qu.:16.89   1st Qu.:0.0000  
- Median :3.695   Median :3.325   Median :17.71   Median :0.0000  
- Mean   :3.597   Mean   :3.217   Mean   :17.85   Mean   :0.4375  
- 3rd Qu.:3.920   3rd Qu.:3.610   3rd Qu.:18.90   3rd Qu.:1.0000  
- Max.   :4.930   Max.   :5.424   Max.   :22.90   Max.   :1.0000  
-       am              gear            carb      
- Min.   :0.0000   Min.   :3.000   Min.   :1.000  
- 1st Qu.:0.0000   1st Qu.:3.000   1st Qu.:2.000  
- Median :0.0000   Median :4.000   Median :2.000  
- Mean   :0.4062   Mean   :3.688   Mean   :2.812  
- 3rd Qu.:1.0000   3rd Qu.:4.000   3rd Qu.:4.000  
- Max.   :1.0000   Max.   :5.000   Max.   :8.000  
-```
-:::
-:::
-
-
----
-
-# ggplot2
-
-### It starts with data
-
-- We will start all of our plots in the same way... using the dataframe and 
-the pipe operator (**%>%**) like this: 
-
---
-
-
-::: {.cell}
-
-:::
-
-
---
-
-- Notice that I have commented my code
-
-- The pipe operator sends whatever is on the left of the pipe (`mtcars`) to whatever is on the right side (`ggplot`)
-
-- Specifically, it sends whatever is on the left to the following **.**
-
-- As is, this code won't do anything yet
-
----
-
-# ggplot2
-
-### Aesthetics (aes)
-
-- aesthetic mappings: how data are mapped to color, size, and **axis**
-- Let's update our code: 
-
-
-::: {.cell}
-
-:::
-
-
---
-
-
-::: {.cell layout-align="center"}
-::: {.cell-output-display}
-![](index_files/figure-revealjs/unnamed-chunk-13-1.png){fig-align='center' width=100%}
-:::
-:::
-
-
----
-
-# ggplot2
-
-### Geometric objects (geom_)
-
-- Whenever you want to make a plot you have to think about what kind of geometric object makes sense for your needs. What do we need here?
-
---
-
-
-::: {.cell}
-
-:::
-
-
---
-
-
-::: {.cell layout-align="center"}
-::: {.cell-output-display}
-![](index_files/figure-revealjs/unnamed-chunk-14-1.png){fig-align='center' width=100%}
-:::
-:::
-
-
----
-
-# ggplot2
-
-### Geometric objects (geom_)
-
-- There are many types of geoms
-  - `geom_point()`
-  - `geom_smooth()`
-  - `geom_hist()`
-  - `geom_bar()`
-  - `geom_boxplot()`
-  - etc. 
-
-- Exercise
-  - Recall that `mtcars` has a lot of variables (see `glimpse(mtcars)`)
-  - Try swapping other variables for x and y
-  - Add a smoother to the plot (`geom_smooth()`)
-  - Add more aesthetics (try `color` and `shape`). What happens?
-  - Add a geom to make a boxplot
-
----
-
-# ggplot2
-
-### Statistical transformations (stat_)
-
-- We can use the `stat_summary()` function to calculate a value and overlay it 
-on the plot
-
-.pull-left[
-
-
-::: {.cell}
-
-```{.r .cell-code}
-mtcars %>%
-  ggplot(., aes(x = am, y = mpg)) + 
-    stat_summary(fun.data = mean_sdl, 
-                 geom = 'pointrange')
-```
-:::
-
-
-]
-
-
-.pull-right[
-
-
-::: {.cell layout-align="center"}
-::: {.cell-output-display}
-![](index_files/figure-revealjs/unnamed-chunk-15-1.png){fig-align='center' width=100%}
-:::
-:::
-
-
-]
-
----
-
-# ggplot2
-
-### Faceting
-
-- What about when we want to see more factors at once?
-- For example, what if we want to see **mpg** as a function of **am** and **cyl**?
-
---
-
-#### Solution 1a
-
-.pull-left[
-
-
-::: {.cell}
-
-:::
-
-
-]
-
-.pull-right[
-
-
-::: {.cell}
-::: {.cell-output-display}
-![](index_files/figure-revealjs/unnamed-chunk-16-1.png){width=100%}
-:::
-:::
-
-
-]
-
----
-
-# ggplot2
-
-### Faceting
-
-- What about when we want to see more factors at once?
-- For example, what if we want to see **mpg** as a function of **am** and **cyl**?
-
-#### Solution 1b
-
-.pull-left[
-
-
-::: {.cell}
-
-:::
-
-
-]
-
-.pull-right[
-
-
-::: {.cell}
-::: {.cell-output-display}
-![](index_files/figure-revealjs/unnamed-chunk-17-1.png){width=100%}
-:::
-:::
-
-
-]
-
----
-
-# ggplot2
-
-### Faceting
-
-- What about when we want to see more factors at once?
-- For example, what if we want to see **mpg** as a function of **am** and **cyl**?
-
-#### Solution 2
-
-.pull-left[
-
-
-::: {.cell}
-
-:::
-
-]
-
-.pull-right[
-
-
-::: {.cell}
-::: {.cell-output-display}
-![](index_files/figure-revealjs/unnamed-chunk-18-1.png){width=100%}
-:::
-:::
-
-
-]
-
----
-
-# More exercises
-
-### Using `mtcars`, create the following
-
-- a boxplot with a variable mapped to the `fill` aesthetic
-
-- a boxplot with a variable mapped to the `color` aesthetic and a horizontal facet
-
-- a scatterplot with a regression line (see `?geom_smooth`)
-
-- a scatterplot with a regression line (see `?geom_smooth`) and a categorical factor (try the aesthetic `shape`)
-
-- a histogram of `mpg`
-
-- What does `geom_violin()` do? What geom can it replace?
-
-
-
----
-class: title-slide-final, middle
-background-image: url(https://github.com/jvcasillas/ru_xaringan/raw/master/img/logo/ru_shield.png), url(https://www.r-project.org/Rlogo.png)
-background-size: 55px, 100px
-background-position: 9% 15%, 89% 15%
-
-# Getting help
-
-## If you have problems using ggplot2
-## ask for help in the slack channel
-
-### You can find some very basic tutorials related to 
-### plotting in R [here][here]
-
-[here]: http://www.jvcasillas.com/base_lattice_ggplot/
-
-
--->
+<section id="getting-help" class="slide level2">
+<h2>Getting help</h2>
+<p>If you have problems using ggplot2 ask for help in the slack channel</p>
+<p>You can find some very basic tutorials related to plotting in R <a href="http://www.jvcasillas.com/base_lattice_ggplot/">here</a></p>
+</section>
+<section id="this-is-the-final-slide" class="slide level2 final">
+<h2>This is the final slide</h2>
+<p><img data-src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/164.png" class="absolute" style="top: 0px; right: 0px; width: 55px; height: 55px; "></p>
+<p><br></p>
+<h3 id="you-can-add-your-email-twitter-github-etc.-info-here">you can add your email, twitter, github, etc. info here</h3>
+<p>Here is an example:</p>
+<table>
+<colgroup>
+<col style="width: 25%">
+<col style="width: 75%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;"><a href="mailto:joseph.casillas@rutgers.edu"><i class="fa-solid fa-envelope" aria-label="envelope"></i></a></td>
+<td style="text-align: left;">joseph.casillas@rutgers.edu</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><a href="www.jvcasillas.com/quarto-rutgers-theme/"><i class="fa-solid fa-link" aria-label="link"></i></a></td>
+<td style="text-align: left;">jvcasillas.com/quarto-rutgers-theme</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><a href="https://twitter.com/jvcasill"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a></td>
+<td style="text-align: left;">@jvcasill</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><a href="https://github.com/jvcasillas"><i class="fa-brands fa-github" aria-label="github"></i></a></td>
+<td style="text-align: left;">@jvcasillas</td>
+</tr>
+</tbody>
+</table>
+</section></section>
+<section id="references" class="title-slide slide level1 smaller scrollable">
+<h1>References</h1>
 <div class="footer footer-default">
 
 </div>
-</section></section>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-wilkinson2012grammar" class="csl-entry" role="listitem">
+Wilkinson, Leland. 2012. <em>The Grammar of Graphics</em>. Springer.
+</div>
+<div id="ref-williams2015" class="csl-entry" role="listitem">
+Williams, Robin. 2015. <em>The Non-Designer’s Design Book: Design and Typographic Principles for the Visual Novice</em>. Pearson Education.
+</div>
+</div>
+</section>
     </div>
   </div>
 
