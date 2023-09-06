@@ -1,0 +1,19 @@
+---
+title: "Data visualization for linguists"
+author: "Joseph V. Casillas"
+format: pdf
+bibliography: ../bib/refs.bib
+csl: ../bib/apa.csl
+---
+
+Are you interested in learning how to make memorable and effective data visualizations for your research?
+In this workshop we will discuss principles of data visualization with a focus on linguistic data. 
+Specifically, we will outline strategies for developing elegant, informative plots by implementing principles from graphic design and the grammar of graphics [@wilkinson2012grammar].
+The workshop will cover how to think about data and the visual communication of data when designing figures using R [@r-cite] and `ggplot2` [@wickham_ggplot]. 
+This includes general do's and dont's, deciding how to pick the most appropriate plot for your data, as well as best practices for visualizing uncertainty, highlighting/annotating key graphical elements, formatting for publication, and much more. 
+The workshop will combine theory and practice so attendees are encouraged to bring their computers with the latest version of R installed. 
+Prior experience, while helpful, is not necessary. 
+
+{{< pagebreak >}}
+
+# References
