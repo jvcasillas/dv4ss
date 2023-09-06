@@ -436,7 +436,7 @@
 </div><div class="column" style="width:33%;">
 <div id="qrsite" class="qrcode"></div>
 <script type="text/javascript">
-var qrcode = new QRCode("qrsite", {"colorDark":"#cc0033","width":"300","colorLight":"#fff","height":"300","text":"https://www.jvcasillas.com/dv4ss/index.html"});
+var qrcode = new QRCode("qrsite", {"colorLight":"#fff","width":"300","height":"300","text":"https://www.jvcasillas.com/dv4ss/index.html","colorDark":"#cc0033"});
 </script>
     
 </div><div class="column" style="width:33%;">
@@ -1042,7 +1042,7 @@ the data speaks for itself…</p>
 <li><p>Let’s update our template</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7" data-code-line-numbers="3-4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">ggplot</span>(</span>
+<div class="sourceCode cell-code" id="cb7" data-code-line-numbers="4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb7-2"><a href="#cb7-2"></a>  <span class="at">data =</span> new_data, </span>
 <span id="cb7-3"><a href="#cb7-3"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score)</span>
 <span id="cb7-4"><a href="#cb7-4"></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1363,6 +1363,7 @@ the data speaks for itself…</p>
 <li><p>Colorblind friendly palettes (e.g., <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html">viridis</a>)</p></li>
 <li><p>Highlight important things</p></li>
 <li><p>Help your target audience (reader)</p></li>
+<li><p>Plot raw data, and statistical summary or model estimates whenever possible</p></li>
 </ul>
 </section>
 <section id="bad-principles-according-to-the-internet" class="slide level2">
