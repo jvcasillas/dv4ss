@@ -898,7 +898,7 @@ summary(new_data) # get general summary
 
 ```{r}
 #| label: aes-ex
-#| code-line-numbers: "4"
+#| code-line-numbers: "3"
 #| eval: false
 ggplot(
   data = new_data, 
