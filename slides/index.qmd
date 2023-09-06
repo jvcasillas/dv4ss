@@ -761,7 +761,7 @@ ggplot(
 
 [@wilkinson2012grammar]{.absolute bottom=5 right=10}
 
-We are interesting in mapping <br>**data** to **aesthetics**
+We are interested in mapping <br>**data** to **aesthetics**
 
 . . .
 
