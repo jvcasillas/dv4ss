@@ -436,7 +436,7 @@
 </div><div class="column" style="width:33%;">
 <div id="qrsite" class="qrcode"></div>
 <script type="text/javascript">
-var qrcode = new QRCode("qrsite", {"text":"https://www.jvcasillas.com/dv4ss/slides/","height":"300","width":"300","colorLight":"#fff","colorDark":"#cc0033"});
+var qrcode = new QRCode("qrsite", {"colorLight":"#fff","text":"https://www.jvcasillas.com/dv4ss/slides/","colorDark":"#cc0033","height":"300","width":"300"});
 </script>
     
 </div><div class="column" style="width:33%;">
@@ -1013,25 +1013,25 @@ the data speaks for itself…</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">head</span>(new_data) <span class="co"># show first 6 rows</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  score proficiency       group
-1  0.45        0.57   bilingual
-2  0.45        0.57   bilingual
-3  0.53        0.47   bilingual
-4  0.47       -0.97 monolingual
-5  0.35       -0.84 monolingual
-6  0.33       -1.56 monolingual</code></pre>
+<pre><code>  score proficiency       group    age
+1  0.45        0.57   bilingual  older
+2  0.45        0.57   bilingual  older
+3  0.53        0.47   bilingual  young
+4  0.47       -0.97 monolingual  older
+5  0.35       -0.84 monolingual oldest
+6  0.33       -1.56 monolingual  older</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">summary</span>(new_data) <span class="co"># get general summary</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     score         proficiency          group          
- Min.   :0.0000   Min.   :-1.56000   Length:32         
- 1st Qu.:0.2150   1st Qu.:-0.97000   Class :character  
- Median :0.3700   Median : 0.18000   Mode  :character  
- Mean   :0.4122   Mean   :-0.00125                     
- 3rd Qu.:0.5300   3rd Qu.: 0.60000                     
- Max.   :1.0000   Max.   : 2.49000                     </code></pre>
+<pre><code>     score         proficiency          group               age    
+ Min.   :0.0000   Min.   :-1.56000   Length:32          young :11  
+ 1st Qu.:0.2150   1st Qu.:-0.97000   Class :character   older : 7  
+ Median :0.3700   Median : 0.18000   Mode  :character   oldest:14  
+ Mean   :0.4122   Mean   :-0.00125                                 
+ 3rd Qu.:0.5300   3rd Qu.: 0.60000                                 
+ Max.   :1.0000   Max.   : 2.49000                                 </code></pre>
 </div>
 </div>
 </section>
@@ -1105,7 +1105,7 @@ the data speaks for itself…</p>
 <div id="tabset-1-1">
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="2|3|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Continuous variable on the x-axis</span></span>
+<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="3|4|6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># Continuous variable on the x-axis</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="fu">ggplot</span>(</span>
 <span id="cb10-3"><a href="#cb10-3"></a>  <span class="at">data =</span> new_data, </span>
 <span id="cb10-4"><a href="#cb10-4"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> score)</span>
@@ -1151,7 +1151,7 @@ the data speaks for itself…</p>
 <div id="tabset-2-1">
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb12" data-code-line-numbers="2|3|5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Continuous variables on both axis</span></span>
+<div class="sourceCode cell-code" id="cb12" data-code-line-numbers="3|4|6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># Continuous variables on both axis</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="fu">ggplot</span>(</span>
 <span id="cb12-3"><a href="#cb12-3"></a>  <span class="at">data =</span> new_data, </span>
 <span id="cb12-4"><a href="#cb12-4"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score)</span>
@@ -1286,100 +1286,155 @@ the data speaks for itself…</p>
 <section id="faceting" class="slide level2">
 <h2>Faceting</h2>
 <ul>
-<li>What about when we want to see more factors at once?</li>
-<li>For example, what if we want to see <strong>mpg</strong> as a function of <strong>am</strong> and <strong>cyl</strong>?</li>
+<li><p>What about when we want to see more factors at once?</p></li>
+<li><p>For example, what if we want to see <strong>score</strong> as a function of <strong>proficiency</strong> and <strong>age</strong>?</p></li>
+<li><p>We use <code>facet_wrap()</code> or <code>facet_grid()</code> to create facets</p></li>
 </ul>
-<div class="fragment">
-<p>Solution 1a</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>mtcars <span class="sc">%&gt;%</span> </span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x =</span> am, <span class="at">y =</span> mpg)) <span class="sc">+</span> </span>
-<span id="cb18-3"><a href="#cb18-3"></a>    <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_sdl, </span>
-<span id="cb18-4"><a href="#cb18-4"></a>                 <span class="at">geom =</span> <span class="st">'pointrange'</span>) <span class="sc">+</span> </span>
-<span id="cb18-5"><a href="#cb18-5"></a>    <span class="fu">facet_grid</span>(. <span class="sc">~</span> cyl) <span class="co">#&lt;&lt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="at">data =</span> new_data, </span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score)</span>
+<span id="cb18-4"><a href="#cb18-4"></a>) <span class="sc">+</span> </span>
+<span id="cb18-5"><a href="#cb18-5"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> age) <span class="sc">+</span> </span>
+<span id="cb18-6"><a href="#cb18-6"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-19" class="slide level2" data-title-menu="Faceting ex. 1">
+<h2></h2>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb19" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="at">data =</span> new_data, </span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score)</span>
+<span id="cb19-4"><a href="#cb19-4"></a>) <span class="sc">+</span> </span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> age) <span class="sc">+</span> </span>
+<span id="cb19-6"><a href="#cb19-6"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/p-shapes-ex1-1.png" style="width:100.0%" class="r-stretch quarto-figure-center"></section>
+<section id="section-20" class="slide level2" data-title-menu="Faceting ex. 2">
+<h2></h2>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<p>&nbsp;</p>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell columns column-output-location quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
+<div class="column">
+<div class="sourceCode cell-code" id="cb20" data-code-line-numbers="7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="at">data =</span> new_data, </span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
+<span id="cb20-4"><a href="#cb20-4"></a>    <span class="at">x =</span> age, <span class="at">y =</span> score</span>
+<span id="cb20-5"><a href="#cb20-5"></a>  )</span>
+<span id="cb20-6"><a href="#cb20-6"></a>) <span class="sc">+</span> </span>
+<span id="cb20-7"><a href="#cb20-7"></a>  <span class="fu">facet_grid</span>(group <span class="sc">~</span> .) <span class="sc">+</span> </span>
+<span id="cb20-8"><a href="#cb20-8"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/p-shapes-ex2-1.png" style="width:100.0%"></p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section>
-<section id="faceting-1" class="slide level2">
-<h2>Faceting</h2>
-<ul>
-<li>What about when we want to see more factors at once?</li>
-<li>For example, what if we want to see <strong>mpg</strong> as a function of <strong>am</strong> and <strong>cyl</strong>?</li>
-</ul>
-<p>Solution 1b</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>mtcars <span class="sc">%&gt;%</span> </span>
-<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x =</span> am, <span class="at">y =</span> mpg)) <span class="sc">+</span> </span>
-<span id="cb19-3"><a href="#cb19-3"></a>    <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_sdl, </span>
-<span id="cb19-4"><a href="#cb19-4"></a>                 <span class="at">geom =</span> <span class="st">'pointrange'</span>) <span class="sc">+</span> </span>
-<span id="cb19-5"><a href="#cb19-5"></a>    <span class="fu">facet_grid</span>(cyl <span class="sc">~</span> .) <span class="co">#&lt;&lt;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="faceting-2" class="slide level2">
-<h2>Faceting</h2>
-<ul>
-<li>What about when we want to see more factors at once?</li>
-<li>For example, what if we want to see <strong>mpg</strong> as a function of <strong>am</strong> and <strong>cyl</strong>?</li>
-</ul>
-<p>Solution 2</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>mtcars <span class="sc">%&gt;%</span> </span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">ggplot</span>(., <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">factor</span>(am), <span class="at">y =</span> mpg, </span>
-<span id="cb20-3"><a href="#cb20-3"></a>                <span class="at">shape =</span> <span class="fu">factor</span>(cyl))) <span class="sc">+</span>  <span class="co">#&lt;&lt;</span></span>
-<span id="cb20-4"><a href="#cb20-4"></a>    <span class="fu">stat_summary</span>(<span class="at">fun.data =</span> mean_sdl, </span>
-<span id="cb20-5"><a href="#cb20-5"></a>                 <span class="at">geom =</span> <span class="st">'pointrange'</span>, </span>
-<span id="cb20-6"><a href="#cb20-6"></a>                 <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="more-exercises" class="slide level2">
+<section id="more-exercises" class="slide level2 smaller">
 <h2>More exercises</h2>
-<p>Using <code>mtcars</code>, create the following</p>
+<p>Using <code>new_data</code>, create the following</p>
 <ul>
 <li><p>a boxplot with a variable mapped to the <code>fill</code> aesthetic</p></li>
 <li><p>a boxplot with a variable mapped to the <code>color</code> aesthetic and a horizontal facet</p></li>
 <li><p>a scatterplot with a regression line (see <code>?geom_smooth</code>)</p></li>
 <li><p>a scatterplot with a regression line (see <code>?geom_smooth</code>) and a categorical factor (try the aesthetic <code>shape</code>)</p></li>
-<li><p>a histogram of <code>mpg</code></p></li>
+<li><p>a histogram of <code>proficiency</code></p></li>
 <li><p>What does <code>geom_violin()</code> do? What geom can it replace?</p></li>
 </ul>
-</section>
-<section class="slide level2">
-
-<p>good principles (remember crap) colors highlight important things help audience (reader)</p>
-</section>
-<section class="slide level2">
-
-<p>bad principles</p>
-</section>
-<section class="slide level2">
-
-<p>practical examples take a bad plot and make it better</p>
 </section></section>
 <section>
-<section id="help" class="title-slide slide level1 center">
-<h1>Help!</h1>
+<section id="review" class="title-slide slide level1 transition center">
+<h1>Review</h1>
 
 </section>
-<section id="resources" class="slide level2">
-<h2>Resources</h2>
+<section id="good-principles" class="slide level2">
+<h2>Good principles</h2>
 <ul>
-<li>https://datavizf23.classes.andrewheiss.com/syllabus.html</li>
-<li>Alberto Cairo, The Truthful Art: Data, Charts, and Maps for Communication (Berkeley, California: New Riders, 2016).</li>
-<li>Kieran Healy, Data Visualization: A Practical Introduction (Princeton: Princeton University Press, 2018), http://socviz.co/</li>
-<li>Claus E. Wilke, Fundamentals of Data Visualization (Sebastopol, California: O’Reilly Media, 2018), https://serialmentor.com/dataviz/</li>
+<li><p>Remember 💩</p></li>
+<li><p>Colorblind friendly palettes (e.g., <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html">viridis</a>)</p></li>
+<li><p>Highlight important things</p></li>
+<li><p>Help your target audience (reader)</p></li>
 </ul>
 </section>
-<section id="getting-help" class="slide level2">
-<h2>Getting help</h2>
-<p>If you have problems using ggplot2 ask for help in the slack channel</p>
-<p>You can find some very basic tutorials related to plotting in R <a href="http://www.jvcasillas.com/base_lattice_ggplot/">here</a></p>
+<section id="bad-principles-according-to-the-internet" class="slide level2">
+<h2>Bad principles (according to the internet)</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>Plots without context</li>
+<li>Illegible fonts</li>
+<li>A line graph with unordered x-axis</li>
+<li>A legend with a zillion categories</li>
+<li>A pie chart</li>
+<li>Axis with scientific notation</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<ul>
+<li>Uninterpretable variable names</li>
+<li>Dual y-Axis</li>
+<li>Bar plots that could be boxplots</li>
+<li>Non-color blind friendly color scales</li>
+<li>Angled text</li>
+</ul>
+</div>
+</div>
+</section></section>
+<section>
+<section id="take-a-bad-plot-and-make-it-better" class="title-slide slide level1 transition center" data-visibility="uncounted">
+<h1>Take a bad plot and make it better</h1>
+
 </section>
-<section id="this-is-the-final-slide" class="slide level2 final">
-<h2>This is the final slide</h2>
+<section id="section-21" class="slide level2" data-menu-title="Bad plots (revisited)">
+<h2></h2>
+<div class="r-stack">
+<p><img data-src="./assets/img/bad_plot_1.png" width="750" height="650"></p>
+<p><img data-src="./assets/img/bad_plot_0.png" class="fragment" width="900" height="650"></p>
+<p><img data-src="./assets/img/bad_plot_2.png" class="fragment" width="1000" height="650"></p>
+</div>
+</section></section>
+<section>
+<section id="wrapping-up" class="title-slide slide level1 center" data-visibility="uncounted">
+<h1>Wrapping up</h1>
+
+</section>
+<section id="help-resources" class="slide level2 transition">
+<h2>Help! (resources)</h2>
+<ul>
+<li><p><a href="https://www.youtube.com/@simplpoints/videos">SimplPoints (Timo Roettger youtube channel))</a></p></li>
+<li><p><a href="https://datavizf23.classes.andrewheiss.com/syllabus.html">Data Visualization with R (course)</a></p></li>
+<li><p><a href="https://www.amazon.com/Truthful-Art-Data-Charts-Communication/dp/0321934075">The Truthful Art: Data, Charts, and Maps for Communication</a></p></li>
+<li><p><a href="http://socviz.co/">Data Visualization: A Practical Introduction</a></p></li>
+<li><p><a href="https://serialmentor.com/dataviz/">Fundamentals of Data Visualization</a></p></li>
+</ul>
+<aside class="notes">
+<p><span class="citation" data-cites="healy2018data">Healy (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span> <span class="citation" data-cites="cairo2016truthful">Cairo (<a href="#/references" role="doc-biblioref" onclick="">2016</a>)</span> <span class="citation" data-cites="wilke2019fundamentals">Wilke (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="thanks" class="slide level2 final" data-visibility="uncounted">
+<h2>Thanks!</h2>
 <p><img data-src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/164.png" class="absolute" style="top: 0px; right: 0px; width: 55px; height: 55px; "></p>
 <p><br></p>
-<h3 id="you-can-add-your-email-twitter-github-etc.-info-here">you can add your email, twitter, github, etc. info here</h3>
-<p>Here is an example:</p>
+<h3 id="materials-available-here">Materials available here:</h3>
+<h3 id="bit.lypsllt_dataviz"><a href="https://bit.ly/psllt_dataviz">bit.ly/psllt_dataviz</a></h3>
 <table>
 <colgroup>
 <col style="width: 25%">
@@ -1391,8 +1446,8 @@ the data speaks for itself…</p>
 <td style="text-align: left;">joseph.casillas@rutgers.edu</td>
 </tr>
 <tr class="even">
-<td style="text-align: right;"><a href="www.jvcasillas.com/quarto-rutgers-theme/"><i class="fa-solid fa-link" aria-label="link"></i></a></td>
-<td style="text-align: left;">jvcasillas.com/quarto-rutgers-theme</td>
+<td style="text-align: right;"><a href="www.jvcasillas.com"><i class="fa-solid fa-link" aria-label="link"></i></a></td>
+<td style="text-align: left;">www.jvcasillas.com</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;"><a href="https://twitter.com/jvcasill"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a></td>
@@ -1404,13 +1459,22 @@ the data speaks for itself…</p>
 </tr>
 </tbody>
 </table>
-</section></section>
-<section id="references" class="title-slide slide level1 smaller scrollable">
-<h1>References</h1>
+</section>
+<section id="references" class="slide level2 smaller scrollable" data-visibility="uncounted">
+<h2>References</h2>
 <div class="footer footer-default">
 
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-cairo2016truthful" class="csl-entry" role="listitem">
+Cairo, Alberto. 2016. <em>The Truthful Art: Data, Charts, and Maps for Communication</em>. New Riders.
+</div>
+<div id="ref-healy2018data" class="csl-entry" role="listitem">
+Healy, Kieran. 2018. <em>Data Visualization: A Practical Introduction</em>. Princeton University Press.
+</div>
+<div id="ref-wilke2019fundamentals" class="csl-entry" role="listitem">
+Wilke, Claus O. 2019. <em>Fundamentals of Data Visualization: A Primer on Making Informative and Compelling Figures</em>. O’Reilly Media.
+</div>
 <div id="ref-wilkinson2012grammar" class="csl-entry" role="listitem">
 Wilkinson, Leland. 2012. <em>The Grammar of Graphics</em>. Springer.
 </div>
@@ -1418,7 +1482,7 @@ Wilkinson, Leland. 2012. <em>The Grammar of Graphics</em>. Springer.
 Williams, Robin. 2015. <em>The Non-Designer’s Design Book: Design and Typographic Principles for the Visual Novice</em>. Pearson Education.
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 

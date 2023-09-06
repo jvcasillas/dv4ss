@@ -975,7 +975,7 @@ ggplot(
 #| label: p-histogram-ex-beg
 #| fig.asp: 1
 #| output-location: column
-#| code-line-numbers: "2|3|5"
+#| code-line-numbers: "3|4|6"
 # Continuous variable on the x-axis
 ggplot(
   data = new_data, 
@@ -1016,7 +1016,7 @@ ggplot(new_data) +
 #| label: p-scatterplot-ex-beg
 #| fig.asp: 1
 #| output-location: column
-#| code-line-numbers: "2|3|5"
+#| code-line-numbers: "3|4|6"
 # Continuous variables on both axis
 ggplot(
   data = new_data, 
@@ -1133,64 +1133,61 @@ ggplot(new_data) +
 
 - What about when we want to see more factors at once?
 
-- For example, what if we want to see **mpg** as a function of **am** and **cyl**?
+- For example, what if we want to see **score** as a function of **proficiency** and **age**?
 
-. . .
-
-Solution 1a
+- We use `facet_wrap()` or `facet_grid()` to create facets
 
 ```{r}
 #| label: p-facets-ex
+#| code-line-numbers: "5"
 #| eval: false
-mtcars %>% 
-  ggplot(., aes(x = am, y = mpg)) + 
-    stat_summary(fun.data = mean_sdl, 
-                 geom = 'pointrange') + 
-    facet_grid(. ~ cyl) #<<
+ggplot(
+  data = new_data, 
+  mapping = aes(x = proficiency, y = score)
+) + 
+  facet_grid(. ~ age) + 
+  geom_point()
 ```
 
-
-## Faceting
-
-- What about when we want to see more factors at once?
-- For example, what if we want to see **mpg** as a function of **am** and **cyl**?
-
-Solution 1b
+## {data-title-menu="Faceting ex. 1"}
 
 ```{r}
-#| label: p-facets-ex2
-#| eval: false
-mtcars %>% 
-  ggplot(., aes(x = am, y = mpg)) + 
-    stat_summary(fun.data = mean_sdl, 
-                 geom = 'pointrange') + 
-    facet_grid(cyl ~ .) #<<
+#| label: p-shapes-ex1
+#| fig-align: 'center'
+#| code-line-numbers: "5"
+ggplot(
+  data = new_data, 
+  mapping = aes(x = proficiency, y = score)
+) + 
+  facet_grid(. ~ age) + 
+  geom_point()
 ```
 
+## {data-title-menu="Faceting ex. 2"}
 
-## Faceting
-
-- What about when we want to see more factors at once?
-- For example, what if we want to see **mpg** as a function of **am** and **cyl**?
-
-Solution 2
+::: {layout="[[-1], [1], [-1]]"}
 
 ```{r}
-#| label: p-shapes-ex
-#| eval: false
-mtcars %>% 
-  ggplot(., aes(x = factor(am), y = mpg, 
-                shape = factor(cyl))) +  #<<
-    stat_summary(fun.data = mean_sdl, 
-                 geom = 'pointrange', 
-                 position = position_dodge(0.5))
+#| label: p-shapes-ex2
+#| code-line-numbers: "7"
+#| output-location: column
+#| fig.asp: 1
+#| fig-height: 10
+ggplot(
+  data = new_data, 
+  mapping = aes(
+    x = age, y = score
+  )
+) + 
+  facet_grid(group ~ .) + 
+  geom_boxplot()
 ```
 
+:::
 
+## More exercises {.smaller}
 
-## More exercises
-
-Using `mtcars`, create the following
+Using `new_data`, create the following
 
 - a boxplot with a variable mapped to the `fill` aesthetic
 
@@ -1200,7 +1197,7 @@ Using `mtcars`, create the following
 
 - a scatterplot with a regression line (see `?geom_smooth`) and a categorical factor (try the aesthetic `shape`)
 
-- a histogram of `mpg`
+- a histogram of `proficiency`
 
 - What does `geom_violin()` do? What geom can it replace?
 
@@ -1209,86 +1206,99 @@ Using `mtcars`, create the following
 
 
 
+# Review {.transition}
+
+## Good principles 
+
+- Remember 💩
+
+- Colorblind friendly palettes (e.g., [viridis](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html))
+
+- Highlight important things
+
+- Help your target audience (reader)
+
+## Bad principles (according to the internet)
+
+::::{.columns}
+:::{.column width="50%"}
+- Plots without context
+- Illegible fonts
+- A line graph with unordered x-axis
+- A legend with a zillion categories
+- A pie chart
+- Axis with scientific notation
+:::
+
+:::{.column width="50%"}
+- Uninterpretable variable names
+- Dual y-Axis
+- Bar plots that could be boxplots
+- Non-color blind friendly color scales
+- Angled text
+:::
+::::
+
+
+
+
+
+# Take a bad plot and make it better {.transition visibility="uncounted"}
+
+## {data-menu-title="Bad plots (revisited)"}
+
+::: {.r-stack}
+![](./assets/img/bad_plot_1){width="750" height="650"}
+
+![](./assets/img/bad_plot_0){.fragment width="900" height="650"}
+
+![](./assets/img/bad_plot_2){.fragment width="1000" height="650"}
+:::
 
 
 
 
 
 
+# Wrapping up {visibility="uncounted"}
 
+## Help! (resources) {.transition}
 
+- [SimplPoints (Timo Roettger youtube channel))](https://www.youtube.com/@simplpoints/videos)
 
+- [Data Visualization with R (course)](https://datavizf23.classes.andrewheiss.com/syllabus.html)
 
+- [The Truthful Art: Data, Charts, and Maps for Communication](https://www.amazon.com/Truthful-Art-Data-Charts-Communication/dp/0321934075)
 
+- [Data Visualization: A Practical Introduction](http://socviz.co/)
 
+- [Fundamentals of Data Visualization](https://serialmentor.com/dataviz/)
 
+::: notes
+@healy2018data
+@cairo2016truthful
+@wilke2019fundamentals
+:::
 
-
-
----
-
-good principles (remember crap)
-  colors
-  highlight important things
-  help audience (reader)
-
----
-
-bad principles
-
----
-
-practical examples
-  take a bad plot and make it better
-
-
-# Help! 
-
-## Resources
-
-- https://datavizf23.classes.andrewheiss.com/syllabus.html
-- Alberto Cairo, The Truthful Art: Data, Charts, and Maps for Communication (Berkeley, California: New Riders, 2016).
-- Kieran Healy, Data Visualization: A Practical Introduction (Princeton: Princeton University Press, 2018), http://socviz.co/
-- Claus E. Wilke, Fundamentals of Data Visualization (Sebastopol, California: O’Reilly Media, 2018), https://serialmentor.com/dataviz/
-
-
-## Getting help
-
-If you have problems using ggplot2
-ask for help in the slack channel
-
-You can find some very basic tutorials related to 
-plotting in R [here][here]
-
-[here]: http://www.jvcasillas.com/base_lattice_ggplot/
-
-
-
-
-
-
-## This is the final slide {.final}
+## Thanks! {.final visibility="uncounted"}
 
 ![](https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/164.png){.absolute top="0" right="0" width="55" height="55"}
 
 </br>
 
-### you can add your email, twitter, github, etc. info here
+### Materials available here: 
 
-Here is an example:
+### [bit.ly/psllt_dataviz](https://bit.ly/psllt_dataviz)
 
 |                                                                             |                                    |
 |----------------------------------------------------------------------------:|:-----------------------------------|
 |   <a href='mailto:joseph.casillas@rutgers.edu'>{{< fa solid envelope >}}</a>|joseph.casillas@rutgers.edu         |
-| <a href='www.jvcasillas.com/quarto-rutgers-theme/'>{{< fa solid link >}}</a>|jvcasillas.com/quarto-rutgers-theme |
+| <a href='www.jvcasillas.com'>{{< fa solid link >}}</a>|www.jvcasillas.com |
 |         <a href='https://twitter.com/jvcasill'>{{< fa brands twitter >}}</a>|\@jvcasill                           |
 |         <a href='https://github.com/jvcasillas'>{{< fa brands github >}}</a>|\@jvcasillas                         |
 
 : {tbl-colwidths="[25,75]"}
 
-
-
-
-# References
+## References {visibility="uncounted"}
 
 
