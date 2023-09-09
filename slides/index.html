@@ -436,7 +436,7 @@
 </div><div class="column" style="width:33%;">
 <div id="qrsite" class="qrcode"></div>
 <script type="text/javascript">
-var qrcode = new QRCode("qrsite", {"height":"300","colorLight":"#fff","text":"https://www.jvcasillas.com/dv4ss/index.html","width":"300","colorDark":"#cc0033"});
+var qrcode = new QRCode("qrsite", {"colorLight":"#fff","text":"https://www.jvcasillas.com/dv4ss/index.html","height":"300","width":"300","colorDark":"#cc0033"});
 </script>
     
 </div><div class="column" style="width:33%;">
@@ -1022,6 +1022,7 @@ the data speaks for itself…</p>
 6  0.33       -1.56 monolingual  older</code></pre>
 </div>
 </div>
+<p><br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">summary</span>(new_data) <span class="co"># get general summary</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1035,17 +1036,27 @@ the data speaks for itself…</p>
 </div>
 </div>
 </section>
-<section id="aesthetics-aes" class="slide level2">
+<section id="aesthetics-aes" class="slide level2 smaller">
 <h2>Aesthetics (aes())</h2>
 <ul>
 <li><p>Aesthetic mappings: how we map data to color, size, and <strong>axis</strong>…</p></li>
 <li><p>Let’s update our template</p></li>
 </ul>
+<div class="columns">
+<div class="column" style="width:50%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7" data-code-line-numbers="3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">ggplot</span>(</span>
 <span id="cb7-2"><a href="#cb7-2"></a>  <span class="at">data =</span> new_data, </span>
 <span id="cb7-3"><a href="#cb7-3"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score)</span>
 <span id="cb7-4"><a href="#cb7-4"></a>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/aes-ex-p-1.png" style="width:100.0%"></p>
+</div>
+</div>
+</div>
 </div>
 </section>
 <section id="geometric-objects-geom_" class="slide level2 smaller">
@@ -1146,7 +1157,7 @@ the data speaks for itself…</p>
 <section id="scatterplot" class="slide level2 smaller">
 <h2>Scatterplot</h2>
 <div class="panel-tabset">
-<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Beginner</a></li><li><a href="#tabset-2-2">Intermediate</a></li></ul>
+<ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Beginner</a></li><li><a href="#tabset-2-2">Intermediate</a></li><li><a href="#tabset-2-3">Advanced</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1">
 <div class="cell columns column-output-location">
@@ -1184,23 +1195,52 @@ the data speaks for itself…</p>
 </div>
 </div>
 </div>
+<div id="tabset-2-3">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Adjust colors</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="co"># Add regression line</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="fu">ggplot</span>(new_data) <span class="sc">+</span> </span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score) <span class="sc">+</span> </span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb14-6"><a href="#cb14-6"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> group), </span>
+<span id="cb14-7"><a href="#cb14-7"></a>    <span class="at">size =</span> <span class="dv">4</span>, <span class="at">pch =</span> <span class="dv">21</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a>  ) <span class="sc">+</span> </span>
+<span id="cb14-9"><a href="#cb14-9"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">formula =</span> <span class="st">"y ~ x"</span>) <span class="sc">+</span> </span>
+<span id="cb14-10"><a href="#cb14-10"></a>  <span class="fu">scale_fill_viridis_d</span>(</span>
+<span id="cb14-11"><a href="#cb14-11"></a>    <span class="at">name =</span> <span class="cn">NULL</span>, </span>
+<span id="cb14-12"><a href="#cb14-12"></a>    <span class="at">option =</span> <span class="st">"E"</span>, </span>
+<span id="cb14-13"><a href="#cb14-13"></a>    <span class="at">begin =</span> <span class="fl">0.4</span>, <span class="at">end =</span> <span class="fl">0.8</span></span>
+<span id="cb14-14"><a href="#cb14-14"></a>  ) <span class="sc">+</span> </span>
+<span id="cb14-15"><a href="#cb14-15"></a>  <span class="fu">theme_minimal</span>(</span>
+<span id="cb14-16"><a href="#cb14-16"></a>    <span class="at">base_size =</span> <span class="dv">30</span>, </span>
+<span id="cb14-17"><a href="#cb14-17"></a>    <span class="at">base_family =</span> <span class="st">"Palatino"</span></span>
+<span id="cb14-18"><a href="#cb14-18"></a>  ) <span class="sc">+</span> </span>
+<span id="cb14-19"><a href="#cb14-19"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">15</span>, .<span class="dv">85</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/p-scatterplot-ex-adv-1.png" style="width:100.0%"></p>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </section>
 <section id="boxplot-box-and-whisker-plot" class="slide level2 smaller">
 <h2>Boxplot (box and whisker plot)</h2>
 <div class="panel-tabset">
-<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Beginner</a></li><li><a href="#tabset-3-2">Intermediate</a></li></ul>
+<ul id="tabset-3" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-3-1">Beginner</a></li><li><a href="#tabset-3-2">Intermediate</a></li><li><a href="#tabset-3-3">Advanced</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1">
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># Try a different geom</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="fu">ggplot</span>(</span>
-<span id="cb14-3"><a href="#cb14-3"></a>  <span class="at">data =</span> new_data, </span>
-<span id="cb14-4"><a href="#cb14-4"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score)</span>
-<span id="cb14-5"><a href="#cb14-5"></a>) <span class="sc">+</span> </span>
-<span id="cb14-6"><a href="#cb14-6"></a>  <span class="fu">geom_boxplot</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Try a different geom</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">ggplot</span>(</span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="at">data =</span> new_data, </span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score)</span>
+<span id="cb15-5"><a href="#cb15-5"></a>) <span class="sc">+</span> </span>
+<span id="cb15-6"><a href="#cb15-6"></a>  <span class="fu">geom_boxplot</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <p><img data-src="index_files/figure-revealjs/p-boxplot-ex-beg-1.png" style="width:100.0%"></p>
@@ -1211,16 +1251,40 @@ the data speaks for itself…</p>
 <div id="tabset-3-2">
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># Adjust colors, new theme</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">ggplot</span>(new_data) <span class="sc">+</span> </span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score, <span class="at">fill =</span> group) <span class="sc">+</span> </span>
-<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
-<span id="cb15-5"><a href="#cb15-5"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"C"</span>, <span class="at">end =</span> <span class="fl">0.85</span>) <span class="sc">+</span> </span>
-<span id="cb15-6"><a href="#cb15-6"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">30</span>) <span class="sc">+</span> </span>
-<span id="cb15-7"><a href="#cb15-7"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.85</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Adjust colors, new theme</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="fu">ggplot</span>(new_data) <span class="sc">+</span> </span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score, <span class="at">fill =</span> group) <span class="sc">+</span> </span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
+<span id="cb16-5"><a href="#cb16-5"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> <span class="fl">0.3</span>, <span class="at">end =</span> <span class="fl">0.8</span>) <span class="sc">+</span> </span>
+<span id="cb16-6"><a href="#cb16-6"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">30</span>) <span class="sc">+</span> </span>
+<span id="cb16-7"><a href="#cb16-7"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.85</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <p><img data-src="index_files/figure-revealjs/p-boxplot-ex-int-1.png" style="width:100.0%"></p>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-3-3">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Overlay raw data</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">ggplot</span>(new_data) <span class="sc">+</span> </span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score) <span class="sc">+</span> </span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> group), <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="fu">geom_jitter</span>(</span>
+<span id="cb17-6"><a href="#cb17-6"></a>    <span class="at">height =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="fl">0.2</span>, </span>
+<span id="cb17-7"><a href="#cb17-7"></a>    <span class="at">size =</span> <span class="dv">4</span>, <span class="at">alpha =</span> <span class="fl">0.4</span></span>
+<span id="cb17-8"><a href="#cb17-8"></a>  ) <span class="sc">+</span> </span>
+<span id="cb17-9"><a href="#cb17-9"></a>  <span class="fu">scale_fill_viridis_d</span>(</span>
+<span id="cb17-10"><a href="#cb17-10"></a>    <span class="at">name =</span> <span class="cn">NULL</span>, </span>
+<span id="cb17-11"><a href="#cb17-11"></a>    <span class="at">begin =</span> <span class="fl">0.3</span>, <span class="at">end =</span> <span class="fl">0.8</span></span>
+<span id="cb17-12"><a href="#cb17-12"></a>  ) <span class="sc">+</span> </span>
+<span id="cb17-13"><a href="#cb17-13"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>) <span class="sc">+</span> </span>
+<span id="cb17-14"><a href="#cb17-14"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">30</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/p-boxplot-ex-adv-1.png" style="width:100.0%"></p>
 </div>
 </div>
 </div>
@@ -1234,23 +1298,23 @@ the data speaks for itself…</p>
 <section id="a-better-way-point-estimate-spread" class="slide level2 smaller">
 <h2>A better way… point estimate + spread</h2>
 <div class="panel-tabset">
-<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Beginner</a></li><li><a href="#tabset-4-2">Intermediate</a></li></ul>
+<ul id="tabset-4" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-4-1">Beginner</a></li><li><a href="#tabset-4-2">Intermediate</a></li><li><a href="#tabset-4-3">Advanced</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1">
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># Point estimate can be mean, median, mode, </span></span>
-<span id="cb16-2"><a href="#cb16-2"></a><span class="co"># Spread can be SD, SE, 95% CI, etc.</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a><span class="fu">ggplot</span>(</span>
-<span id="cb16-4"><a href="#cb16-4"></a>  <span class="at">data =</span> new_data, </span>
-<span id="cb16-5"><a href="#cb16-5"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score) </span>
-<span id="cb16-6"><a href="#cb16-6"></a>) <span class="sc">+</span> </span>
-<span id="cb16-7"><a href="#cb16-7"></a>  <span class="fu">stat_summary</span>(</span>
-<span id="cb16-8"><a href="#cb16-8"></a>    <span class="at">fun.data =</span> mean_sdl, </span>
-<span id="cb16-9"><a href="#cb16-9"></a>    <span class="at">geom =</span> <span class="st">'pointrange'</span>, </span>
-<span id="cb16-10"><a href="#cb16-10"></a>    <span class="at">size =</span> <span class="dv">2</span>, </span>
-<span id="cb16-11"><a href="#cb16-11"></a>    <span class="at">linewidth =</span> <span class="dv">2</span></span>
-<span id="cb16-12"><a href="#cb16-12"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Point estimate can be mean, median, mode, </span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co"># Spread can be SD, SE, 95% CI, etc.</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="fu">ggplot</span>(</span>
+<span id="cb18-4"><a href="#cb18-4"></a>  <span class="at">data =</span> new_data, </span>
+<span id="cb18-5"><a href="#cb18-5"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score) </span>
+<span id="cb18-6"><a href="#cb18-6"></a>) <span class="sc">+</span> </span>
+<span id="cb18-7"><a href="#cb18-7"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb18-8"><a href="#cb18-8"></a>    <span class="at">fun.data =</span> mean_sdl, </span>
+<span id="cb18-9"><a href="#cb18-9"></a>    <span class="at">geom =</span> <span class="st">'pointrange'</span>, </span>
+<span id="cb18-10"><a href="#cb18-10"></a>    <span class="at">size =</span> <span class="dv">2</span>, </span>
+<span id="cb18-11"><a href="#cb18-11"></a>    <span class="at">linewidth =</span> <span class="dv">2</span></span>
+<span id="cb18-12"><a href="#cb18-12"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <p><img data-src="index_files/figure-revealjs/p-point-estimate-spread-ex-beg-1.png" style="width:100.0%"></p>
@@ -1261,21 +1325,58 @@ the data speaks for itself…</p>
 <div id="tabset-4-2">
 <div class="cell columns column-output-location">
 <div class="column">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Customize, add caption</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">ggplot</span>(new_data) <span class="sc">+</span> </span>
-<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score) <span class="sc">+</span> </span>
-<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span> </span>
-<span id="cb17-5"><a href="#cb17-5"></a>  <span class="fu">stat_summary</span>(</span>
-<span id="cb17-6"><a href="#cb17-6"></a>    <span class="at">fun.data =</span> mean_cl_boot, </span>
-<span id="cb17-7"><a href="#cb17-7"></a>    <span class="at">geom =</span> <span class="st">'pointrange'</span>, </span>
-<span id="cb17-8"><a href="#cb17-8"></a>    <span class="at">size =</span> <span class="dv">4</span>, </span>
-<span id="cb17-9"><a href="#cb17-9"></a>    <span class="at">linewidth =</span> <span class="dv">2</span></span>
-<span id="cb17-10"><a href="#cb17-10"></a>  ) <span class="sc">+</span> </span>
-<span id="cb17-11"><a href="#cb17-11"></a>  <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">"Mean ±95% CI"</span>) <span class="sc">+</span> </span>
-<span id="cb17-12"><a href="#cb17-12"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># Customize, add caption</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">ggplot</span>(new_data) <span class="sc">+</span> </span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score) <span class="sc">+</span> </span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span> </span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb19-6"><a href="#cb19-6"></a>    <span class="at">fun.data =</span> mean_cl_boot, </span>
+<span id="cb19-7"><a href="#cb19-7"></a>    <span class="at">geom =</span> <span class="st">'pointrange'</span>, </span>
+<span id="cb19-8"><a href="#cb19-8"></a>    <span class="at">size =</span> <span class="dv">4</span>, </span>
+<span id="cb19-9"><a href="#cb19-9"></a>    <span class="at">linewidth =</span> <span class="dv">2</span></span>
+<span id="cb19-10"><a href="#cb19-10"></a>  ) <span class="sc">+</span> </span>
+<span id="cb19-11"><a href="#cb19-11"></a>  <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">"Mean ±95% CI"</span>) <span class="sc">+</span> </span>
+<span id="cb19-12"><a href="#cb19-12"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <p><img data-src="index_files/figure-revealjs/p-point-estimate-spread-ex-int-1.png" style="width:100.0%"></p>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-4-3">
+<div class="cell columns column-output-location">
+<div class="column">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># Customize points and gridlines, add jitter</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="fu">ggplot</span>(new_data) <span class="sc">+</span> </span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score) <span class="sc">+</span> </span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">geom_jitter</span>(</span>
+<span id="cb20-5"><a href="#cb20-5"></a>    <span class="at">height =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="fl">0.2</span>, </span>
+<span id="cb20-6"><a href="#cb20-6"></a>    <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">size =</span> <span class="dv">4</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a>  ) <span class="sc">+</span> </span>
+<span id="cb20-8"><a href="#cb20-8"></a>  <span class="fu">stat_summary</span>(</span>
+<span id="cb20-9"><a href="#cb20-9"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> group), </span>
+<span id="cb20-10"><a href="#cb20-10"></a>    <span class="at">fun.data =</span> mean_se, </span>
+<span id="cb20-11"><a href="#cb20-11"></a>    <span class="at">geom =</span> <span class="st">'pointrange'</span>, </span>
+<span id="cb20-12"><a href="#cb20-12"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">linewidth =</span> <span class="dv">2</span>, </span>
+<span id="cb20-13"><a href="#cb20-13"></a>    <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">show.legend =</span> F</span>
+<span id="cb20-14"><a href="#cb20-14"></a>  ) <span class="sc">+</span> </span>
+<span id="cb20-15"><a href="#cb20-15"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Score"</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">caption =</span> <span class="st">"Mean ±SE"</span>) <span class="sc">+</span> </span>
+<span id="cb20-16"><a href="#cb20-16"></a>  <span class="fu">scale_fill_viridis_d</span>(</span>
+<span id="cb20-17"><a href="#cb20-17"></a>    <span class="at">option =</span> <span class="st">"A"</span>, <span class="at">begin =</span> <span class="fl">0.2</span>, <span class="at">end =</span> <span class="fl">0.6</span></span>
+<span id="cb20-18"><a href="#cb20-18"></a>  ) <span class="sc">+</span> </span>
+<span id="cb20-19"><a href="#cb20-19"></a>  <span class="fu">theme_minimal</span>(</span>
+<span id="cb20-20"><a href="#cb20-20"></a>    <span class="at">base_size =</span> <span class="dv">30</span>, <span class="at">base_family =</span> <span class="st">"Palatino"</span></span>
+<span id="cb20-21"><a href="#cb20-21"></a>  ) <span class="sc">+</span> </span>
+<span id="cb20-22"><a href="#cb20-22"></a>  <span class="fu">theme</span>(</span>
+<span id="cb20-23"><a href="#cb20-23"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">0.9</span>), <span class="at">hjust =</span> <span class="fl">0.95</span>),</span>
+<span id="cb20-24"><a href="#cb20-24"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">0.9</span>), <span class="at">hjust =</span> <span class="fl">0.95</span>),</span>
+<span id="cb20-25"><a href="#cb20-25"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'grey80'</span>, <span class="at">linewidth =</span> <span class="fl">0.15</span>),</span>
+<span id="cb20-26"><a href="#cb20-26"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'grey80'</span>, <span class="at">linewidth =</span> <span class="fl">0.15</span>)</span>
+<span id="cb20-27"><a href="#cb20-27"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div><div class="column">
+<div class="cell-output-display">
+<p><img data-src="index_files/figure-revealjs/p-point-estimate-spread-ex-adv-1.png" style="width:100.0%"></p>
 </div>
 </div>
 </div>
@@ -1291,23 +1392,23 @@ the data speaks for itself…</p>
 <li><p>We use <code>facet_wrap()</code> or <code>facet_grid()</code> to create facets</p></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="at">data =</span> new_data, </span>
-<span id="cb18-3"><a href="#cb18-3"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score)</span>
-<span id="cb18-4"><a href="#cb18-4"></a>) <span class="sc">+</span> </span>
-<span id="cb18-5"><a href="#cb18-5"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> age) <span class="sc">+</span> </span>
-<span id="cb18-6"><a href="#cb18-6"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="at">data =</span> new_data, </span>
+<span id="cb21-3"><a href="#cb21-3"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score)</span>
+<span id="cb21-4"><a href="#cb21-4"></a>) <span class="sc">+</span> </span>
+<span id="cb21-5"><a href="#cb21-5"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> age) <span class="sc">+</span> </span>
+<span id="cb21-6"><a href="#cb21-6"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="section-19" class="slide level2" data-title-menu="Faceting ex. 1">
 <h2></h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb19" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb19-2"><a href="#cb19-2"></a>  <span class="at">data =</span> new_data, </span>
-<span id="cb19-3"><a href="#cb19-3"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score)</span>
-<span id="cb19-4"><a href="#cb19-4"></a>) <span class="sc">+</span> </span>
-<span id="cb19-5"><a href="#cb19-5"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> age) <span class="sc">+</span> </span>
-<span id="cb19-6"><a href="#cb19-6"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22" data-code-line-numbers="5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="at">data =</span> new_data, </span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score)</span>
+<span id="cb22-4"><a href="#cb22-4"></a>) <span class="sc">+</span> </span>
+<span id="cb22-5"><a href="#cb22-5"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> age) <span class="sc">+</span> </span>
+<span id="cb22-6"><a href="#cb22-6"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="index_files/figure-revealjs/p-shapes-ex1-1.png" style="width:100.0%" class="r-stretch quarto-figure-center"></section>
@@ -1322,14 +1423,14 @@ the data speaks for itself…</p>
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="cell columns column-output-location quarto-layout-cell" style="flex-basis: 100.0%;justify-content: center;">
 <div class="column">
-<div class="sourceCode cell-code" id="cb20" data-code-line-numbers="7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="at">data =</span> new_data, </span>
-<span id="cb20-3"><a href="#cb20-3"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
-<span id="cb20-4"><a href="#cb20-4"></a>    <span class="at">x =</span> age, <span class="at">y =</span> score</span>
-<span id="cb20-5"><a href="#cb20-5"></a>  )</span>
-<span id="cb20-6"><a href="#cb20-6"></a>) <span class="sc">+</span> </span>
-<span id="cb20-7"><a href="#cb20-7"></a>  <span class="fu">facet_grid</span>(group <span class="sc">~</span> .) <span class="sc">+</span> </span>
-<span id="cb20-8"><a href="#cb20-8"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23" data-code-line-numbers="7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">ggplot</span>(</span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="at">data =</span> new_data, </span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
+<span id="cb23-4"><a href="#cb23-4"></a>    <span class="at">x =</span> age, <span class="at">y =</span> score</span>
+<span id="cb23-5"><a href="#cb23-5"></a>  )</span>
+<span id="cb23-6"><a href="#cb23-6"></a>) <span class="sc">+</span> </span>
+<span id="cb23-7"><a href="#cb23-7"></a>  <span class="fu">facet_grid</span>(group <span class="sc">~</span> .) <span class="sc">+</span> </span>
+<span id="cb23-8"><a href="#cb23-8"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <p><img data-src="index_files/figure-revealjs/p-shapes-ex2-1.png" style="width:100.0%"></p>
@@ -1350,7 +1451,48 @@ the data speaks for itself…</p>
 <li><p>a histogram of <code>proficiency</code></p></li>
 <li><p>What does <code>geom_violin()</code> do? What geom can it replace?</p></li>
 </ul>
-</section></section>
+</section>
+<section id="next-level-raw-data-model-estimates" class="slide level2 smaller" data-background-color="black">
+<h2><span class="emph">Next level… raw data + model estimates</span></h2>
+<p>Let’s fit a model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># Load some additional libraries</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="fu">library</span>(<span class="st">"brms"</span>); <span class="fu">library</span>(<span class="st">"emmeans"</span>); <span class="fu">library</span>(<span class="st">"tidybayes"</span>)</span>
+<span id="cb24-3"><a href="#cb24-3"></a></span>
+<span id="cb24-4"><a href="#cb24-4"></a><span class="co"># Fit bayesian regression model</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a>mod <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">formula =</span> score <span class="sc">~</span> proficiency, <span class="at">family =</span> <span class="fu">Beta</span>(), <span class="at">data =</span> new_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we plot the raw data and the posterior predictive distribution</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">emmeans</span>(</span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="at">object =</span> mod, </span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="at">specs =</span> <span class="sc">~</span> proficiency, </span>
+<span id="cb25-4"><a href="#cb25-4"></a>  <span class="at">at =</span> <span class="fu">list</span>(<span class="at">proficiency =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">0.1</span>)), </span>
+<span id="cb25-5"><a href="#cb25-5"></a>  <span class="at">epred =</span> T</span>
+<span id="cb25-6"><a href="#cb25-6"></a>) <span class="sc">|&gt;</span> </span>
+<span id="cb25-7"><a href="#cb25-7"></a>  <span class="fu">gather_emmeans_draws</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb25-8"><a href="#cb25-8"></a>  <span class="fu">filter</span>(.draw <span class="sc">&lt;</span> <span class="dv">300</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb25-9"><a href="#cb25-9"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb25-10"><a href="#cb25-10"></a>  <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> .value) <span class="sc">+</span> </span>
+<span id="cb25-11"><a href="#cb25-11"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> .draw), <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb25-12"><a href="#cb25-12"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">color =</span> <span class="st">"#cc0033"</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb25-13"><a href="#cb25-13"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb25-14"><a href="#cb25-14"></a>    <span class="at">data =</span> new_data, <span class="fu">aes</span>(<span class="at">y =</span> score), </span>
+<span id="cb25-15"><a href="#cb25-15"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"grey30"</span></span>
+<span id="cb25-16"><a href="#cb25-16"></a>    ) <span class="sc">+</span></span>
+<span id="cb25-17"><a href="#cb25-17"></a>  <span class="fu">labs</span>(</span>
+<span id="cb25-18"><a href="#cb25-18"></a>    <span class="at">y =</span> <span class="st">"Score"</span>, <span class="at">x =</span> <span class="st">"Proficiency"</span>, </span>
+<span id="cb25-19"><a href="#cb25-19"></a>    <span class="at">title =</span> <span class="st">"Scores as a function of proficiency"</span>, </span>
+<span id="cb25-20"><a href="#cb25-20"></a>    <span class="at">subtitle =</span> <span class="st">"300 draws from the posterior predictive distribution"</span></span>
+<span id="cb25-21"><a href="#cb25-21"></a>  ) <span class="sc">+</span> </span>
+<span id="cb25-22"><a href="#cb25-22"></a>  ggdark<span class="sc">::</span><span class="fu">dark_theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>, <span class="at">base_family =</span> <span class="st">"Palatino"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/model-est-brm-plot-1.png" style="width:100.0%" class="r-stretch"></section>
+<section id="section-21" class="slide level2" data-menu-title="Raw data + model estimates ex" data-background-color="black">
+<h2></h2>
+
+<img data-src="index_files/figure-revealjs/model-est-brm-plot-1.png" style="width:100.0%" class="r-stretch"></section></section>
 <section>
 <section id="review" class="title-slide slide level1 transition center">
 <h1>Review</h1>
@@ -1394,7 +1536,7 @@ the data speaks for itself…</p>
 <h1>Take a bad plot and make it better</h1>
 
 </section>
-<section id="section-21" class="slide level2" data-menu-title="Bad plots (revisited)">
+<section id="section-22" class="slide level2" data-menu-title="Bad plots (revisited)">
 <h2></h2>
 <div class="r-stack">
 <p><img data-src="./assets/img/bad_plot_1.png" width="750" height="650"></p>

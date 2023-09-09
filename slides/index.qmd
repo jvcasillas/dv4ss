@@ -885,17 +885,21 @@ new_data <- readRDS(link)
 head(new_data) # show first 6 rows
 ```
 
+<br>
+
 ```{r}
 #| label: explore2
 summary(new_data) # get general summary
 ```
 
-## Aesthetics (aes())
+## Aesthetics (aes()) {.smaller}
 
 - Aesthetic mappings: how we map data to color, size, and **axis**...
 
 - Let's update our template
 
+::::{.columns}
+:::{.column width="50%"}
 ```{r}
 #| label: aes-ex
 #| code-line-numbers: "3"
@@ -905,6 +909,23 @@ ggplot(
   mapping = aes(x = proficiency, y = score)
 ) 
 ```
+:::
+
+:::{.column width="50%"}
+```{r}
+#| label: aes-ex-p
+#| code-line-numbers: "3"
+#| echo: false
+#| fig.asp: 1
+#| fig.height: 3
+ggplot(
+  data = new_data, 
+  mapping = aes(x = proficiency, y = score)
+) + 
+  labs(title = NULL, subtitle = NULL)
+```
+:::
+::::
 
 ## Geometric objects (geom_\*) {.smaller}
 
@@ -1043,6 +1064,33 @@ ggplot(new_data) +
   theme(legend.position = c(.15, .85))
 ```
 
+### Advanced
+
+```{r}
+#| label: p-scatterplot-ex-adv
+#| fig.asp: 1
+#| output-location: column
+# Adjust colors
+# Add regression line
+ggplot(new_data) + 
+  aes(x = proficiency, y = score) + 
+  geom_point(
+    aes(fill = group), 
+    size = 4, pch = 21
+  ) + 
+  geom_smooth(method = lm, formula = "y ~ x") + 
+  scale_fill_viridis_d(
+    name = NULL, 
+    option = "E", 
+    begin = 0.4, end = 0.8
+  ) + 
+  theme_minimal(
+    base_size = 30, 
+    base_family = "Palatino"
+  ) + 
+  theme(legend.position = c(.15, .85))
+```
+
 :::
 
 
@@ -1074,9 +1122,31 @@ ggplot(
 ggplot(new_data) + 
   aes(x = group, y = score, fill = group) + 
   geom_boxplot() + 
-  scale_fill_viridis_d(option = "C", end = 0.85) + 
+  scale_fill_viridis_d(begin = 0.3, end = 0.8) + 
   theme_classic(base_size = 30) + 
   theme(legend.position = c(0.8, 0.85))
+```
+
+### Advanced
+
+```{r}
+#| label: p-boxplot-ex-adv
+#| fig.asp: 1
+#| output-location: column
+# Overlay raw data
+ggplot(new_data) + 
+  aes(x = group, y = score) + 
+  geom_boxplot(aes(fill = group), show.legend = F) + 
+  geom_jitter(
+    height = 0, width = 0.2, 
+    size = 4, alpha = 0.4
+  ) + 
+  scale_fill_viridis_d(
+    name = NULL, 
+    begin = 0.3, end = 0.8
+  ) + 
+  labs(x = NULL) + 
+  theme_classic(base_size = 30) 
 ```
 
 :::
@@ -1125,6 +1195,41 @@ ggplot(new_data) +
   ) + 
   labs(caption = "Mean ±95% CI") + 
   theme_minimal(base_size = 30)
+```
+
+### Advanced
+
+```{r}
+#| label: p-point-estimate-spread-ex-adv
+#| fig.asp: 1
+#| output-location: column
+# Customize points and gridlines, add jitter
+ggplot(new_data) + 
+  aes(x = group, y = score) + 
+  geom_jitter(
+    height = 0, width = 0.2, 
+    alpha = 0.3, size = 4
+  ) + 
+  stat_summary(
+    aes(fill = group), 
+    fun.data = mean_se, 
+    geom = 'pointrange', 
+    size = 3, linewidth = 2, 
+    pch = 21, show.legend = F
+  ) + 
+  labs(y = "Score", x = NULL, caption = "Mean ±SE") + 
+  scale_fill_viridis_d(
+    option = "A", begin = 0.2, end = 0.6
+  ) + 
+  theme_minimal(
+    base_size = 30, base_family = "Palatino"
+  ) + 
+  theme(
+    axis.title.y = element_text(size = rel(0.9), hjust = 0.95),
+    axis.title.x = element_text(size = rel(0.9), hjust = 0.95),
+    panel.grid.major = element_line(color = 'grey80', linewidth = 0.15),
+    panel.grid.minor = element_line(color = 'grey80', linewidth = 0.15)
+  )
 ```
 
 :::
@@ -1201,6 +1306,72 @@ Using `new_data`, create the following
 
 - What does `geom_violin()` do? What geom can it replace?
 
+
+## [Next level... raw data + model estimates]{.emph} {.smaller background-color="black"}
+
+```{r}
+#| label: model-est-brm
+#| echo: false
+library("brms")
+library("emmeans")
+library("tidybayes")
+mod <- brm(
+  formula = score ~ proficiency, 
+  family = Beta(), 
+  file = here("misc", "mod"), 
+  data = mutate(
+    new_data, score = if_else(score == 0, score + 0.001, score - 0.001)
+    )
+)
+```
+
+Let's fit a model. 
+```{r}
+#| label: model-est-brm-code
+#| eval: false
+#| echo: true
+# Load some additional libraries
+library("brms"); library("emmeans"); library("tidybayes")
+
+# Fit bayesian regression model
+mod <- brm(formula = score ~ proficiency, family = Beta(), data = new_data)
+```
+
+Now we plot the raw data and the posterior predictive distribution
+```{r}
+#| label: model-est-brm-plot
+#| echo: true
+#| output: 'hold'
+emmeans(
+  object = mod, 
+  specs = ~ proficiency, 
+  at = list(proficiency = seq(-2.5, 2.5, 0.1)), 
+  epred = T
+) |> 
+  gather_emmeans_draws() |> 
+  filter(.draw < 300) |> 
+  ggplot() + 
+  aes(x = proficiency, y = .value) + 
+  geom_line(aes(group = .draw), alpha = 0.1) + 
+  stat_summary(fun = mean, geom = "line", color = "#cc0033", linewidth = 2) + 
+  geom_point(
+    data = new_data, aes(y = score), 
+    size = 3, pch = 21, fill = "grey30"
+    ) +
+  labs(
+    y = "Score", x = "Proficiency", 
+    title = "Scores as a function of proficiency", 
+    subtitle = "300 draws from the posterior predictive distribution"
+  ) + 
+  ggdark::dark_theme_minimal(base_size = 18, base_family = "Palatino")
+```
+
+## {data-menu-title="Raw data + model estimates ex" background-color="black"}
+
+```{r}
+#| label: model-est-brm-plot
+#| echo: false
+```
 
 
 
