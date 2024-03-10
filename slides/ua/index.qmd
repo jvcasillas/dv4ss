@@ -2,7 +2,7 @@
 title: "Data visualization for linguists"
 subtitle: ""
 author: "Joseph V. Casillas | Rutgers University"
-institute: "Symposium<br>University of Arizona"
+institute: "33rd Graduate and Professional Symposium on Hispanic and Luso-Brazilian Literature, Language and Culture<br>University of Arizona"
 date: "2024/03/24 (Last update: `r Sys.Date()`)"
 format: rutgers-revealjs
 engine: knitr
@@ -1194,7 +1194,7 @@ ggplot(new_data) +
 
 ```{r}
 #| label: p-point-estimate-spread-ex-adv
-#| fig.asp: 1
+#| fig-asp: 1
 #| output-location: column
 # Customize points and gridlines, add jitter
 ggplot(new_data) + 
@@ -1263,14 +1263,13 @@ ggplot(
 
 ## {data-title-menu="Faceting ex. 2"}
 
-::: {layout="[[-1], [1], [-1]]"}
+<br>
 
 ```{r}
 #| label: p-shapes-ex2
 #| code-line-numbers: "7"
 #| output-location: column
-#| fig.asp: 1
-#| fig-height: 10
+#| fig-asp: 1
 ggplot(
   data = new_data, 
   mapping = aes(
@@ -1281,7 +1280,6 @@ ggplot(
   geom_boxplot()
 ```
 
-:::
 
 ## More exercises {.smaller}
 
@@ -1306,8 +1304,7 @@ Using `new_data`, create the following
 #| label: model-est-brm
 #| echo: false
 library("brms")
-library("emmeans")
-library("tidybayes")
+library("marginaleffects")
 mod <- brm(
   formula = score ~ proficiency, 
   family = Beta(), 
@@ -1324,7 +1321,7 @@ Let's fit a model.
 #| eval: false
 #| echo: true
 # Load some additional libraries
-library("brms"); library("emmeans"); library("tidybayes")
+library("brms"); library("marginaleffects")
 
 # Fit bayesian regression model
 mod <- brm(formula = score ~ proficiency, family = Beta(), data = new_data)
@@ -1335,17 +1332,13 @@ Now we plot the raw data and the posterior predictive distribution
 #| label: model-est-brm-plot
 #| echo: true
 #| output: 'hold'
-emmeans(
-  object = mod, 
-  specs = ~ proficiency, 
-  at = list(proficiency = seq(-2.5, 2.5, 0.1)), 
-  epred = T
-) |> 
-  gather_emmeans_draws() |> 
-  filter(.draw < 300) |> 
+predictions(mod, newdata = datagrid(proficiency = seq(-2.5, 2.5, 0.1))) |>
+  posterior_draws() |> 
+  mutate(drawid = as.numeric(drawid)) |> 
+  filter(drawid < 300) |> 
   ggplot() + 
-  aes(x = proficiency, y = .value) + 
-  geom_line(aes(group = .draw), alpha = 0.1) + 
+  aes(x = proficiency, y = draw) + 
+  geom_line(aes(group = drawid), alpha = 0.1) + 
   stat_summary(fun = mean, geom = "line", color = "#cc0033", linewidth = 2) + 
   geom_point(
     data = new_data, aes(y = score), 
@@ -1454,16 +1447,32 @@ emmeans(
 
 ### Materials available here: 
 
-### [bit.ly/psllt_2023](https://bit.ly/psllt_2023)
+### [bit.ly/dv4ss](https://bit.ly/dv4ss)
 
-|                                                                             |                                    |
-|----------------------------------------------------------------------------:|:-----------------------------------|
-|   <a href='mailto:joseph.casillas@rutgers.edu'>{{< fa solid envelope >}}</a>|joseph.casillas@rutgers.edu         |
-| <a href='www.jvcasillas.com'>{{< fa solid link >}}</a>|www.jvcasillas.com |
-|         <a href='https://twitter.com/jvcasill'>{{< fa brands twitter >}}</a>|\@jvcasill                           |
-|         <a href='https://github.com/jvcasillas'>{{< fa brands github >}}</a>|\@jvcasillas                         |
+```{r}
+#| label: tbl-final
+#| tbl-colwidths: [25, 50, 25]
+#| echo: false
+tidyr::tibble(
+  ` ` = c(
+    "<a href='mailto:joseph.casillas@rutgers.edu'>{{< fa solid envelope >}}</a>", 
+    "<a href='www.jvcasillas.com'>{{< fa solid link >}}</a>", 
+    "<a href='https://twitter.com/jvcasill'>{{< fa brands twitter >}}</a>", 
+    "<a href='https://github.com/jvcasillas'>{{< fa brands github >}}</a>"
+  ), 
+  `  ` = c(
+    "joseph.casillas@rutgers.edu", 
+    "www.jvcasillas.com", 
+    "\\@jvcasill", 
+    "\\@jvcasillas"
+  ), 
+  `   ` = c("&nbsp; &nbsp; &nbsp; &nbsp;", " ", " ", " ")
+) |> 
+  knitr::kable(align = c("r", "l", "l"))
 
-: {tbl-colwidths="[25,75]"}
+```
+
+
 
 ## References {visibility="uncounted"}
 

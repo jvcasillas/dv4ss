@@ -417,10 +417,10 @@
     <div class="slides">
 
 <section id="title-slide" class="center">
-  <img width="65" src="https://github.com/jvcasillas/ru_xaringan/raw/master/img/logo/ru_shield.png">
+  <img width="150" src="https://github.com/jvcasillas/ru_xaringan/raw/master/img/logo/ru_new.png">
   <h1 class="title">Data visualization for linguists</h1>
   <p class="author">Joseph V. Casillas | Rutgers University</p>
-  <p class="institute">Symposium<br>University of Arizona</p>
+  <p class="institute">33rd Graduate and Professional Symposium on Hispanic and Luso-Brazilian Literature, Language and Culture<br>University of Arizona</p>
   <p class="date">2024-03-24</p>
 </section>
 <section id="follow-along" class="slide level2">
@@ -438,7 +438,7 @@
 </div><div class="column" style="width:33%;">
 <div id="qrsite" class="qrcode"></div>
 <script type="text/javascript">
-var qrcode = new QRCode("qrsite", {"height":"300","text":"https://www.jvcasillas.com/dv4ss/index.html","colorLight":"#fff","colorDark":"#cc0033","width":"300"});
+var qrcode = new QRCode("qrsite", {"colorDark":"#cc0033","height":"300","text":"https://www.jvcasillas.com/dv4ss/index.html","width":"300","colorLight":"#fff"});
 </script>
     
 </div><div class="column" style="width:33%;">
@@ -1492,6 +1492,9 @@ the data speaks for itself…</p>
 <img data-src="index_files/figure-revealjs/p-shapes-ex1-1.png" class="quarto-figure quarto-figure-center r-stretch" style="width:100.0%"></section>
 <section id="section-20" class="slide level2" data-title-menu="Faceting ex. 2">
 <h2></h2>
+<p><br></p>
+<div class="cell columns column-output-location">
+<div class="column">
 <div class="sourceCode cell-code" id="cb23" data-code-line-numbers="7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">ggplot</span>(</span>
 <span id="cb23-2"><a href=""></a>  <span class="at">data =</span> new_data, </span>
 <span id="cb23-3"><a href=""></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
@@ -1500,24 +1503,12 @@ the data speaks for itself…</p>
 <span id="cb23-6"><a href=""></a>) <span class="sc">+</span> </span>
 <span id="cb23-7"><a href=""></a>  <span class="fu">facet_grid</span>(group <span class="sc">~</span> .) <span class="sc">+</span> </span>
 <span id="cb23-8"><a href=""></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="quarto-layout-panel" data-layout="[[-1], [1], [-1]]">
-<div class="quarto-layout-row">
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
-<p>&nbsp;</p>
-</div>
-</div>
-<div class="quarto-layout-row">
-<div class="cell columns column-output-location quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div class="column">
-
 </div><div class="column">
 <div class="cell-output-display">
 <div>
 <figure>
 <p><img data-src="index_files/figure-revealjs/p-shapes-ex2-1.png" style="width:100.0%"></p>
 </figure>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -1540,35 +1531,31 @@ the data speaks for itself…</p>
 <p>Let’s fit a model.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="co"># Load some additional libraries</span></span>
-<span id="cb24-2"><a href=""></a><span class="fu">library</span>(<span class="st">"brms"</span>); <span class="fu">library</span>(<span class="st">"emmeans"</span>); <span class="fu">library</span>(<span class="st">"tidybayes"</span>)</span>
+<span id="cb24-2"><a href=""></a><span class="fu">library</span>(<span class="st">"brms"</span>); <span class="fu">library</span>(<span class="st">"marginaleffects"</span>)</span>
 <span id="cb24-3"><a href=""></a></span>
 <span id="cb24-4"><a href=""></a><span class="co"># Fit bayesian regression model</span></span>
 <span id="cb24-5"><a href=""></a>mod <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">formula =</span> score <span class="sc">~</span> proficiency, <span class="at">family =</span> <span class="fu">Beta</span>(), <span class="at">data =</span> new_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now we plot the raw data and the posterior predictive distribution</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="fu">emmeans</span>(</span>
-<span id="cb25-2"><a href=""></a>  <span class="at">object =</span> mod, </span>
-<span id="cb25-3"><a href=""></a>  <span class="at">specs =</span> <span class="sc">~</span> proficiency, </span>
-<span id="cb25-4"><a href=""></a>  <span class="at">at =</span> <span class="fu">list</span>(<span class="at">proficiency =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">0.1</span>)), </span>
-<span id="cb25-5"><a href=""></a>  <span class="at">epred =</span> T</span>
-<span id="cb25-6"><a href=""></a>) <span class="sc">|&gt;</span> </span>
-<span id="cb25-7"><a href=""></a>  <span class="fu">gather_emmeans_draws</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb25-8"><a href=""></a>  <span class="fu">filter</span>(.draw <span class="sc">&lt;</span> <span class="dv">300</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb25-9"><a href=""></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb25-10"><a href=""></a>  <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> .value) <span class="sc">+</span> </span>
-<span id="cb25-11"><a href=""></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> .draw), <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
-<span id="cb25-12"><a href=""></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">color =</span> <span class="st">"#cc0033"</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb25-13"><a href=""></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb25-14"><a href=""></a>    <span class="at">data =</span> new_data, <span class="fu">aes</span>(<span class="at">y =</span> score), </span>
-<span id="cb25-15"><a href=""></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"grey30"</span></span>
-<span id="cb25-16"><a href=""></a>    ) <span class="sc">+</span></span>
-<span id="cb25-17"><a href=""></a>  <span class="fu">labs</span>(</span>
-<span id="cb25-18"><a href=""></a>    <span class="at">y =</span> <span class="st">"Score"</span>, <span class="at">x =</span> <span class="st">"Proficiency"</span>, </span>
-<span id="cb25-19"><a href=""></a>    <span class="at">title =</span> <span class="st">"Scores as a function of proficiency"</span>, </span>
-<span id="cb25-20"><a href=""></a>    <span class="at">subtitle =</span> <span class="st">"300 draws from the posterior predictive distribution"</span></span>
-<span id="cb25-21"><a href=""></a>  ) <span class="sc">+</span> </span>
-<span id="cb25-22"><a href=""></a>  ggdark<span class="sc">::</span><span class="fu">dark_theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>, <span class="at">base_family =</span> <span class="st">"Palatino"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href=""></a><span class="fu">predictions</span>(mod, <span class="at">newdata =</span> <span class="fu">datagrid</span>(<span class="at">proficiency =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">0.1</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href=""></a>  <span class="fu">posterior_draws</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">drawid =</span> <span class="fu">as.numeric</span>(drawid)) <span class="sc">|&gt;</span> </span>
+<span id="cb25-4"><a href=""></a>  <span class="fu">filter</span>(drawid <span class="sc">&lt;</span> <span class="dv">300</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb25-5"><a href=""></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb25-6"><a href=""></a>  <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> draw) <span class="sc">+</span> </span>
+<span id="cb25-7"><a href=""></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> drawid), <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb25-8"><a href=""></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">color =</span> <span class="st">"#cc0033"</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb25-9"><a href=""></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb25-10"><a href=""></a>    <span class="at">data =</span> new_data, <span class="fu">aes</span>(<span class="at">y =</span> score), </span>
+<span id="cb25-11"><a href=""></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"grey30"</span></span>
+<span id="cb25-12"><a href=""></a>    ) <span class="sc">+</span></span>
+<span id="cb25-13"><a href=""></a>  <span class="fu">labs</span>(</span>
+<span id="cb25-14"><a href=""></a>    <span class="at">y =</span> <span class="st">"Score"</span>, <span class="at">x =</span> <span class="st">"Proficiency"</span>, </span>
+<span id="cb25-15"><a href=""></a>    <span class="at">title =</span> <span class="st">"Scores as a function of proficiency"</span>, </span>
+<span id="cb25-16"><a href=""></a>    <span class="at">subtitle =</span> <span class="st">"300 draws from the posterior predictive distribution"</span></span>
+<span id="cb25-17"><a href=""></a>  ) <span class="sc">+</span> </span>
+<span id="cb25-18"><a href=""></a>  ggdark<span class="sc">::</span><span class="fu">dark_theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>, <span class="at">base_family =</span> <span class="st">"Palatino"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="index_files/figure-revealjs/model-est-brm-plot-1.png" style="width:100.0%" class="r-stretch"></section>
@@ -1660,31 +1647,40 @@ the data speaks for itself…</p>
 <p><img data-src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/164.png" class="absolute" style="top: 0px; right: 0px; width: 55px; height: 55px; "></p>
 <p><br></p>
 <h3 id="materials-available-here">Materials available here:</h3>
-<h3 id="bit.lypsllt_2023"><a href="https://bit.ly/psllt_2023">bit.ly/psllt_2023</a></h3>
+<h3 id="bit.lydv4ss"><a href="https://bit.ly/dv4ss">bit.ly/dv4ss</a></h3>
+<div id="tbl-final" class="cell" data-tbl-colwidths="[25,50,25]">
+<div class="cell-output-display">
 <table>
 <colgroup>
-<col style="width: 25%">
-<col style="width: 75%">
+<col style="width: 57%">
+<col style="width: 21%">
+<col style="width: 21%">
 </colgroup>
 <tbody>
 <tr class="odd">
 <td style="text-align: right;"><a href="mailto:joseph.casillas@rutgers.edu"><i class="fa-solid fa-envelope" aria-label="envelope"></i></a></td>
 <td style="text-align: left;">joseph.casillas@rutgers.edu</td>
+<td style="text-align: left;">&nbsp; &nbsp; &nbsp; &nbsp;</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;"><a href="www.jvcasillas.com"><i class="fa-solid fa-link" aria-label="link"></i></a></td>
 <td style="text-align: left;">www.jvcasillas.com</td>
+<td style="text-align: left;"></td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;"><a href="https://twitter.com/jvcasill"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a></td>
 <td style="text-align: left;">@jvcasill</td>
+<td style="text-align: left;"></td>
 </tr>
 <tr class="even">
 <td style="text-align: right;"><a href="https://github.com/jvcasillas"><i class="fa-brands fa-github" aria-label="github"></i></a></td>
 <td style="text-align: left;">@jvcasillas</td>
+<td style="text-align: left;"></td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
 </section>
 <section id="references" class="slide level2 smaller scrollable" data-visibility="uncounted">
 <h2>References</h2>
