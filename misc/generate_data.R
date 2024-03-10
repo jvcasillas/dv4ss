@@ -9,7 +9,7 @@ dat <- mtcars |>
       age == 6 ~ "older", 
       age == 8 ~ "oldest"
     ), 
-    age = fct_relevel(age, "young", "older")
+    age = forcats::fct_relevel(age, "young", "older")
   ) |>
   mutate_if(is.numeric, round, digits = 2)
 
@@ -29,4 +29,4 @@ ggplot(data = dat) +
   geom_point()
 
 saveRDS(dat, file = here("misc", "new_data.RDS"))
-write.csv(dat, "misc", "new_data.csv")
+readr::write_csv(dat, here("misc", "new_data.csv"))

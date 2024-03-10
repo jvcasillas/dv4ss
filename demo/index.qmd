@@ -1,65 +1,76 @@
 ---
 title: "Data visualization for linguists"
 subtitle: "Interactive demo"
+author: "Joseph V. Casillas"
+date: today
 format: html
 engine: knitr
 webr: 
   show-startup-message: true
-  packages: ['ggplot2', 'dplyr']
+  packages: ['ggplot2', 'dplyr', 'tidyr', 'here', 'Hmisc']
 filters: 
   - webr
+execute:
+  fig.retina: 2
 ---
 
 ```{r}
+#| label: hard-setup
+#| include: false
+library("tidyverse")
+library("marginaleffects")
+new_data <- readRDS(here::here("./misc/new_data.RDS"))
+mod <- readRDS(here::here("./misc/mod.rds"))
+```
+
+
+```{webr-r}
+#| context: setup
+
+# Get data file
+download.file(
+  "https://raw.githubusercontent.com/jvcasillas/dv4ss/main/misc/new_data.csv",
+  "new_data.csv"
+  )
+```
+
+# Walkthrough with `ggplot2` ![](https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png){top=0 right=0 width=50 height=50}
+
+This tutorial serves as a compliment to the [slides](https://www.jvcasillas.com/dv4ss/slides/ua/index.html). 
+
+
+# Setup
+
+These are some of the packages we will use. 
+Note: you do not need to install them for this demo. 
+
+```{r}
+#| warning: false
+#| message: false
+#| eval: false
 library("ggplot2")
 library("dplyr")
 library("tidyr")
 library("here")
 library("brms")
 library("marginaleffects")
-library("ggdist")
-link <- url("https://github.com/jvcasillas/dv4ss/raw/main/misc/new_data.RDS")
-new_data <- readRDS(link)
 ```
-
-
-
-```{webr-r}
-#| context: interactive
-
-ggplot(mtcars) + 
-  aes(x = drat, y = mpg) + 
-  geom_point()
-```
-
-
 
 
 # It starts with data
 
-- Let's take a look at a dataframe
-- Try using `head(new_data)` and `summary(new_data)`
-- What kind of information did you learn about the dataframe?
+Let's take a look at a data set we will use in this demo. 
+Try using `head(new_data)` and `summary(new_data)`. 
+What kind of information can you learn about the dataframe?
 
 ```{webr-r}
-#| label: load-data
-# Link to data
-link <- url("https://github.com/jvcasillas/dv4ss/raw/main/misc/new_data.RDS")
-
-# Load data
-new_data <- readRDS(link)
-
-# Examin data
+#| label: examine-data-ex
+# Examine data
 head(new_data)
 summary(new_data)
 ```
 
-
-# Walkthrough with [ggplot2]{style="color: blue;"}
-
-![](https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png){.absolute top=200 right=0 width=400" height="400"}
-
-## Let's revist some basic plots
+Let's revist some basic plots
 
 - Histogram
 - Scatterplots
@@ -74,9 +85,7 @@ summary(new_data)
 
 ```{webr-r}
 #| label: p-histogram-ex-beg
-#| fig.asp: 1
-#| output-location: column
-#| code-line-numbers: "3|4|6"
+#| fig-asp: 1
 # Continuous variable on the x-axis
 ggplot(
   data = new_data, 
@@ -87,10 +96,9 @@ ggplot(
 
 ### Intermediate
 
-```{r}
+```{webr-r}
 #| label: p-histogram-ex-int
-#| fig.asp: 1
-#| output-location: column
+#| fig-asp: 1
 # Streamline code and adjust options
 ggplot(new_data) + 
   aes(x = score) + 
@@ -100,24 +108,22 @@ ggplot(new_data) +
     bins = 9
   ) + 
   theme_bw(
-    base_size = 30, 
+    base_size = 12, 
     base_family = "Palatino"
   )
 ```
 
 :::
 
-## Scatterplot {.smaller}
+## Scatterplot
 
 ::: {.panel-tabset}
 
 ### Beginner
 
-```{r}
+```{webr-r}
 #| label: p-scatterplot-ex-beg
-#| fig.asp: 1
-#| output-location: column
-#| code-line-numbers: "3|4|6"
+#| fig-asp: 1
 # Continuous variables on both axis
 ggplot(
   data = new_data, 
@@ -128,17 +134,15 @@ ggplot(
 
 ### Intermediate
 
-```{r}
+```{webr-r}
 #| label: p-scatterplot-ex-int
-#| fig.asp: 1
-#| output-location: column
-# Include aesthetic mapping from inside
-# geom_point()
+#| fig-asp: 1
+# Include aesthetic mapping from inside geom_point()
 ggplot(new_data) + 
   aes(x = proficiency, y = score) + 
   geom_point(aes(color = group), size = 4) + 
   theme_minimal(
-    base_size = 30, 
+    base_size = 12, 
     base_family = "Palatino"
   ) + 
   theme(legend.position = c(.15, .85))
@@ -146,12 +150,10 @@ ggplot(new_data) +
 
 ### Advanced
 
-```{r}
+```{webr-r}
 #| label: p-scatterplot-ex-adv
-#| fig.asp: 1
-#| output-location: column
-# Adjust colors
-# Add regression line
+#| fig-asp: 1
+# Adjust colors, add regression line
 ggplot(new_data) + 
   aes(x = proficiency, y = score) + 
   geom_point(
@@ -165,7 +167,7 @@ ggplot(new_data) +
     begin = 0.4, end = 0.8
   ) + 
   theme_minimal(
-    base_size = 30, 
+    base_size = 12, 
     base_family = "Palatino"
   ) + 
   theme(legend.position = c(.15, .85))
@@ -174,16 +176,15 @@ ggplot(new_data) +
 :::
 
 
-## Boxplot (box and whisker plot) {.smaller}
+## Boxplot (box and whisker plot)
 
 ::: {.panel-tabset}
 
 ### Beginner
 
-```{r}
+```{webr-r}
 #| label: p-boxplot-ex-beg
-#| fig.asp: 1
-#| output-location: column
+#| fig-asp: 1
 # Try a different geom
 ggplot(
   data = new_data, 
@@ -194,25 +195,23 @@ ggplot(
 
 ### Intermediate
 
-```{r}
+```{webr-r}
 #| label: p-boxplot-ex-int
-#| fig.asp: 1
-#| output-location: column
+#| fig-asp: 1
 # Adjust colors, new theme
 ggplot(new_data) + 
   aes(x = group, y = score, fill = group) + 
   geom_boxplot() + 
   scale_fill_viridis_d(begin = 0.3, end = 0.8) + 
-  theme_classic(base_size = 30) + 
+  theme_classic(base_size = 12, base_family = "Palatino") + 
   theme(legend.position = c(0.8, 0.85))
 ```
 
 ### Advanced
 
-```{r}
+```{webr-r}
 #| label: p-boxplot-ex-adv
-#| fig.asp: 1
-#| output-location: column
+#| fig-asp: 1
 # Overlay raw data
 ggplot(new_data) + 
   aes(x = group, y = score) + 
@@ -226,12 +225,13 @@ ggplot(new_data) +
     begin = 0.3, end = 0.8
   ) + 
   labs(x = NULL) + 
-  theme_classic(base_size = 30) 
+  theme_classic(base_size = 12, base_family = "Palatino") 
 ```
 
 :::
 
-## {background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_iqr.png" background-size="contain" data-menu-title="What's a boxplot anyway?"}
+Need a refresher regarding what a boxplot is? 
+See [here](https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_iqr.png).
 
 ## A better way... point estimate + spread {.smaller}
 
@@ -239,10 +239,9 @@ ggplot(new_data) +
 
 ### Beginner
 
-```{r}
+```{webr-r}
 #| label: p-point-estimate-spread-ex-beg
-#| fig.asp: 1
-#| output-location: column
+#| fig-asp: 1
 # Point estimate can be mean, median, mode, 
 # Spread can be SD, SE, 95% CI, etc.
 ggplot(
@@ -252,17 +251,16 @@ ggplot(
   stat_summary(
     fun.data = mean_sdl, 
     geom = 'pointrange', 
-    size = 2, 
-    linewidth = 2
+    size = 1, 
+    linewidth = 1
   ) 
 ```
 
 ### Intermediate
 
-```{r}
+```{webr-r}
 #| label: p-point-estimate-spread-ex-int
-#| fig.asp: 1
-#| output-location: column
+#| fig-asp: 1
 # Customize, add caption
 ggplot(new_data) + 
   aes(x = group, y = score) + 
@@ -270,39 +268,38 @@ ggplot(new_data) +
   stat_summary(
     fun.data = mean_cl_boot, 
     geom = 'pointrange', 
-    size = 4, 
-    linewidth = 2
+    size = 2, 
+    linewidth = 1
   ) + 
   labs(caption = "Mean ±95% CI") + 
-  theme_minimal(base_size = 30)
+  theme_minimal(base_size = 12, base_family = "Palatino")
 ```
 
 ### Advanced
 
-```{r}
+```{webr-r}
 #| label: p-point-estimate-spread-ex-adv
-#| fig.asp: 1
-#| output-location: column
+#| fig-asp: 1
 # Customize points and gridlines, add jitter
 ggplot(new_data) + 
   aes(x = group, y = score) + 
   geom_jitter(
     height = 0, width = 0.2, 
-    alpha = 0.3, size = 4
+    alpha = 0.3, size = 3
   ) + 
   stat_summary(
     aes(fill = group), 
     fun.data = mean_se, 
     geom = 'pointrange', 
-    size = 3, linewidth = 2, 
+    size = 1, linewidth = 1, 
     pch = 21, show.legend = F
   ) + 
   labs(y = "Score", x = NULL, caption = "Mean ±SE") + 
   scale_fill_viridis_d(
-    option = "A", begin = 0.2, end = 0.6
+    option = "A", begin = 0.3, end = 0.7
   ) + 
   theme_minimal(
-    base_size = 30, base_family = "Palatino"
+    base_size = 12, base_family = "Palatino"
   ) + 
   theme(
     axis.title.y = element_text(size = rel(0.9), hjust = 0.95),
@@ -314,32 +311,20 @@ ggplot(new_data) +
 
 :::
 
+
 ## Faceting
 
-- What about when we want to see more factors at once?
+What about when we want to see more factors at once? 
+For example, what if we want to see **score** as a function of **proficiency** and **age**? 
+We use `facet_wrap()` or `facet_grid()` to create facets
 
-- For example, what if we want to see **score** as a function of **proficiency** and **age**?
+::: {.panel-tabset}
 
-- We use `facet_wrap()` or `facet_grid()` to create facets
+### Horizontal
 
-```{r}
-#| label: p-facets-ex
-#| code-line-numbers: "5"
-#| eval: false
-ggplot(
-  data = new_data, 
-  mapping = aes(x = proficiency, y = score)
-) + 
-  facet_grid(. ~ age) + 
-  geom_point()
-```
-
-## {data-title-menu="Faceting ex. 1"}
-
-```{r}
+```{webr-r}
 #| label: p-shapes-ex1
-#| fig-align: 'center'
-#| code-line-numbers: "5"
+#| fig-height: 3
 ggplot(
   data = new_data, 
   mapping = aes(x = proficiency, y = score)
@@ -348,16 +333,11 @@ ggplot(
   geom_point()
 ```
 
-## {data-title-menu="Faceting ex. 2"}
+### Vertical
 
-::: {layout="[[-1], [1], [-1]]"}
-
-```{r}
+```{webr-r}
 #| label: p-shapes-ex2
-#| code-line-numbers: "7"
-#| output-location: column
-#| fig.asp: 1
-#| fig-height: 10
+#| fig-height: 5
 ggplot(
   data = new_data, 
   mapping = aes(
@@ -370,57 +350,140 @@ ggplot(
 
 :::
 
-## More exercises {.smaller}
 
-Using `new_data`, create the following
+# More exercises
 
-- a boxplot with a variable mapped to the `fill` aesthetic
+Want to challenge yourself a bit more?
+Using `new_data`, create the following: 
 
-- a boxplot with a variable mapped to the `color` aesthetic and a horizontal facet
+1. a boxplot with a variable mapped to the `fill` aesthetic
+2. a boxplot with a variable mapped to the `color` aesthetic and a horizontal facet
+3. a scatterplot with a regression line (see `?geom_smooth`)
+4. a scatterplot with a regression line (see `?geom_smooth`) and a categorical factor (try the aesthetic `shape`)
+5. a histogram of `proficiency`
+6. What does `geom_violin()` do? 
+What geom can it replace?
 
-- a scatterplot with a regression line (see `?geom_smooth`)
+::: {.panel-tabset}
 
-- a scatterplot with a regression line (see `?geom_smooth`) and a categorical factor (try the aesthetic `shape`)
+### Practice here
 
-- a histogram of `proficiency`
+```{webr-r}
+#| label: blank-console
+ggplot(
+  data = new_data, 
+  mapping = aes()
+) + 
 
-- What does `geom_violin()` do? What geom can it replace?
 
 
-## [Next level... raw data + model estimates]{.emph} {.smaller background-color="black"}
 
-```{r}
-#| label: model-est-brm
-#| echo: false
 
-mod <- brm(
-  formula = score ~ proficiency, 
-  family = Beta(), 
-  file = here("misc", "mod"), 
-  data = mutate(
-    new_data, score = if_else(score == 0, score + 0.001, score - 0.001)
-    )
-)
 ```
 
-Let's fit a model. 
+### Solution 1
+
+```{webr-r}
+#| label: solution1
+# Boxplot with a variable mapped to the `fill` aesthetic
+ggplot(
+  data = new_data, 
+  mapping = aes(x = group, y = score, fill = group)
+) + 
+  geom_boxplot()
+```
+
+### Solution 2
+
+```{webr-r}
+#| label: solution2
+# Boxplot with a variable mapped to `color` aesthetic and a horizontal facet
+ggplot(
+  data = new_data, 
+  mapping = aes(x = group, y = score, color = group)
+) + 
+  facet_grid(. ~ age) + 
+  geom_boxplot() 
+```
+
+### Solution 3
+
+```{webr-r}
+#| label: solution3
+# Scatterplot with regression line (see `?geom_smooth`)
+ggplot(
+  data = new_data, 
+  mapping = aes(x = proficiency, y = score)
+) + 
+  geom_point() + 
+  geom_smooth(method = "lm", formula = "y ~ x")
+```
+
+### Solution 4
+
+```{webr-r}
+#| label: solution4
+# Scatterplot with regression line and categorical factor (try aesthetic `shape`)
+ggplot(
+  data = new_data, 
+  mapping = aes(x = proficiency, y = score)
+) + 
+  geom_point(aes(shape = group)) + 
+  geom_smooth(method = "lm", formula = "y ~ x")
+```
+
+### Solution 5
+
+```{webr-r}
+#| label: solution5
+# Histogram of `proficiency`
+ggplot(
+  data = new_data, 
+  mapping = aes(x = proficiency)
+) + 
+  geom_histogram(color = "black", fill = "grey", bins = 7)
+```
+
+### Solution 6
+
+```{webr-r}
+#| label: solution6
+# `geom_violin()` (replacement for geom_boxplot)
+ggplot(
+  data = new_data, 
+  mapping = aes(x = group, y = score, shape = group)
+) + 
+  geom_point() + 
+  geom_violin(fill = NA)
+```
+
+:::
+
+
+
+
+
+
+# Next level... raw data + model estimates
+
+Let's explore another example in which we plot raw data along with some type of summary from a statistical model. 
+For this example we will fit a Bayesian regression model exploring `score` as a function of `proficiency`. 
+In truth, the model was fit behind the scenes and loaded for you, but we did this using the following code: 
+
 ```{r}
 #| label: model-est-brm-code
 #| eval: false
-#| echo: true
-# Load some additional libraries
-library("brms"); library("emmeans"); library("tidybayes")
-
 # Fit bayesian regression model
 mod <- brm(formula = score ~ proficiency, family = Beta(), data = new_data)
 ```
 
-Now we plot the raw data and the posterior predictive distribution
+Now we plot the raw data and use the `marginaleffects` package to sample from the posterior predictive distribution. 
+
 ```{r}
 #| label: model-est-brm-plot
-#| echo: true
-#| output: 'hold'
-
+#| message: false
+#| fig-asp: 0.56
+#| out-width: "100%"
 predictions(
   mod, 
   newdata = datagrid(
@@ -446,29 +509,20 @@ predictions(
   ggdark::dark_theme_minimal(base_size = 18, base_family = "Palatino")
 ```
 
-## {data-menu-title="Raw data + model estimates ex" background-color="black"}
-
-```{r}
-#| label: model-est-brm-plot
-#| echo: false
-```
 
 
 
 
 
-# Review {.transition}
+
+# Review 
 
 ## Good principles 
 
 - Remember 💩
-
 - Colorblind friendly palettes (e.g., [viridis](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html))
-
 - Highlight important things
-
 - Help your target audience (reader)
-
 - Plot raw data, and statistical summary or model estimates whenever possible
 
 ## Bad principles (according to the internet)
@@ -496,62 +550,13 @@ predictions(
 
 
 
-# Take a bad plot and make it better {.transition visibility="uncounted"}
-
-## {data-menu-title="Bad plots (revisited)"}
-
-::: {.r-stack}
-![](../assets/img/bad_plot_1){width="750" height="650"}
-
-![](../assets/img/bad_plot_0){.fragment width="900" height="650"}
-
-![](../assets/img/bad_plot_2){.fragment width="1000" height="650"}
-:::
 
 
 
-
-
-
-# Wrapping up {visibility="uncounted"}
-
-## Help! (resources) {.transition}
+# Help! (resources)
 
 - [SimplPoints (Timo Roettger youtube channel))](https://www.youtube.com/@simplpoints/videos)
-
 - [Data Visualization with R (course)](https://datavizf23.classes.andrewheiss.com/syllabus.html)
-
 - [The Truthful Art: Data, Charts, and Maps for Communication](https://www.amazon.com/Truthful-Art-Data-Charts-Communication/dp/0321934075)
-
 - [Data Visualization: A Practical Introduction](http://socviz.co/)
-
 - [Fundamentals of Data Visualization](https://serialmentor.com/dataviz/)
-
-::: notes
-@healy2018data
-@cairo2016truthful
-@wilke2019fundamentals
-:::
-
-## Thanks! {.final visibility="uncounted"}
-
-![](https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/164.png){.absolute top="0" right="0" width="55" height="55"}
-
-</br>
-
-### Materials available here: 
-
-### [bit.ly/psllt_2023](https://bit.ly/psllt_2023)
-
-|                                                                             |                                    |
-|----------------------------------------------------------------------------:|:-----------------------------------|
-|   <a href='mailto:joseph.casillas@rutgers.edu'>{{< fa solid envelope >}}</a>|joseph.casillas@rutgers.edu         |
-| <a href='www.jvcasillas.com'>{{< fa solid link >}}</a>|www.jvcasillas.com |
-|         <a href='https://twitter.com/jvcasill'>{{< fa brands twitter >}}</a>|\@jvcasill                           |
-|         <a href='https://github.com/jvcasillas'>{{< fa brands github >}}</a>|\@jvcasillas                         |
-
-: {tbl-colwidths="[25,75]"}
-
-## References {visibility="uncounted"}
-
-

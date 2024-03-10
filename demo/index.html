@@ -6,6 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Joseph V. Casillas">
+<meta name="dcterms.date" content="2024-03-10">
 
 <title>Data visualization for linguists</title>
 <style>
@@ -67,8 +69,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<link href="index_files/libs/quarto-contrib/fontawesome6-0.1.0/all.css" rel="stylesheet">
-<link href="index_files/libs/quarto-contrib/fontawesome6-0.1.0/latex-fontsize.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/editor/editor.main.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
   
@@ -213,7 +213,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 // Document level settings ----
 
 // Determine if we need to install R packages
-globalThis.qwebrInstallRPackagesList = ['ggplot2', 'dplyr'];
+globalThis.qwebrInstallRPackagesList = ['ggplot2', 'dplyr', 'tidyr', 'here', 'Hmisc'];
 
 // Specify possible locations to search for the repository
 globalThis.qwebrPackageRepoURLS = ['https://repo.r-wasm.org/'];
@@ -235,7 +235,7 @@ globalThis.qwebrCustomizedWebROptions = {
 };
 
 // Store cell data
-globalThis.qwebrCellDetails = [{"id":1,"code":"\nggplot(mtcars) + \n  aes(x = drat, y = mpg) + \n  geom_point()","options":{"results":"markup","output":"true","fig-width":7,"fig-cap":"","out-width":"700px","context":"interactive","warning":"true","dpi":72,"fig-height":5,"read-only":"false","autorun":"false","comment":"","classes":"","out-height":"","label":"unnamed-chunk-1","message":"true"}},{"id":2,"code":"# Link to data\nlink <- url(\"https://github.com/jvcasillas/dv4ss/raw/main/misc/new_data.RDS\")\n\n# Load data\nnew_data <- readRDS(link)\n\n# Examin data\nhead(new_data)\nsummary(new_data)","options":{"results":"markup","output":"true","fig-width":7,"fig-cap":"","out-width":"700px","context":"interactive","warning":"true","dpi":72,"fig-height":5,"read-only":"false","autorun":"false","comment":"","classes":"","out-height":"","label":"load-data","message":"true"}},{"id":3,"code":"# Continuous variable on the x-axis\nggplot(\n  data = new_data, \n  mapping = aes(x = score)\n) + \n  geom_histogram() ","options":{"context":"interactive","results":"markup","fig-height":5,"output-location":"column","comment":"","fig-width":7,"fig.asp":"1","fig-cap":"","out-width":"700px","dpi":72,"code-line-numbers":"3|4|6","message":"true","read-only":"false","label":"p-histogram-ex-beg","out-height":"","classes":"","autorun":"false","output":"true","warning":"true"}}];
+globalThis.qwebrCellDetails = [{"options":{"warning":"true","output":"true","fig-width":7,"label":"unnamed-chunk-1","context":"setup","dpi":72,"comment":"","out-width":"700px","autorun":"true","read-only":"false","message":"true","results":"markup","fig-cap":"","out-height":"","classes":"","fig-height":5},"id":1,"code":"\n# Get data file\ndownload.file(\n  \"https://raw.githubusercontent.com/jvcasillas/dv4ss/main/misc/new_data.csv\",\n  \"new_data.csv\"\n  )"},{"options":{"warning":"true","output":"true","fig-width":7,"label":"examine-data-ex","context":"interactive","dpi":72,"comment":"","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","out-height":"","classes":"","fig-height":5},"id":2,"code":"# Examine data\nhead(new_data)\nsummary(new_data)"},{"options":{"warning":"true","output":"true","dpi":72,"out-height":"","classes":"","fig-height":5,"comment":"","fig-asp":"1","label":"p-histogram-ex-beg","context":"interactive","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","fig-width":7},"id":3,"code":"# Continuous variable on the x-axis\nggplot(\n  data = new_data, \n  mapping = aes(x = score)\n) + \n  geom_histogram() "},{"options":{"warning":"true","output":"true","dpi":72,"out-height":"","classes":"","fig-height":5,"comment":"","fig-asp":"1","label":"p-histogram-ex-int","context":"interactive","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","fig-width":7},"id":4,"code":"# Streamline code and adjust options\nggplot(new_data) + \n  aes(x = score) + \n  geom_histogram(\n    color = \"black\", \n    fill = \"grey70\", \n    bins = 9\n  ) + \n  theme_bw(\n    base_size = 12, \n    base_family = \"Palatino\"\n  )"},{"options":{"warning":"true","output":"true","dpi":72,"out-height":"","classes":"","fig-height":5,"comment":"","fig-asp":"1","label":"p-scatterplot-ex-beg","context":"interactive","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","fig-width":7},"id":5,"code":"# Continuous variables on both axis\nggplot(\n  data = new_data, \n  mapping = aes(x = proficiency, y = score)\n) + \n  geom_point() "},{"options":{"warning":"true","output":"true","dpi":72,"out-height":"","classes":"","fig-height":5,"comment":"","fig-asp":"1","label":"p-scatterplot-ex-int","context":"interactive","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","fig-width":7},"id":6,"code":"# Include aesthetic mapping from inside geom_point()\nggplot(new_data) + \n  aes(x = proficiency, y = score) + \n  geom_point(aes(color = group), size = 4) + \n  theme_minimal(\n    base_size = 12, \n    base_family = \"Palatino\"\n  ) + \n  theme(legend.position = c(.15, .85))"},{"options":{"warning":"true","output":"true","dpi":72,"out-height":"","classes":"","fig-height":5,"comment":"","fig-asp":"1","label":"p-scatterplot-ex-adv","context":"interactive","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","fig-width":7},"id":7,"code":"# Adjust colors, add regression line\nggplot(new_data) + \n  aes(x = proficiency, y = score) + \n  geom_point(\n    aes(fill = group), \n    size = 4, pch = 21\n  ) + \n  geom_smooth(method = lm, formula = \"y ~ x\") + \n  scale_fill_viridis_d(\n    name = NULL, \n    option = \"E\", \n    begin = 0.4, end = 0.8\n  ) + \n  theme_minimal(\n    base_size = 12, \n    base_family = \"Palatino\"\n  ) + \n  theme(legend.position = c(.15, .85))"},{"options":{"warning":"true","output":"true","dpi":72,"out-height":"","classes":"","fig-height":5,"comment":"","fig-asp":"1","label":"p-boxplot-ex-beg","context":"interactive","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","fig-width":7},"id":8,"code":"# Try a different geom\nggplot(\n  data = new_data, \n  mapping = aes(x = group, y = score)\n) + \n  geom_boxplot() "},{"options":{"warning":"true","output":"true","dpi":72,"out-height":"","classes":"","fig-height":5,"comment":"","fig-asp":"1","label":"p-boxplot-ex-int","context":"interactive","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","fig-width":7},"id":9,"code":"# Adjust colors, new theme\nggplot(new_data) + \n  aes(x = group, y = score, fill = group) + \n  geom_boxplot() + \n  scale_fill_viridis_d(begin = 0.3, end = 0.8) + \n  theme_classic(base_size = 12, base_family = \"Palatino\") + \n  theme(legend.position = c(0.8, 0.85))"},{"options":{"warning":"true","output":"true","dpi":72,"out-height":"","classes":"","fig-height":5,"comment":"","fig-asp":"1","label":"p-boxplot-ex-adv","context":"interactive","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","fig-width":7},"id":10,"code":"# Overlay raw data\nggplot(new_data) + \n  aes(x = group, y = score) + \n  geom_boxplot(aes(fill = group), show.legend = F) + \n  geom_jitter(\n    height = 0, width = 0.2, \n    size = 4, alpha = 0.4\n  ) + \n  scale_fill_viridis_d(\n    name = NULL, \n    begin = 0.3, end = 0.8\n  ) + \n  labs(x = NULL) + \n  theme_classic(base_size = 12, base_family = \"Palatino\") "},{"options":{"warning":"true","output":"true","dpi":72,"out-height":"","classes":"","fig-height":5,"comment":"","fig-asp":"1","label":"p-point-estimate-spread-ex-beg","context":"interactive","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","fig-width":7},"id":11,"code":"# Point estimate can be mean, median, mode, \n# Spread can be SD, SE, 95% CI, etc.\nggplot(\n  data = new_data, \n  mapping = aes(x = group, y = score) \n) + \n  stat_summary(\n    fun.data = mean_sdl, \n    geom = 'pointrange', \n    size = 1, \n    linewidth = 1\n  ) "},{"options":{"warning":"true","output":"true","dpi":72,"out-height":"","classes":"","fig-height":5,"comment":"","fig-asp":"1","label":"p-point-estimate-spread-ex-int","context":"interactive","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","fig-width":7},"id":12,"code":"# Customize, add caption\nggplot(new_data) + \n  aes(x = group, y = score) + \n  geom_point(alpha = 0.3, size = 4) + \n  stat_summary(\n    fun.data = mean_cl_boot, \n    geom = 'pointrange', \n    size = 2, \n    linewidth = 1\n  ) + \n  labs(caption = \"Mean ±95% CI\") + \n  theme_minimal(base_size = 12, base_family = \"Palatino\")"},{"options":{"warning":"true","output":"true","dpi":72,"out-height":"","classes":"","fig-height":5,"comment":"","fig-asp":"1","label":"p-point-estimate-spread-ex-adv","context":"interactive","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","fig-width":7},"id":13,"code":"# Customize points and gridlines, add jitter\nggplot(new_data) + \n  aes(x = group, y = score) + \n  geom_jitter(\n    height = 0, width = 0.2, \n    alpha = 0.3, size = 3\n  ) + \n  stat_summary(\n    aes(fill = group), \n    fun.data = mean_se, \n    geom = 'pointrange', \n    size = 1, linewidth = 1, \n    pch = 21, show.legend = F\n  ) + \n  labs(y = \"Score\", x = NULL, caption = \"Mean ±SE\") + \n  scale_fill_viridis_d(\n    option = \"A\", begin = 0.3, end = 0.7\n  ) + \n  theme_minimal(\n    base_size = 12, base_family = \"Palatino\"\n  ) + \n  theme(\n    axis.title.y = element_text(size = rel(0.9), hjust = 0.95),\n    axis.title.x = element_text(size = rel(0.9), hjust = 0.95),\n    panel.grid.major = element_line(color = 'grey80', linewidth = 0.15),\n    panel.grid.minor = element_line(color = 'grey80', linewidth = 0.15)\n  )"},{"options":{"warning":"true","output":"true","fig-width":7,"label":"p-shapes-ex1","context":"interactive","dpi":72,"comment":"","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","out-height":"","classes":"","fig-height":"3"},"id":14,"code":"ggplot(\n  data = new_data, \n  mapping = aes(x = proficiency, y = score)\n) + \n  facet_grid(. ~ age) + \n  geom_point()"},{"options":{"warning":"true","output":"true","fig-width":7,"label":"p-shapes-ex2","context":"interactive","dpi":72,"comment":"","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","out-height":"","classes":"","fig-height":"5"},"id":15,"code":"ggplot(\n  data = new_data, \n  mapping = aes(\n    x = age, y = score\n  )\n) + \n  facet_grid(group ~ .) + \n  geom_boxplot()"},{"options":{"warning":"true","output":"true","fig-width":7,"label":"blank-console","context":"interactive","dpi":72,"comment":"","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","out-height":"","classes":"","fig-height":5},"id":16,"code":"ggplot(\n  data = new_data, \n  mapping = aes()\n) + \n\n\n\n"},{"options":{"warning":"true","output":"true","fig-width":7,"label":"solution1","context":"interactive","dpi":72,"comment":"","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","out-height":"","classes":"","fig-height":5},"id":17,"code":"# Boxplot with a variable mapped to the `fill` aesthetic\nggplot(\n  data = new_data, \n  mapping = aes(x = group, y = score, fill = group)\n) + \n  geom_boxplot()"},{"options":{"warning":"true","output":"true","fig-width":7,"label":"solution2","context":"interactive","dpi":72,"comment":"","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","out-height":"","classes":"","fig-height":5},"id":18,"code":"# Boxplot with a variable mapped to `color` aesthetic and a horizontal facet\nggplot(\n  data = new_data, \n  mapping = aes(x = group, y = score, color = group)\n) + \n  facet_grid(. ~ age) + \n  geom_boxplot() "},{"options":{"warning":"true","output":"true","fig-width":7,"label":"solution3","context":"interactive","dpi":72,"comment":"","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","out-height":"","classes":"","fig-height":5},"id":19,"code":"# Scatterplot with regression line (see `?geom_smooth`)\nggplot(\n  data = new_data, \n  mapping = aes(x = proficiency, y = score)\n) + \n  geom_point() + \n  geom_smooth(method = \"lm\", formula = \"y ~ x\")"},{"options":{"warning":"true","output":"true","fig-width":7,"label":"solution4","context":"interactive","dpi":72,"comment":"","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","out-height":"","classes":"","fig-height":5},"id":20,"code":"# Scatterplot with regression line and categorical factor (try aesthetic `shape`)\nggplot(\n  data = new_data, \n  mapping = aes(x = proficiency, y = score)\n) + \n  geom_point(aes(shape = group)) + \n  geom_smooth(method = \"lm\", formula = \"y ~ x\")"},{"options":{"warning":"true","output":"true","fig-width":7,"label":"solution5","context":"interactive","dpi":72,"comment":"","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","out-height":"","classes":"","fig-height":5},"id":21,"code":"# Histogram of `proficiency`\nggplot(\n  data = new_data, \n  mapping = aes(x = proficiency)\n) + \n  geom_histogram(color = \"black\", fill = \"grey\", bins = 7)"},{"options":{"warning":"true","output":"true","fig-width":7,"label":"solution6","context":"interactive","dpi":72,"comment":"","out-width":"700px","autorun":"false","read-only":"false","message":"true","results":"markup","fig-cap":"","out-height":"","classes":"","fig-height":5},"id":22,"code":"# `geom_violin()` (replacement for geom_boxplot)\nggplot(\n  data = new_data, \n  mapping = aes(x = group, y = score, shape = group)\n) + \n  geom_point() + \n  geom_violin(fill = NA)"}];
 
 </script>
 <script type="module">
@@ -1145,7 +1145,19 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Joseph V. Casillas </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">March 10, 2024</p>
+    </div>
+  </div>
   
     
   </div>
@@ -1155,84 +1167,36 @@ globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
 </header>
 
 
-<div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggplot2"</span>)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"dplyr"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'dplyr'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:stats':
-
-    filter, lag</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:base':
-
-    intersect, setdiff, setequal, union</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyr"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"here"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>here() starts at /Users/casillas/academia/teaching/workshops/dv4ss</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"brms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: Rcpp</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading 'brms' package (version 2.20.4). Useful instructions
-can be found by typing help('brms'). A more detailed introduction
-to the package is available through vignette('brms_overview').</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'brms'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following object is masked from 'package:stats':
-
-    ar</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"marginaleffects"</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggdist"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>
-Attaching package: 'ggdist'</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>The following objects are masked from 'package:brms':
-
-    dstudent_t, pstudent_t, qstudent_t, rstudent_t</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>link <span class="ot">&lt;-</span> <span class="fu">url</span>(<span class="st">"https://github.com/jvcasillas/dv4ss/raw/main/misc/new_data.RDS"</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>new_data <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(link)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <div id="qwebr-insertion-location-1"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+<section id="walkthrough-with-ggplot2" class="level1">
+<h1>Walkthrough with <code>ggplot2</code> <img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png" data-top="0" data-right="0" width="50" height="50"></h1>
+<p>This tutorial serves as a compliment to the <a href="https://www.jvcasillas.com/dv4ss/slides/ua/index.html">slides</a>.</p>
+</section>
+<section id="setup" class="level1">
+<h1>Setup</h1>
+<p>These are some of the packages we will use. Note: you do not need to install them for this demo.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"dplyr"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyr"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"here"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"brms"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"marginaleffects"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
 <section id="it-starts-with-data" class="level1">
 <h1>It starts with data</h1>
-<ul>
-<li>Let’s take a look at a dataframe</li>
-<li>Try using <code>head(new_data)</code> and <code>summary(new_data)</code></li>
-<li>What kind of information did you learn about the dataframe?</li>
-</ul>
+<p>Let’s take a look at a data set we will use in this demo. Try using <code>head(new_data)</code> and <code>summary(new_data)</code>. What kind of information can you learn about the dataframe?</p>
 <div id="qwebr-insertion-location-2"></div>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
-</section>
-<section id="walkthrough-with-ggplot2" class="level1">
-<h1>Walkthrough with <span style="color: blue;">ggplot2</span></h1>
-<p><img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png" class="absolute" data-top="200" data-right="0" height="400"></p>
-<section id="lets-revist-some-basic-plots" class="level2">
-<h2 class="anchored" data-anchor-id="lets-revist-some-basic-plots">Let’s revist some basic plots</h2>
+<p>Let’s revist some basic plots</p>
 <ul>
 <li>Histogram</li>
 <li>Scatterplots</li>
 <li>Boxplots</li>
 <li>Point estimate + spread</li>
 </ul>
-</section>
 <section id="histogram" class="level2">
 <h2 class="anchored" data-anchor-id="histogram">Histogram</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -1243,182 +1207,52 @@ Attaching package: 'ggdist'</code></pre>
 <noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<div class="cell" data-output-location="column">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Streamline code and adjust options</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_data) <span class="sc">+</span> </span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> score) <span class="sc">+</span> </span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span>, </span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"grey70"</span>, </span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">bins =</span> <span class="dv">9</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_size =</span> <span class="dv">30</span>, </span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_family =</span> <span class="st">"Palatino"</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/p-histogram-ex-int-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<div id="qwebr-insertion-location-4"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 </div>
 </div>
 </section>
-<section id="scatterplot" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="scatterplot">Scatterplot</h2>
+<section id="scatterplot" class="level2">
+<h2 class="anchored" data-anchor-id="scatterplot">Scatterplot</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Beginner</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Intermediate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Advanced</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<div class="cell" data-output-location="column">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Continuous variables on both axis</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">ggplot</span>(</span>
-<span id="cb17-3"><a href="#cb17-3"></a>  <span class="at">data =</span> new_data, </span>
-<span id="cb17-4"><a href="#cb17-4"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score)</span>
-<span id="cb17-5"><a href="#cb17-5"></a>) <span class="sc">+</span> </span>
-<span id="cb17-6"><a href="#cb17-6"></a>  <span class="fu">geom_point</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/p-scatterplot-ex-beg-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<div id="qwebr-insertion-location-5"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<div class="cell" data-output-location="column">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include aesthetic mapping from inside</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># geom_point()</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_data) <span class="sc">+</span> </span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score) <span class="sc">+</span> </span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> group), <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span> </span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(</span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_size =</span> <span class="dv">30</span>, </span>
-<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_family =</span> <span class="st">"Palatino"</span></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">15</span>, .<span class="dv">85</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: A numeric `legend.position` argument in `theme()` was deprecated in ggplot2
-3.5.0.
-ℹ Please use the `legend.position.inside` argument of `theme()` instead.</code></pre>
-</div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/p-scatterplot-ex-int-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<div id="qwebr-insertion-location-6"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
-<div class="cell" data-output-location="column">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust colors</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Add regression line</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_data) <span class="sc">+</span> </span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score) <span class="sc">+</span> </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> group), </span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span>, <span class="at">pch =</span> <span class="dv">21</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> lm, <span class="at">formula =</span> <span class="st">"y ~ x"</span>) <span class="sc">+</span> </span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NULL</span>, </span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">option =</span> <span class="st">"E"</span>, </span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">begin =</span> <span class="fl">0.4</span>, <span class="at">end =</span> <span class="fl">0.8</span></span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(</span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_size =</span> <span class="dv">30</span>, </span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_family =</span> <span class="st">"Palatino"</span></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">15</span>, .<span class="dv">85</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/p-scatterplot-ex-adv-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<div id="qwebr-insertion-location-7"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 </div>
 </div>
 </section>
-<section id="boxplot-box-and-whisker-plot" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="boxplot-box-and-whisker-plot">Boxplot (box and whisker plot)</h2>
+<section id="boxplot-box-and-whisker-plot" class="level2">
+<h2 class="anchored" data-anchor-id="boxplot-box-and-whisker-plot">Boxplot (box and whisker plot)</h2>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Beginner</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Intermediate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Advanced</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<div class="cell" data-output-location="column">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Try a different geom</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> new_data, </span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score)</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span> </span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/p-boxplot-ex-beg-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<div id="qwebr-insertion-location-8"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<div class="cell" data-output-location="column">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust colors, new theme</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_data) <span class="sc">+</span> </span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score, <span class="at">fill =</span> group) <span class="sc">+</span> </span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> <span class="fl">0.3</span>, <span class="at">end =</span> <span class="fl">0.8</span>) <span class="sc">+</span> </span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">30</span>) <span class="sc">+</span> </span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.85</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/p-boxplot-ex-int-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<div id="qwebr-insertion-location-9"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
-<div class="cell" data-output-location="column">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Overlay raw data</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_data) <span class="sc">+</span> </span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score) <span class="sc">+</span> </span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> group), <span class="at">show.legend =</span> F) <span class="sc">+</span> </span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">height =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="fl">0.2</span>, </span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span>, <span class="at">alpha =</span> <span class="fl">0.4</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(</span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">name =</span> <span class="cn">NULL</span>, </span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">begin =</span> <span class="fl">0.3</span>, <span class="at">end =</span> <span class="fl">0.8</span></span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="cn">NULL</span>) <span class="sc">+</span> </span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">30</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/p-boxplot-ex-adv-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div id="qwebr-insertion-location-10"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
-</section>
-<section id="section" class="level2" data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_iqr.png" data-background-size="contain" data-menu-title="What's a boxplot anyway?">
-<h2 data-background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_iqr.png" data-background-size="contain" data-menu-title="What's a boxplot anyway?" class="anchored" data-anchor-id="section"></h2>
+<p>Need a refresher regarding what a boxplot is? See <a href="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_iqr.png">here</a>.</p>
 </section>
 <section id="a-better-way-point-estimate-spread" class="level2 smaller">
 <h2 class="smaller anchored" data-anchor-id="a-better-way-point-estimate-spread">A better way… point estimate + spread</h2>
@@ -1426,238 +1260,134 @@ Attaching package: 'ggdist'</code></pre>
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Beginner</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Intermediate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Advanced</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<div class="cell" data-output-location="column">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Point estimate can be mean, median, mode, </span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Spread can be SD, SE, 95% CI, etc.</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> new_data, </span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score) </span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span> </span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun.data =</span> mean_sdl, </span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">'pointrange'</span>, </span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">2</span>, </span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">2</span></span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/p-point-estimate-spread-ex-beg-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<div id="qwebr-insertion-location-11"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<div class="cell" data-output-location="column">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Customize, add caption</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_data) <span class="sc">+</span> </span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score) <span class="sc">+</span> </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">size =</span> <span class="dv">4</span>) <span class="sc">+</span> </span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun.data =</span> mean_cl_boot, </span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">'pointrange'</span>, </span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">4</span>, </span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">2</span></span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">"Mean ±95% CI"</span>) <span class="sc">+</span> </span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/p-point-estimate-spread-ex-int-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<div id="qwebr-insertion-location-12"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
-<div class="cell" data-output-location="column">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Customize points and gridlines, add jitter</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(new_data) <span class="sc">+</span> </span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> group, <span class="at">y =</span> score) <span class="sc">+</span> </span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_jitter</span>(</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">height =</span> <span class="dv">0</span>, <span class="at">width =</span> <span class="fl">0.2</span>, </span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">alpha =</span> <span class="fl">0.3</span>, <span class="at">size =</span> <span class="dv">4</span></span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(</span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">fill =</span> group), </span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">fun.data =</span> mean_se, </span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">'pointrange'</span>, </span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">linewidth =</span> <span class="dv">2</span>, </span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">show.legend =</span> F</span>
-<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"Score"</span>, <span class="at">x =</span> <span class="cn">NULL</span>, <span class="at">caption =</span> <span class="st">"Mean ±SE"</span>) <span class="sc">+</span> </span>
-<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(</span>
-<span id="cb26-17"><a href="#cb26-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">option =</span> <span class="st">"A"</span>, <span class="at">begin =</span> <span class="fl">0.2</span>, <span class="at">end =</span> <span class="fl">0.6</span></span>
-<span id="cb26-18"><a href="#cb26-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb26-19"><a href="#cb26-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(</span>
-<span id="cb26-20"><a href="#cb26-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_size =</span> <span class="dv">30</span>, <span class="at">base_family =</span> <span class="st">"Palatino"</span></span>
-<span id="cb26-21"><a href="#cb26-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb26-22"><a href="#cb26-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
-<span id="cb26-23"><a href="#cb26-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">0.9</span>), <span class="at">hjust =</span> <span class="fl">0.95</span>),</span>
-<span id="cb26-24"><a href="#cb26-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="fu">rel</span>(<span class="fl">0.9</span>), <span class="at">hjust =</span> <span class="fl">0.95</span>),</span>
-<span id="cb26-25"><a href="#cb26-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'grey80'</span>, <span class="at">linewidth =</span> <span class="fl">0.15</span>),</span>
-<span id="cb26-26"><a href="#cb26-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">'grey80'</span>, <span class="at">linewidth =</span> <span class="fl">0.15</span>)</span>
-<span id="cb26-27"><a href="#cb26-27" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/p-point-estimate-spread-ex-adv-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<div id="qwebr-insertion-location-13"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 </div>
 </div>
 </section>
 <section id="faceting" class="level2">
 <h2 class="anchored" data-anchor-id="faceting">Faceting</h2>
-<ul>
-<li><p>What about when we want to see more factors at once?</p></li>
-<li><p>For example, what if we want to see <strong>score</strong> as a function of <strong>proficiency</strong> and <strong>age</strong>?</p></li>
-<li><p>We use <code>facet_wrap()</code> or <code>facet_grid()</code> to create facets</p></li>
-</ul>
+<p>What about when we want to see more factors at once? For example, what if we want to see <strong>score</strong> as a function of <strong>proficiency</strong> and <strong>age</strong>? We use <code>facet_wrap()</code> or <code>facet_grid()</code> to create facets</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Horizontal</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Vertical</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div id="qwebr-insertion-location-14"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div id="qwebr-insertion-location-15"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="more-exercises" class="level1">
+<h1>More exercises</h1>
+<p>Want to challenge yourself a bit more? Using <code>new_data</code>, create the following:</p>
+<ol type="1">
+<li>a boxplot with a variable mapped to the <code>fill</code> aesthetic</li>
+<li>a boxplot with a variable mapped to the <code>color</code> aesthetic and a horizontal facet</li>
+<li>a scatterplot with a regression line (see <code>?geom_smooth</code>)</li>
+<li>a scatterplot with a regression line (see <code>?geom_smooth</code>) and a categorical factor (try the aesthetic <code>shape</code>)</li>
+<li>a histogram of <code>proficiency</code></li>
+<li>What does <code>geom_violin()</code> do? What geom can it replace?</li>
+</ol>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Practice here</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-4" role="tab" aria-controls="tabset-6-4" aria-selected="false" href="">Solution 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-5" role="tab" aria-controls="tabset-6-5" aria-selected="false" href="">Solution 4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-6" role="tab" aria-controls="tabset-6-6" aria-selected="false" href="">Solution 5</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-7" role="tab" aria-controls="tabset-6-7" aria-selected="false" href="">Solution 6</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div id="qwebr-insertion-location-16"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div id="qwebr-insertion-location-17"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<div id="qwebr-insertion-location-18"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+<div id="tabset-6-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-4-tab">
+<div id="qwebr-insertion-location-19"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+<div id="tabset-6-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-5-tab">
+<div id="qwebr-insertion-location-20"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+<div id="tabset-6-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-6-tab">
+<div id="qwebr-insertion-location-21"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+<div id="tabset-6-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-7-tab">
+<div id="qwebr-insertion-location-22"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
+</div>
+</div>
+</div>
+</section>
+<section id="next-level-raw-data-model-estimates" class="level1">
+<h1>Next level… raw data + model estimates</h1>
+<p>Let’s explore another example in which we plot raw data along with some type of summary from a statistical model. For this example we will fit a Bayesian regression model exploring <code>score</code> as a function of <code>proficiency</code>. In truth, the model was fit behind the scenes and loaded for you, but we did this using the following code:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb27-2"><a href="#cb27-2"></a>  <span class="at">data =</span> new_data, </span>
-<span id="cb27-3"><a href="#cb27-3"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score)</span>
-<span id="cb27-4"><a href="#cb27-4"></a>) <span class="sc">+</span> </span>
-<span id="cb27-5"><a href="#cb27-5"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> age) <span class="sc">+</span> </span>
-<span id="cb27-6"><a href="#cb27-6"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit bayesian regression model</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">formula =</span> score <span class="sc">~</span> proficiency, <span class="at">family =</span> <span class="fu">Beta</span>(), <span class="at">data =</span> new_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="section-1" class="level2" data-title-menu="Faceting ex. 1">
-<h2 data-title-menu="Faceting ex. 1" class="anchored" data-anchor-id="section-1"></h2>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb28-2"><a href="#cb28-2"></a>  <span class="at">data =</span> new_data, </span>
-<span id="cb28-3"><a href="#cb28-3"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> score)</span>
-<span id="cb28-4"><a href="#cb28-4"></a>) <span class="sc">+</span> </span>
-<span id="cb28-5"><a href="#cb28-5"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> age) <span class="sc">+</span> </span>
-<span id="cb28-6"><a href="#cb28-6"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="index_files/figure-html/p-shapes-ex1-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="section-2" class="level2" data-title-menu="Faceting ex. 2">
-<h2 data-title-menu="Faceting ex. 2" class="anchored" data-anchor-id="section-2"></h2>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">ggplot</span>(</span>
-<span id="cb29-2"><a href="#cb29-2"></a>  <span class="at">data =</span> new_data, </span>
-<span id="cb29-3"><a href="#cb29-3"></a>  <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
-<span id="cb29-4"><a href="#cb29-4"></a>    <span class="at">x =</span> age, <span class="at">y =</span> score</span>
-<span id="cb29-5"><a href="#cb29-5"></a>  )</span>
-<span id="cb29-6"><a href="#cb29-6"></a>) <span class="sc">+</span> </span>
-<span id="cb29-7"><a href="#cb29-7"></a>  <span class="fu">facet_grid</span>(group <span class="sc">~</span> .) <span class="sc">+</span> </span>
-<span id="cb29-8"><a href="#cb29-8"></a>  <span class="fu">geom_boxplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="quarto-layout-panel" data-layout="[[-1], [1], [-1]]">
-<div class="quarto-layout-row">
-<div class="quarto-figure-spacer quarto-layout-cell" style="flex-basis: 100.0%;justify-content: flex-start;">
-<p>&nbsp;</p>
-</div>
-</div>
-<div class="quarto-layout-row">
-<div class="cell quarto-layout-cell" data-output-location="column" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/p-shapes-ex2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="more-exercises" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="more-exercises">More exercises</h2>
-<p>Using <code>new_data</code>, create the following</p>
-<ul>
-<li><p>a boxplot with a variable mapped to the <code>fill</code> aesthetic</p></li>
-<li><p>a boxplot with a variable mapped to the <code>color</code> aesthetic and a horizontal facet</p></li>
-<li><p>a scatterplot with a regression line (see <code>?geom_smooth</code>)</p></li>
-<li><p>a scatterplot with a regression line (see <code>?geom_smooth</code>) and a categorical factor (try the aesthetic <code>shape</code>)</p></li>
-<li><p>a histogram of <code>proficiency</code></p></li>
-<li><p>What does <code>geom_violin()</code> do? What geom can it replace?</p></li>
-</ul>
-</section>
-<section id="next-level-raw-data-model-estimates" class="level2 smaller" data-background-color="black">
-<h2 class="smaller anchored" data-background-color="black" data-anchor-id="next-level-raw-data-model-estimates"><span class="emph">Next level… raw data + model estimates</span></h2>
-<p>Let’s fit a model.</p>
+<p>Now we plot the raw data and use the <code>marginaleffects</code> package to sample from the posterior predictive distribution.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load some additional libraries</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"brms"</span>); <span class="fu">library</span>(<span class="st">"emmeans"</span>); <span class="fu">library</span>(<span class="st">"tidybayes"</span>)</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit bayesian regression model</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>mod <span class="ot">&lt;-</span> <span class="fu">brm</span>(<span class="at">formula =</span> score <span class="sc">~</span> proficiency, <span class="at">family =</span> <span class="fu">Beta</span>(), <span class="at">data =</span> new_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p>Now we plot the raw data and the posterior predictive distribution</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  mod, </span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> <span class="fu">datagrid</span>(</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">proficiency =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">0.1</span>)</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">posterior_draws</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">drawid =</span> <span class="fu">as.numeric</span>(drawid)) <span class="sc">|&gt;</span> </span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(drawid <span class="sc">&lt;</span> <span class="dv">300</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> draw) <span class="sc">+</span> </span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> drawid), <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">color =</span> <span class="st">"#cc0033"</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb31-15"><a href="#cb31-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> new_data, <span class="fu">aes</span>(<span class="at">y =</span> score), </span>
-<span id="cb31-16"><a href="#cb31-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"grey30"</span></span>
-<span id="cb31-17"><a href="#cb31-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
-<span id="cb31-18"><a href="#cb31-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb31-19"><a href="#cb31-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Score"</span>, <span class="at">x =</span> <span class="st">"Proficiency"</span>, </span>
-<span id="cb31-20"><a href="#cb31-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Scores as a function of proficiency"</span>, </span>
-<span id="cb31-21"><a href="#cb31-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"300 draws from the posterior predictive distribution"</span></span>
-<span id="cb31-22"><a href="#cb31-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
-<span id="cb31-23"><a href="#cb31-23" aria-hidden="true" tabindex="-1"></a>  ggdark<span class="sc">::</span><span class="fu">dark_theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>, <span class="at">base_family =</span> <span class="st">"Palatino"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Inverted geom defaults of fill and color/colour.
-To change them back, use invert_geom_defaults().</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predictions</span>(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  mod, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">newdata =</span> <span class="fu">datagrid</span>(</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">proficiency =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">0.1</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">posterior_draws</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">drawid =</span> <span class="fu">as.numeric</span>(drawid)) <span class="sc">|&gt;</span> </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(drawid <span class="sc">&lt;</span> <span class="dv">300</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">x =</span> proficiency, <span class="at">y =</span> draw) <span class="sc">+</span> </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> drawid), <span class="at">alpha =</span> <span class="fl">0.1</span>) <span class="sc">+</span> </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun =</span> mean, <span class="at">geom =</span> <span class="st">"line"</span>, <span class="at">color =</span> <span class="st">"#cc0033"</span>, <span class="at">linewidth =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> new_data, <span class="fu">aes</span>(<span class="at">y =</span> score), </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="dv">3</span>, <span class="at">pch =</span> <span class="dv">21</span>, <span class="at">fill =</span> <span class="st">"grey30"</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">+</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Score"</span>, <span class="at">x =</span> <span class="st">"Proficiency"</span>, </span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Scores as a function of proficiency"</span>, </span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"300 draws from the posterior predictive distribution"</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> </span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  ggdark<span class="sc">::</span><span class="fu">dark_theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">18</span>, <span class="at">base_family =</span> <span class="st">"Palatino"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="index_files/figure-html/model-est-brm-plot-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="index_files/figure-html/model-est-brm-plot-1.png" class="img-fluid figure-img" style="width:100.0%"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="section-3" class="level2" data-menu-title="Raw data + model estimates ex" data-background-color="black">
-<h2 data-menu-title="Raw data + model estimates ex" data-background-color="black" class="anchored" data-anchor-id="section-3"></h2>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="index_files/figure-html/model-est-brm-plot-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="review" class="level1 transition">
-<h1 class="transition">Review</h1>
+<section id="review" class="level1">
+<h1>Review</h1>
 <section id="good-principles" class="level2">
 <h2 class="anchored" data-anchor-id="good-principles">Good principles</h2>
 <ul>
-<li><p>Remember 💩</p></li>
-<li><p>Colorblind friendly palettes (e.g., <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html">viridis</a>)</p></li>
-<li><p>Highlight important things</p></li>
-<li><p>Help your target audience (reader)</p></li>
-<li><p>Plot raw data, and statistical summary or model estimates whenever possible</p></li>
+<li>Remember 💩</li>
+<li>Colorblind friendly palettes (e.g., <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html">viridis</a>)</li>
+<li>Highlight important things</li>
+<li>Help your target audience (reader)</li>
+<li>Plot raw data, and statistical summary or model estimates whenever possible</li>
 </ul>
 </section>
 <section id="bad-principles-according-to-the-internet" class="level2">
@@ -1684,70 +1414,15 @@ To change them back, use invert_geom_defaults().</code></pre>
 </div>
 </section>
 </section>
-<section id="take-a-bad-plot-and-make-it-better" class="level1 transition" data-visibility="uncounted">
-<h1 class="transition" data-visibility="uncounted">Take a bad plot and make it better</h1>
-<section id="section-4" class="level2" data-menu-title="Bad plots (revisited)">
-<h2 data-menu-title="Bad plots (revisited)" class="anchored" data-anchor-id="section-4"></h2>
-<div class="r-stack">
-<p><img src="../assets/img/bad_plot_1.png" width="750" height="650"></p>
-<p><img src="../assets/img/bad_plot_0.png" class="fragment" width="900" height="650"></p>
-<p><img src="../assets/img/bad_plot_2.png" class="fragment" width="1000" height="650"></p>
-</div>
-</section>
-</section>
-<section id="wrapping-up" class="level1" data-visibility="uncounted">
-<h1 data-visibility="uncounted">Wrapping up</h1>
-<section id="help-resources" class="level2 transition">
-<h2 class="transition anchored" data-anchor-id="help-resources">Help! (resources)</h2>
+<section id="help-resources" class="level1">
+<h1>Help! (resources)</h1>
 <ul>
-<li><p><a href="https://www.youtube.com/@simplpoints/videos">SimplPoints (Timo Roettger youtube channel))</a></p></li>
-<li><p><a href="https://datavizf23.classes.andrewheiss.com/syllabus.html">Data Visualization with R (course)</a></p></li>
-<li><p><a href="https://www.amazon.com/Truthful-Art-Data-Charts-Communication/dp/0321934075">The Truthful Art: Data, Charts, and Maps for Communication</a></p></li>
-<li><p><a href="http://socviz.co/">Data Visualization: A Practical Introduction</a></p></li>
-<li><p><a href="https://serialmentor.com/dataviz/">Fundamentals of Data Visualization</a></p></li>
+<li><a href="https://www.youtube.com/@simplpoints/videos">SimplPoints (Timo Roettger youtube channel))</a></li>
+<li><a href="https://datavizf23.classes.andrewheiss.com/syllabus.html">Data Visualization with R (course)</a></li>
+<li><a href="https://www.amazon.com/Truthful-Art-Data-Charts-Communication/dp/0321934075">The Truthful Art: Data, Charts, and Maps for Communication</a></li>
+<li><a href="http://socviz.co/">Data Visualization: A Practical Introduction</a></li>
+<li><a href="https://serialmentor.com/dataviz/">Fundamentals of Data Visualization</a></li>
 </ul>
-<div class="notes">
-<p><span class="citation" data-cites="healy2018data">@healy2018data</span> <span class="citation" data-cites="cairo2016truthful">@cairo2016truthful</span> <span class="citation" data-cites="wilke2019fundamentals">@wilke2019fundamentals</span></p>
-</div>
-</section>
-<section id="thanks" class="level2 final" data-visibility="uncounted">
-<h2 class="final anchored" data-visibility="uncounted" data-anchor-id="thanks">Thanks!</h2>
-<p><img src="https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/164.png" class="absolute" data-top="0" data-right="0" width="55" height="55"></p>
-<p><br></p>
-<section id="materials-available-here" class="level3">
-<h3 class="anchored" data-anchor-id="materials-available-here">Materials available here:</h3>
-</section>
-<section id="bit.lypsllt_2023" class="level3">
-<h3 class="anchored" data-anchor-id="bit.lypsllt_2023"><a href="https://bit.ly/psllt_2023">bit.ly/psllt_2023</a></h3>
-<table class="table">
-<colgroup>
-<col style="width: 25%">
-<col style="width: 75%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;"><a href="mailto:joseph.casillas@rutgers.edu"><i class="fa-solid fa-envelope" aria-label="envelope"></i></a></td>
-<td style="text-align: left;">joseph.casillas@rutgers.edu</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;"><a href="www.jvcasillas.com"><i class="fa-solid fa-link" aria-label="link"></i></a></td>
-<td style="text-align: left;">www.jvcasillas.com</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;"><a href="https://twitter.com/jvcasill"><i class="fa-brands fa-twitter" aria-label="twitter"></i></a></td>
-<td style="text-align: left;">@jvcasill</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;"><a href="https://github.com/jvcasillas"><i class="fa-brands fa-github" aria-label="github"></i></a></td>
-<td style="text-align: left;">@jvcasillas</td>
-</tr>
-</tbody>
-</table>
-</section>
-</section>
-<section id="references" class="level2" data-visibility="uncounted">
-<h2 data-visibility="uncounted" class="anchored" data-anchor-id="references">References</h2>
-</section>
 </section>
 
 </main>
