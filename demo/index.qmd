@@ -3,7 +3,9 @@ title: "Data visualization for linguists"
 subtitle: "Interactive demo"
 author: "Joseph V. Casillas"
 date: today
-format: html
+format:
+  html:
+    theme: united
 engine: knitr
 webr: 
   show-startup-message: true
