@@ -7,5 +7,17 @@
   },
   "slides/index.qmd": {
     "index.html": "8d446105"
+  },
+  "demo/index.qmd": {
+    "index.html": "b41f38e5"
+  },
+  "index2.qmd": {
+    "index2.html": "29bf7543"
+  },
+  "slides/psllt/index.qmd": {
+    "index.html": "8dbd1ad2"
+  },
+  "slides/ua/index.qmd": {
+    "index.html": "65bc36b4"
   }
 }

@@ -1,0 +1,557 @@
+---
+title: "Data visualization for linguists"
+subtitle: "Interactive demo"
+format: html
+engine: knitr
+webr: 
+  show-startup-message: true
+  packages: ['ggplot2', 'dplyr']
+filters: 
+  - webr
+---
+
+```{r}
+library("ggplot2")
+library("dplyr")
+library("tidyr")
+library("here")
+library("brms")
+library("marginaleffects")
+library("ggdist")
+link <- url("https://github.com/jvcasillas/dv4ss/raw/main/misc/new_data.RDS")
+new_data <- readRDS(link)
+```
+
+
+
+```{webr-r}
+#| context: interactive
+
+ggplot(mtcars) + 
+  aes(x = drat, y = mpg) + 
+  geom_point()
+```
+
+
+
+
+# It starts with data
+
+- Let's take a look at a dataframe
+- Try using `head(new_data)` and `summary(new_data)`
+- What kind of information did you learn about the dataframe?
+
+```{webr-r}
+#| label: load-data
+# Link to data
+link <- url("https://github.com/jvcasillas/dv4ss/raw/main/misc/new_data.RDS")
+
+# Load data
+new_data <- readRDS(link)
+
+# Examin data
+head(new_data)
+summary(new_data)
+```
+
+
+# Walkthrough with [ggplot2]{style="color: blue;"}
+
+![](https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png){.absolute top=200 right=0 width=400" height="400"}
+
+## Let's revist some basic plots
+
+- Histogram
+- Scatterplots
+- Boxplots
+- Point estimate + spread
+
+## Histogram 
+
+::: {.panel-tabset}
+
+### Beginner
+
+```{webr-r}
+#| label: p-histogram-ex-beg
+#| fig.asp: 1
+#| output-location: column
+#| code-line-numbers: "3|4|6"
+# Continuous variable on the x-axis
+ggplot(
+  data = new_data, 
+  mapping = aes(x = score)
+) + 
+  geom_histogram() 
+```
+
+### Intermediate
+
+```{r}
+#| label: p-histogram-ex-int
+#| fig.asp: 1
+#| output-location: column
+# Streamline code and adjust options
+ggplot(new_data) + 
+  aes(x = score) + 
+  geom_histogram(
+    color = "black", 
+    fill = "grey70", 
+    bins = 9
+  ) + 
+  theme_bw(
+    base_size = 30, 
+    base_family = "Palatino"
+  )
+```
+
+:::
+
+## Scatterplot {.smaller}
+
+::: {.panel-tabset}
+
+### Beginner
+
+```{r}
+#| label: p-scatterplot-ex-beg
+#| fig.asp: 1
+#| output-location: column
+#| code-line-numbers: "3|4|6"
+# Continuous variables on both axis
+ggplot(
+  data = new_data, 
+  mapping = aes(x = proficiency, y = score)
+) + 
+  geom_point() 
+```
+
+### Intermediate
+
+```{r}
+#| label: p-scatterplot-ex-int
+#| fig.asp: 1
+#| output-location: column
+# Include aesthetic mapping from inside
+# geom_point()
+ggplot(new_data) + 
+  aes(x = proficiency, y = score) + 
+  geom_point(aes(color = group), size = 4) + 
+  theme_minimal(
+    base_size = 30, 
+    base_family = "Palatino"
+  ) + 
+  theme(legend.position = c(.15, .85))
+```
+
+### Advanced
+
+```{r}
+#| label: p-scatterplot-ex-adv
+#| fig.asp: 1
+#| output-location: column
+# Adjust colors
+# Add regression line
+ggplot(new_data) + 
+  aes(x = proficiency, y = score) + 
+  geom_point(
+    aes(fill = group), 
+    size = 4, pch = 21
+  ) + 
+  geom_smooth(method = lm, formula = "y ~ x") + 
+  scale_fill_viridis_d(
+    name = NULL, 
+    option = "E", 
+    begin = 0.4, end = 0.8
+  ) + 
+  theme_minimal(
+    base_size = 30, 
+    base_family = "Palatino"
+  ) + 
+  theme(legend.position = c(.15, .85))
+```
+
+:::
+
+
+## Boxplot (box and whisker plot) {.smaller}
+
+::: {.panel-tabset}
+
+### Beginner
+
+```{r}
+#| label: p-boxplot-ex-beg
+#| fig.asp: 1
+#| output-location: column
+# Try a different geom
+ggplot(
+  data = new_data, 
+  mapping = aes(x = group, y = score)
+) + 
+  geom_boxplot() 
+```
+
+### Intermediate
+
+```{r}
+#| label: p-boxplot-ex-int
+#| fig.asp: 1
+#| output-location: column
+# Adjust colors, new theme
+ggplot(new_data) + 
+  aes(x = group, y = score, fill = group) + 
+  geom_boxplot() + 
+  scale_fill_viridis_d(begin = 0.3, end = 0.8) + 
+  theme_classic(base_size = 30) + 
+  theme(legend.position = c(0.8, 0.85))
+```
+
+### Advanced
+
+```{r}
+#| label: p-boxplot-ex-adv
+#| fig.asp: 1
+#| output-location: column
+# Overlay raw data
+ggplot(new_data) + 
+  aes(x = group, y = score) + 
+  geom_boxplot(aes(fill = group), show.legend = F) + 
+  geom_jitter(
+    height = 0, width = 0.2, 
+    size = 4, alpha = 0.4
+  ) + 
+  scale_fill_viridis_d(
+    name = NULL, 
+    begin = 0.3, end = 0.8
+  ) + 
+  labs(x = NULL) + 
+  theme_classic(base_size = 30) 
+```
+
+:::
+
+## {background-image="https://raw.githubusercontent.com/jvcasillas/media/master/rstats/memes/rstats_iqr.png" background-size="contain" data-menu-title="What's a boxplot anyway?"}
+
+## A better way... point estimate + spread {.smaller}
+
+::: {.panel-tabset}
+
+### Beginner
+
+```{r}
+#| label: p-point-estimate-spread-ex-beg
+#| fig.asp: 1
+#| output-location: column
+# Point estimate can be mean, median, mode, 
+# Spread can be SD, SE, 95% CI, etc.
+ggplot(
+  data = new_data, 
+  mapping = aes(x = group, y = score) 
+) + 
+  stat_summary(
+    fun.data = mean_sdl, 
+    geom = 'pointrange', 
+    size = 2, 
+    linewidth = 2
+  ) 
+```
+
+### Intermediate
+
+```{r}
+#| label: p-point-estimate-spread-ex-int
+#| fig.asp: 1
+#| output-location: column
+# Customize, add caption
+ggplot(new_data) + 
+  aes(x = group, y = score) + 
+  geom_point(alpha = 0.3, size = 4) + 
+  stat_summary(
+    fun.data = mean_cl_boot, 
+    geom = 'pointrange', 
+    size = 4, 
+    linewidth = 2
+  ) + 
+  labs(caption = "Mean ±95% CI") + 
+  theme_minimal(base_size = 30)
+```
+
+### Advanced
+
+```{r}
+#| label: p-point-estimate-spread-ex-adv
+#| fig.asp: 1
+#| output-location: column
+# Customize points and gridlines, add jitter
+ggplot(new_data) + 
+  aes(x = group, y = score) + 
+  geom_jitter(
+    height = 0, width = 0.2, 
+    alpha = 0.3, size = 4
+  ) + 
+  stat_summary(
+    aes(fill = group), 
+    fun.data = mean_se, 
+    geom = 'pointrange', 
+    size = 3, linewidth = 2, 
+    pch = 21, show.legend = F
+  ) + 
+  labs(y = "Score", x = NULL, caption = "Mean ±SE") + 
+  scale_fill_viridis_d(
+    option = "A", begin = 0.2, end = 0.6
+  ) + 
+  theme_minimal(
+    base_size = 30, base_family = "Palatino"
+  ) + 
+  theme(
+    axis.title.y = element_text(size = rel(0.9), hjust = 0.95),
+    axis.title.x = element_text(size = rel(0.9), hjust = 0.95),
+    panel.grid.major = element_line(color = 'grey80', linewidth = 0.15),
+    panel.grid.minor = element_line(color = 'grey80', linewidth = 0.15)
+  )
+```
+
+:::
+
+## Faceting
+
+- What about when we want to see more factors at once?
+
+- For example, what if we want to see **score** as a function of **proficiency** and **age**?
+
+- We use `facet_wrap()` or `facet_grid()` to create facets
+
+```{r}
+#| label: p-facets-ex
+#| code-line-numbers: "5"
+#| eval: false
+ggplot(
+  data = new_data, 
+  mapping = aes(x = proficiency, y = score)
+) + 
+  facet_grid(. ~ age) + 
+  geom_point()
+```
+
+## {data-title-menu="Faceting ex. 1"}
+
+```{r}
+#| label: p-shapes-ex1
+#| fig-align: 'center'
+#| code-line-numbers: "5"
+ggplot(
+  data = new_data, 
+  mapping = aes(x = proficiency, y = score)
+) + 
+  facet_grid(. ~ age) + 
+  geom_point()
+```
+
+## {data-title-menu="Faceting ex. 2"}
+
+::: {layout="[[-1], [1], [-1]]"}
+
+```{r}
+#| label: p-shapes-ex2
+#| code-line-numbers: "7"
+#| output-location: column
+#| fig.asp: 1
+#| fig-height: 10
+ggplot(
+  data = new_data, 
+  mapping = aes(
+    x = age, y = score
+  )
+) + 
+  facet_grid(group ~ .) + 
+  geom_boxplot()
+```
+
+:::
+
+## More exercises {.smaller}
+
+Using `new_data`, create the following
+
+- a boxplot with a variable mapped to the `fill` aesthetic
+
+- a boxplot with a variable mapped to the `color` aesthetic and a horizontal facet
+
+- a scatterplot with a regression line (see `?geom_smooth`)
+
+- a scatterplot with a regression line (see `?geom_smooth`) and a categorical factor (try the aesthetic `shape`)
+
+- a histogram of `proficiency`
+
+- What does `geom_violin()` do? What geom can it replace?
+
+
+## [Next level... raw data + model estimates]{.emph} {.smaller background-color="black"}
+
+```{r}
+#| label: model-est-brm
+#| echo: false
+
+mod <- brm(
+  formula = score ~ proficiency, 
+  family = Beta(), 
+  file = here("misc", "mod"), 
+  data = mutate(
+    new_data, score = if_else(score == 0, score + 0.001, score - 0.001)
+    )
+)
+```
+
+Let's fit a model. 
+```{r}
+#| label: model-est-brm-code
+#| eval: false
+#| echo: true
+# Load some additional libraries
+library("brms"); library("emmeans"); library("tidybayes")
+
+# Fit bayesian regression model
+mod <- brm(formula = score ~ proficiency, family = Beta(), data = new_data)
+```
+
+Now we plot the raw data and the posterior predictive distribution
+```{r}
+#| label: model-est-brm-plot
+#| echo: true
+#| output: 'hold'
+
+predictions(
+  mod, 
+  newdata = datagrid(
+    proficiency = seq(-2.5, 2.5, 0.1)
+  )
+) |>
+  posterior_draws() |> 
+  mutate(drawid = as.numeric(drawid)) |> 
+  filter(drawid < 300) |> 
+  ggplot() + 
+  aes(x = proficiency, y = draw) + 
+  geom_line(aes(group = drawid), alpha = 0.1) + 
+  stat_summary(fun = mean, geom = "line", color = "#cc0033", linewidth = 2) + 
+  geom_point(
+    data = new_data, aes(y = score), 
+    size = 3, pch = 21, fill = "grey30"
+    ) +
+  labs(
+    y = "Score", x = "Proficiency", 
+    title = "Scores as a function of proficiency", 
+    subtitle = "300 draws from the posterior predictive distribution"
+  ) + 
+  ggdark::dark_theme_minimal(base_size = 18, base_family = "Palatino")
+```
+
+## {data-menu-title="Raw data + model estimates ex" background-color="black"}
+
+```{r}
+#| label: model-est-brm-plot
+#| echo: false
+```
+
+
+
+
+
+# Review {.transition}
+
+## Good principles 
+
+- Remember 💩
+
+- Colorblind friendly palettes (e.g., [viridis](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html))
+
+- Highlight important things
+
+- Help your target audience (reader)
+
+- Plot raw data, and statistical summary or model estimates whenever possible
+
+## Bad principles (according to the internet)
+
+::::{.columns}
+:::{.column width="50%"}
+- Plots without context
+- Illegible fonts
+- A line graph with unordered x-axis
+- A legend with a zillion categories
+- A pie chart
+- Axis with scientific notation
+:::
+
+:::{.column width="50%"}
+- Uninterpretable variable names
+- Dual y-Axis
+- Bar plots that could be boxplots
+- Non-color blind friendly color scales
+- Angled text
+:::
+::::
+
+
+
+
+
+# Take a bad plot and make it better {.transition visibility="uncounted"}
+
+## {data-menu-title="Bad plots (revisited)"}
+
+::: {.r-stack}
+![](../assets/img/bad_plot_1){width="750" height="650"}
+
+![](../assets/img/bad_plot_0){.fragment width="900" height="650"}
+
+![](../assets/img/bad_plot_2){.fragment width="1000" height="650"}
+:::
+
+
+
+
+
+
+# Wrapping up {visibility="uncounted"}
+
+## Help! (resources) {.transition}
+
+- [SimplPoints (Timo Roettger youtube channel))](https://www.youtube.com/@simplpoints/videos)
+
+- [Data Visualization with R (course)](https://datavizf23.classes.andrewheiss.com/syllabus.html)
+
+- [The Truthful Art: Data, Charts, and Maps for Communication](https://www.amazon.com/Truthful-Art-Data-Charts-Communication/dp/0321934075)
+
+- [Data Visualization: A Practical Introduction](http://socviz.co/)
+
+- [Fundamentals of Data Visualization](https://serialmentor.com/dataviz/)
+
+::: notes
+@healy2018data
+@cairo2016truthful
+@wilke2019fundamentals
+:::
+
+## Thanks! {.final visibility="uncounted"}
+
+![](https://a.espncdn.com/combiner/i?img=/i/teamlogos/ncaa/500/164.png){.absolute top="0" right="0" width="55" height="55"}
+
+</br>
+
+### Materials available here: 
+
+### [bit.ly/psllt_2023](https://bit.ly/psllt_2023)
+
+|                                                                             |                                    |
+|----------------------------------------------------------------------------:|:-----------------------------------|
+|   <a href='mailto:joseph.casillas@rutgers.edu'>{{< fa solid envelope >}}</a>|joseph.casillas@rutgers.edu         |
+| <a href='www.jvcasillas.com'>{{< fa solid link >}}</a>|www.jvcasillas.com |
+|         <a href='https://twitter.com/jvcasill'>{{< fa brands twitter >}}</a>|\@jvcasill                           |
+|         <a href='https://github.com/jvcasillas'>{{< fa brands github >}}</a>|\@jvcasillas                         |
+
+: {tbl-colwidths="[25,75]"}
+
+## References {visibility="uncounted"}
+
+

@@ -6,7 +6,7 @@ engine: knitr
 Author: Joseph V. Casillas  
 Last update: `r Sys.Date()`
 
-- [Slides](https://www.jvcasillas.com/dv4ss/slides/index.html)
-- [Exercises (R script)](https://raw.githubusercontent.com/jvcasillas/dv4ss/main/misc/exercises.R) (Note: you may have to right-click the link and "save as")
+- Slides ([PSLLT](https://www.jvcasillas.com/dv4ss/slides/psllt/index.html), [UA](https://www.jvcasillas.com/dv4ss/slides/ua/index.html))
+- Exercises ([WebR](https://www.jvcasillas.com/dv4ss/demo/index.html), [R script](https://raw.githubusercontent.com/jvcasillas/dv4ss/main/misc/exercises.R))
 
 
