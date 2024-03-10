@@ -32,6 +32,8 @@ download.file(
   "https://raw.githubusercontent.com/jvcasillas/dv4ss/main/misc/new_data.csv",
   "new_data.csv"
   )
+
+new_data <- read.csv("new_data.csv")
 ```
 
 # Walkthrough with `ggplot2` ![](https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png){top=0 right=0 width=50 height=50}
