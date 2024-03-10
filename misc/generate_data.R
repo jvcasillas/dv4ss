@@ -29,3 +29,4 @@ ggplot(data = dat) +
   geom_point()
 
 saveRDS(dat, file = here("misc", "new_data.RDS"))
+write.csv(dat, "misc", "new_data.csv")
