@@ -3,7 +3,7 @@ title: "Data visualization for linguists"
 subtitle: ""
 author: "Joseph V. Casillas | Rutgers University"
 institute: "33rd Graduate and Professional Symposium on Hispanic and Luso-Brazilian Literature, Language and Culture<br>University of Arizona"
-date: "2024/03/24 (Last update: `r Sys.Date()`)"
+date: "2024/03/23 (Last update: `r Sys.Date()`)"
 format: rutgers-revealjs
 engine: knitr
 bibliography: ../../bib/refs.bib
@@ -43,26 +43,7 @@ theme_set(theme_grey(base_size = 30))
 
 ```
 
-## Follow along
-
-::::: {layout="[[-1], [1], [-1]]"}
-:::: {.columns}
-::: {.column width="33%"}
-:::
-::: {.column width="33%"}
-{{< qrcode https://www.jvcasillas.com/dv4ss/index.html qrsite width=300 height=300 colorDark='#cc0033' colorLight='#fff' >}}
-:::
-::: {.column width="33%"}
-:::
-::::
-:::::
-
----
-
-
-
-
-
+[slido](https://wall.sli.do/event/uJq8E28ssc3oWCkQJ9EkBL?section=e89fa587-9303-4b5a-8534-a8b000fb89e8)
 
 ## How to use this workshop
 
@@ -90,6 +71,23 @@ Do you know R?
 - Come back when time and resources allow
 :::
 ::::
+
+
+
+## Follow along
+
+::::: {layout="[[-1], [1], [-1]]"}
+:::: {.columns}
+::: {.column width="33%"}
+:::
+::: {.column width="33%"}
+{{< qrcode https://www.jvcasillas.com/dv4ss/index.html qrsite width=300 height=300 colorDark='#cc0033' colorLight='#fff' >}}
+:::
+::: {.column width="33%"}
+:::
+::::
+:::::
+
 
 
 
