@@ -19,5 +19,11 @@
   },
   "slides/ua/index.qmd": {
     "index.html": "65bc36b4"
+  },
+  "bio/index.qmd": {
+    "index.tex": "bedc494d"
+  },
+  "slides/penn/index.qmd": {
+    "index.html": "d6060209"
   }
 }
