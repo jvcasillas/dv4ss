@@ -1,8 +1,8 @@
 {
-  "hash": "31a445cdb7c6a3eb6df12286471c2c1c",
+  "hash": "d9e785c6c668c4387656b7e5c48338b1",
   "result": {
     "engine": "knitr",
-    "markdown": "---\ntitle: \"dv4ss\"\nengine: knitr\n---\n\n\nAuthor: Joseph V. Casillas  \nLast update: 2024-03-09\n\n- Slides ([PSLLT](https://www.jvcasillas.com/dv4ss/slides/psllt/index.html), [UA](https://www.jvcasillas.com/dv4ss/slides/ua/index.html))\n- Exercises ([WebR](https://www.jvcasillas.com/dv4ss/demo/index.html), [R script](https://raw.githubusercontent.com/jvcasillas/dv4ss/main/misc/exercises.R))\n\n\n",
+    "markdown": "---\ntitle: \"dv4ss\"\nengine: knitr\n---\n\n\n\nAuthor: Joseph V. Casillas  \nLast update: 2024-10-30\n\n- Slides ([PSLLT](https://www.jvcasillas.com/dv4ss/slides/psllt/index.html), [UA](https://www.jvcasillas.com/dv4ss/slides/ua/index.html), [Penn State Research Methods Workshop](https://www.jvcasillas.com/dv4ss/slides/penn/index.html))\n- Exercises ([WebR](https://www.jvcasillas.com/dv4ss/demo/index.html), [R script](https://raw.githubusercontent.com/jvcasillas/dv4ss/main/misc/exercises.R))\n\n\n",
     "supporting": [
       "index_files"
     ],

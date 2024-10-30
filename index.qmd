@@ -6,7 +6,7 @@ engine: knitr
 Author: Joseph V. Casillas  
 Last update: `r Sys.Date()`
 
-- Slides ([PSLLT](https://www.jvcasillas.com/dv4ss/slides/psllt/index.html), [UA](https://www.jvcasillas.com/dv4ss/slides/ua/index.html))
+- Slides ([PSLLT](https://www.jvcasillas.com/dv4ss/slides/psllt/index.html), [UA](https://www.jvcasillas.com/dv4ss/slides/ua/index.html), [Penn State Research Methods Workshop](https://www.jvcasillas.com/dv4ss/slides/penn/index.html))
 - Exercises ([WebR](https://www.jvcasillas.com/dv4ss/demo/index.html), [R script](https://raw.githubusercontent.com/jvcasillas/dv4ss/main/misc/exercises.R))
 
 
