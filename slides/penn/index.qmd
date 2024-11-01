@@ -68,7 +68,8 @@ Do you know R?
 [No]{.emph}
 
 - Watch
-- Come back when time and resources allow
+- Come back when time/resources allow
+- Use webR demo
 :::
 ::::
 
@@ -88,6 +89,7 @@ Do you know R?
 ::::
 :::::
 
+### [bit.ly/dv4ss](https://bit.ly/dv4ss)
 
 
 
@@ -440,7 +442,7 @@ p_goals +
 :::
 :::
 
-## {background-image="../assets/img/bad_plot_0.png" background-size="contain" data-menu-title="The ugliest plot in the world"}
+## {background-image="../assets/img/bad_plots/bad_plot_0.png" background-size="contain" data-menu-title="The ugliest plot in the world"}
 
 
 
@@ -732,9 +734,14 @@ ggplot(
 ## Heatmaps {visibility="uncounted"}
 
 ::: {.r-stack}
-![](../assets/img/plot_heatmap_0.png){.absolute top=150 right=60 width="80%"}
+![](../assets/img/plot_heatmap_0.png){.absolute top=25 right=100 width="60%"}
 
-![](../assets/img/plot_heatmap_1.png){.fragment .absolute top=65 right=65 width="80%"}
+<!--
+![](../assets/img/plot_heatmap_1.png){.absolute top=150 right=30 width="80%"}
+
+<!--
+![](../assets/img/plot_heatmap_2.png){.fragment .absolute top=65 right=35 width="85%"}
+-->
 :::
 
 
@@ -1414,14 +1421,41 @@ predictions(mod, newdata = datagrid(proficiency = seq(-2.5, 2.5, 0.1))) |>
 ## {data-menu-title="Bad plots (revisited)"}
 
 ::: {.r-stack}
-![](../assets/img/bad_plot_1){width="750" height="650"}
+![](../assets/img/bad_plots/bad_plot_1){width="750" height="650"}
 
-![](../assets/img/bad_plot_0){.fragment width="900" height="650"}
+![](../assets/img/bad_plots/bad_plot_0){.fragment width="900" height="650"}
 
-![](../assets/img/bad_plot_2){.fragment width="1000" height="650"}
+![](../assets/img/bad_plots/bad_plot_2){.fragment width="1000" height="650"}
+:::
+
+## {data-menu-title="More bad plots"}
+
+::: {.r-stack}
+![](../assets/img/bad_plots/bad_plot_3){width="750" height="650"}
+
+![](../assets/img/bad_plots/bad_plot_4){.fragment width="900" height="650"}
+
+![](../assets/img/bad_plots/bad_plot_5){.fragment width="1000" height="650"}
 :::
 
 
+## {data-menu-title="Even more bad plots"}
+
+::: {.r-stack}
+![](../assets/img/bad_plots/bad_plot_6){width="750" height="650"}
+
+![](../assets/img/bad_plots/bad_plot_7){.fragment width="800" height="650"}
+
+![](../assets/img/bad_plots/bad_plot_8){.fragment width="1000" height="550"}
+
+![](../assets/img/bad_plots/bad_plot_11){.fragment width="1000" height="600"}
+
+![](../assets/img/bad_plots/bad_plot_12){.fragment width="9000" height="700"}
+
+![](../assets/img/bad_plots/bad_plot_13){.fragment width="900" height="700"}
+
+![](../assets/img/bad_plots/bad_plot_14){.fragment width="900" height="700"}
+:::
 
 
 
@@ -1479,8 +1513,8 @@ tidyr::tibble(
 
 ```
 
+## Q&A
 
+[slido](https://wall.sli.do/event/ipmt2aXBnzydYcjtAXxr3r?section=85be5578-563d-4c51-9274-ff400b365a07)
 
 ## References {visibility="uncounted"}
-
-
