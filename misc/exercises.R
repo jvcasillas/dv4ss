@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 #
 # Data visualization workshop
-# Last update: 20240305
+# Last update: 20241101
 # Author: Joseph V. Casillas
 #
 # -----------------------------------------------------------------------------
@@ -139,7 +139,10 @@ ggplot(new_data) +
     base_size = 12, 
     base_family = "Palatino"
   ) + 
-  theme(legend.position = c(.15, .85))
+  theme(
+    legend.position = "inside", 
+    legend.position.inside = c(.15, .85)
+  )
 
 #
 # Boxplot (box and whisker plot)
@@ -163,7 +166,29 @@ ggplot(new_data) +
   geom_boxplot() + 
   scale_fill_viridis_d(option = "C", end = 0.85) + 
   theme_classic(base_size = 12) + 
-  theme(legend.position = c(0.8, 0.85))
+  theme(
+    legend.position = "inside", 
+    legend.position.inside = c(0.8, 0.85)
+  )
+
+## Advanced
+# Ex: p-boxplot-ex-adv
+# Overlay raw data
+ggplot(new_data) + 
+  aes(x = group, y = score) + 
+  geom_boxplot(aes(fill = group), show.legend = F) + 
+  geom_jitter(
+    height = 0, width = 0.2, 
+    size = 4, alpha = 0.4
+  ) + 
+  scale_fill_viridis_d(
+    name = NULL, 
+    begin = 0.3, end = 0.8
+  ) + 
+  labs(x = NULL) + 
+  theme_classic(base_size = 12, base_family = "Palatino")
+
+
 
 
 #
@@ -200,6 +225,37 @@ ggplot(new_data) +
   ) + 
   labs(caption = "Mean ±95% CI") + 
   theme_minimal(base_size = 12)
+
+## Advanced
+# Ex: p-point-estimate-spread-ex-adv
+# Customize points and gridlines, add jitter
+ggplot(new_data) + 
+  aes(x = group, y = score) + 
+  geom_jitter(
+    height = 0, width = 0.2, 
+    alpha = 0.3, size = 3
+  ) + 
+  stat_summary(
+    aes(fill = group), 
+    fun.data = mean_se, 
+    geom = 'pointrange', 
+    size = 1, linewidth = 1, 
+    pch = 21, show.legend = F
+  ) + 
+  labs(y = "Score", x = NULL, caption = "Mean ±SE") + 
+  scale_fill_viridis_d(
+    option = "A", begin = 0.3, end = 0.7
+  ) + 
+  theme_minimal(
+    base_size = 12, base_family = "Palatino"
+  ) + 
+  theme(
+    axis.title.y = element_text(size = rel(0.9), hjust = 0.95),
+    axis.title.x = element_text(size = rel(0.9), hjust = 0.95),
+    panel.grid.major = element_line(color = 'grey80', linewidth = 0.15),
+    panel.grid.minor = element_line(color = 'grey80', linewidth = 0.15)
+  )
+
 
 
 #
