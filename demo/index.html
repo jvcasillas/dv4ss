@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.45">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Joseph V. Casillas">
-<meta name="dcterms.date" content="2024-11-01">
+<meta name="dcterms.date" content="2024-03-10">
 
 <title>Data visualization for linguists</title>
 <style>
@@ -35,7 +35,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -69,115 +69,888 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="index_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="index_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="index_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css">
-<style>
-  .CodeMirror pre {
-    background-color: unset !important;
-  }
-  .btn-webr {
-    background-color: #EEEEEE;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+  
+<style type="text/css">
+.monaco-editor pre {
+  background-color: unset !important;
+}
+
+.qwebr-editor-toolbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.qwebr-editor-toolbar-left-buttons, .qwebr-editor-toolbar-right-buttons {
+  display: flex;
+}
+
+.qwebr-non-interactive-loading-container.qwebr-cell-needs-evaluation, .qwebr-non-interactive-loading-container.qwebr-cell-evaluated {
+  justify-content: center;
+  display: flex;
+  background-color: rgba(250, 250, 250, 0.65);
+  border: 1px solid rgba(233, 236, 239, 0.65);
+  border-radius: 0.5rem;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.qwebr-r-project-logo {
+  color: #2767B0; /* R Project's blue color */
+}
+
+.qwebr-icon-status-spinner {
+  color: #7894c4;
+}
+
+.qwebr-icon-run-code {
+  color: #0d9c29
+}
+
+.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+.qwebr-editor {
+  border: 1px solid #EEEEEE;
+}
+
+.qwebr-editor-toolbar {
+  background-color: #EEEEEE;
+  padding: 0.2rem 0.5rem;
+}
+
+.qwebr-button {
+  background-color: #EEEEEE;
+  display: inline-block;
+  font-weight: 400;
+  line-height: 1;
+  text-decoration: none;
+  text-align: center;
+  color: #000;
+  border-color: #dee2e6;
+  border: 1px solid rgba(0,0,0,0);
+  padding: 0.375rem 0.75rem;
+  font-size: .9rem;
+  border-radius: 0.25rem;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.qwebr-button:hover {
+  color: #000;
+  background-color: #d9dce0;
+  border-color: #c8ccd0;
+}
+
+.qwebr-button:disabled,.qwebr-button.disabled,fieldset:disabled .qwebr-button {
+  pointer-events: none;
+  opacity: .65
+}
+
+.qwebr-button-reset {
+  color: #696969; /*#4682b4;*/
+}
+
+.qwebr-button-copy {
+  color: #696969;
+}
+
+
+/* Custom styling for RevealJS Presentations*/
+
+/* Reset the style of the interactive area */
+.reveal div.qwebr-interactive-area {
+  display: block;
+  box-shadow: none;
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  padding: 0;
+} 
+
+/* Provide space to entries */
+.reveal div.qwebr-output-code-area pre div {
+  margin: 1px 2px 1px 10px;
+}
+
+/* Collapse the inside code tags to avoid extra space between line outputs */
+.reveal pre div code.qwebr-output-code-stdout, .reveal pre div code.qwebr-output-code-stderr {
+  padding: 0;
+  display: contents;
+}
+
+.reveal pre div code.qwebr-output-code-stdout {
+  color: #111;
+}
+
+.reveal pre div code.qwebr-output-code-stderr {
+  color: #db4133;
+}
+
+
+/* Create a border around console and output (does not effect graphs) */
+.reveal div.qwebr-console-area {
+  border: 1px solid #EEEEEE;
+  box-shadow: 2px 2px 10px #EEEEEE;
+}
+
+/* Cap output height and allow text to scroll */
+/* TODO: Is there a better way to fit contents/max it parallel to the monaco editor size? */
+.reveal div.qwebr-output-code-area pre {
+  max-height: 400px;
+  overflow: scroll;
+}
+
 </style>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/r/r.js"></script>
 <script type="module">
+// Document level settings ----
 
-  // Start a timer
-  const initializeWebRTimerStart = performance.now();
+// Determine if we need to install R packages
+globalThis.qwebrInstallRPackagesList = ['ggplot2', 'dplyr', 'tidyr', 'here', 'Hmisc'];
 
-  // Determine if we need to install R packages
-  var installRPackagesList = ['ggplot2', 'dplyr', 'tidyr', 'here', 'Hmisc'];
-  // Check to see if we have an empty array, if we do set to skip the installation.
-  var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
+// Specify possible locations to search for the repository
+globalThis.qwebrPackageRepoURLS = ['https://repo.r-wasm.org/'];
 
-  // Display a startup message?
-  var showStartupMessage = true;
-  var showHeaderMessage = false;
-  if (showStartupMessage) {
+// Check to see if we have an empty array, if we do set to skip the installation.
+globalThis.qwebrSetupRPackages = !(qwebrInstallRPackagesList.indexOf("") !== -1);
+globalThis.qwebrAutoloadRPackages = true;
 
-    // Create the outermost div element
-    var quartoTitleMeta = document.createElement("div");
-    quartoTitleMeta.classList.add("quarto-title-meta");
+// Display a startup message?
+globalThis.qwebrShowStartupMessage = true;
+globalThis.qwebrShowHeaderMessage = false;
 
-    // Create the first inner div element
-    var firstInnerDiv = document.createElement("div");
+// Describe the webR settings that should be used
+globalThis.qwebrCustomizedWebROptions = {
+  "baseURL": "https://webr.r-wasm.org/v0.2.2/",
+  "serviceWorkerUrl": "",
+  "homedir": "/home/web_user", 
+  "channelType": "ChannelType.Automatic"
+};
 
-    // Create the second inner div element with "WebR Status" heading 
-    // and contents
-    var secondInnerDiv = document.createElement("div");
-    secondInnerDiv.classList.add("quarto-title-meta-heading");
-    secondInnerDiv.innerText = "WebR Status";
+// Store cell data
+globalThis.qwebrCellDetails = [{"id":1,"options":{"dpi":72,"fig-width":7,"comment":"","out-height":"","autorun":"true","warning":"true","fig-cap":"","context":"setup","classes":"","out-width":"700px","output":"true","read-only":"false","results":"markup","message":"true","fig-height":5,"label":"unnamed-chunk-1"},"code":"\n# Get data file\ndownload.file(\n  \"https://raw.githubusercontent.com/jvcasillas/dv4ss/main/misc/new_data.csv\",\n  \"new_data.csv\"\n  )\n\nnew_data <- read.csv(\"new_data.csv\")"},{"id":2,"options":{"dpi":72,"fig-width":7,"comment":"","out-height":"","autorun":"false","warning":"true","fig-cap":"","context":"interactive","classes":"","out-width":"700px","output":"true","read-only":"false","results":"markup","message":"true","fig-height":5,"label":"examine-data-ex"},"code":"# Examine data\nhead(new_data)\nsummary(new_data)"},{"id":3,"options":{"out-height":"","warning":"true","fig-height":5,"dpi":72,"out-width":"700px","read-only":"false","results":"markup","fig-width":7,"output":"true","fig-cap":"","comment":"","fig-asp":"1","autorun":"false","classes":"","message":"true","context":"interactive","label":"p-histogram-ex-beg"},"code":"# Continuous variable on the x-axis\nggplot(\n  data = new_data, \n  mapping = aes(x = score)\n) + \n  geom_histogram() "},{"id":4,"options":{"out-height":"","warning":"true","fig-height":5,"dpi":72,"out-width":"700px","read-only":"false","results":"markup","fig-width":7,"output":"true","fig-cap":"","comment":"","fig-asp":"1","autorun":"false","classes":"","message":"true","context":"interactive","label":"p-histogram-ex-int"},"code":"# Streamline code and adjust options\nggplot(new_data) + \n  aes(x = score) + \n  geom_histogram(\n    color = \"black\", \n    fill = \"grey70\", \n    bins = 9\n  ) + \n  theme_bw(\n    base_size = 12, \n    base_family = \"Palatino\"\n  )"},{"id":5,"options":{"out-height":"","warning":"true","fig-height":5,"dpi":72,"out-width":"700px","read-only":"false","results":"markup","fig-width":7,"output":"true","fig-cap":"","comment":"","fig-asp":"1","autorun":"false","classes":"","message":"true","context":"interactive","label":"p-scatterplot-ex-beg"},"code":"# Continuous variables on both axis\nggplot(\n  data = new_data, \n  mapping = aes(x = proficiency, y = score)\n) + \n  geom_point() "},{"id":6,"options":{"out-height":"","warning":"true","fig-height":5,"dpi":72,"out-width":"700px","read-only":"false","results":"markup","fig-width":7,"output":"true","fig-cap":"","comment":"","fig-asp":"1","autorun":"false","classes":"","message":"true","context":"interactive","label":"p-scatterplot-ex-int"},"code":"# Include aesthetic mapping from inside geom_point()\nggplot(new_data) + \n  aes(x = proficiency, y = score) + \n  geom_point(aes(color = group), size = 4) + \n  theme_minimal(\n    base_size = 12, \n    base_family = \"Palatino\"\n  ) + \n  theme(legend.position = c(.15, .85))"},{"id":7,"options":{"out-height":"","warning":"true","fig-height":5,"dpi":72,"out-width":"700px","read-only":"false","results":"markup","fig-width":7,"output":"true","fig-cap":"","comment":"","fig-asp":"1","autorun":"false","classes":"","message":"true","context":"interactive","label":"p-scatterplot-ex-adv"},"code":"# Adjust colors, add regression line\nggplot(new_data) + \n  aes(x = proficiency, y = score) + \n  geom_point(\n    aes(fill = group), \n    size = 4, pch = 21\n  ) + \n  geom_smooth(method = lm, formula = \"y ~ x\") + \n  scale_fill_viridis_d(\n    name = NULL, \n    option = \"E\", \n    begin = 0.4, end = 0.8\n  ) + \n  theme_minimal(\n    base_size = 12, \n    base_family = \"Palatino\"\n  ) + \n  theme(legend.position = c(.15, .85))"},{"id":8,"options":{"out-height":"","warning":"true","fig-height":5,"dpi":72,"out-width":"700px","read-only":"false","results":"markup","fig-width":7,"output":"true","fig-cap":"","comment":"","fig-asp":"1","autorun":"false","classes":"","message":"true","context":"interactive","label":"p-boxplot-ex-beg"},"code":"# Try a different geom\nggplot(\n  data = new_data, \n  mapping = aes(x = group, y = score)\n) + \n  geom_boxplot() "},{"id":9,"options":{"out-height":"","warning":"true","fig-height":5,"dpi":72,"out-width":"700px","read-only":"false","results":"markup","fig-width":7,"output":"true","fig-cap":"","comment":"","fig-asp":"1","autorun":"false","classes":"","message":"true","context":"interactive","label":"p-boxplot-ex-int"},"code":"# Adjust colors, new theme\nggplot(new_data) + \n  aes(x = group, y = score, fill = group) + \n  geom_boxplot() + \n  scale_fill_viridis_d(begin = 0.3, end = 0.8) + \n  theme_classic(base_size = 12, base_family = \"Palatino\") + \n  theme(legend.position = c(0.8, 0.85))"},{"id":10,"options":{"out-height":"","warning":"true","fig-height":5,"dpi":72,"out-width":"700px","read-only":"false","results":"markup","fig-width":7,"output":"true","fig-cap":"","comment":"","fig-asp":"1","autorun":"false","classes":"","message":"true","context":"interactive","label":"p-boxplot-ex-adv"},"code":"# Overlay raw data\nggplot(new_data) + \n  aes(x = group, y = score) + \n  geom_boxplot(aes(fill = group), show.legend = F) + \n  geom_jitter(\n    height = 0, width = 0.2, \n    size = 4, alpha = 0.4\n  ) + \n  scale_fill_viridis_d(\n    name = NULL, \n    begin = 0.3, end = 0.8\n  ) + \n  labs(x = NULL) + \n  theme_classic(base_size = 12, base_family = \"Palatino\") "},{"id":11,"options":{"out-height":"","warning":"true","fig-height":5,"dpi":72,"out-width":"700px","read-only":"false","results":"markup","fig-width":7,"output":"true","fig-cap":"","comment":"","fig-asp":"1","autorun":"false","classes":"","message":"true","context":"interactive","label":"p-point-estimate-spread-ex-beg"},"code":"# Point estimate can be mean, median, mode, \n# Spread can be SD, SE, 95% CI, etc.\nggplot(\n  data = new_data, \n  mapping = aes(x = group, y = score) \n) + \n  stat_summary(\n    fun.data = mean_sdl, \n    geom = 'pointrange', \n    size = 1, \n    linewidth = 1\n  ) "},{"id":12,"options":{"out-height":"","warning":"true","fig-height":5,"dpi":72,"out-width":"700px","read-only":"false","results":"markup","fig-width":7,"output":"true","fig-cap":"","comment":"","fig-asp":"1","autorun":"false","classes":"","message":"true","context":"interactive","label":"p-point-estimate-spread-ex-int"},"code":"# Customize, add caption\nggplot(new_data) + \n  aes(x = group, y = score) + \n  geom_point(alpha = 0.3, size = 4) + \n  stat_summary(\n    fun.data = mean_cl_boot, \n    geom = 'pointrange', \n    size = 2, \n    linewidth = 1\n  ) + \n  labs(caption = \"Mean ±95% CI\") + \n  theme_minimal(base_size = 12, base_family = \"Palatino\")"},{"id":13,"options":{"out-height":"","warning":"true","fig-height":5,"dpi":72,"out-width":"700px","read-only":"false","results":"markup","fig-width":7,"output":"true","fig-cap":"","comment":"","fig-asp":"1","autorun":"false","classes":"","message":"true","context":"interactive","label":"p-point-estimate-spread-ex-adv"},"code":"# Customize points and gridlines, add jitter\nggplot(new_data) + \n  aes(x = group, y = score) + \n  geom_jitter(\n    height = 0, width = 0.2, \n    alpha = 0.3, size = 3\n  ) + \n  stat_summary(\n    aes(fill = group), \n    fun.data = mean_se, \n    geom = 'pointrange', \n    size = 1, linewidth = 1, \n    pch = 21, show.legend = F\n  ) + \n  labs(y = \"Score\", x = NULL, caption = \"Mean ±SE\") + \n  scale_fill_viridis_d(\n    option = \"A\", begin = 0.3, end = 0.7\n  ) + \n  theme_minimal(\n    base_size = 12, base_family = \"Palatino\"\n  ) + \n  theme(\n    axis.title.y = element_text(size = rel(0.9), hjust = 0.95),\n    axis.title.x = element_text(size = rel(0.9), hjust = 0.95),\n    panel.grid.major = element_line(color = 'grey80', linewidth = 0.15),\n    panel.grid.minor = element_line(color = 'grey80', linewidth = 0.15)\n  )"},{"id":14,"options":{"dpi":72,"fig-width":7,"comment":"","out-height":"","autorun":"false","warning":"true","fig-cap":"","context":"interactive","classes":"","out-width":"700px","output":"true","read-only":"false","results":"markup","message":"true","fig-height":"3","label":"p-shapes-ex1"},"code":"ggplot(\n  data = new_data, \n  mapping = aes(x = proficiency, y = score)\n) + \n  facet_grid(. ~ age) + \n  geom_point()"},{"id":15,"options":{"dpi":72,"fig-width":7,"comment":"","out-height":"","autorun":"false","warning":"true","fig-cap":"","context":"interactive","classes":"","out-width":"700px","output":"true","read-only":"false","results":"markup","message":"true","fig-height":"5","label":"p-shapes-ex2"},"code":"ggplot(\n  data = new_data, \n  mapping = aes(\n    x = age, y = score\n  )\n) + \n  facet_grid(group ~ .) + \n  geom_boxplot()"},{"id":16,"options":{"dpi":72,"fig-width":7,"comment":"","out-height":"","autorun":"false","warning":"true","fig-cap":"","context":"interactive","classes":"","out-width":"700px","output":"true","read-only":"false","results":"markup","message":"true","fig-height":5,"label":"blank-console"},"code":"ggplot(\n  data = new_data, \n  mapping = aes()\n) + \n\n\n\n"},{"id":17,"options":{"dpi":72,"fig-width":7,"comment":"","out-height":"","autorun":"false","warning":"true","fig-cap":"","context":"interactive","classes":"","out-width":"700px","output":"true","read-only":"false","results":"markup","message":"true","fig-height":5,"label":"solution1"},"code":"# Boxplot with a variable mapped to the `fill` aesthetic\nggplot(\n  data = new_data, \n  mapping = aes(x = group, y = score, fill = group)\n) + \n  geom_boxplot()"},{"id":18,"options":{"dpi":72,"fig-width":7,"comment":"","out-height":"","autorun":"false","warning":"true","fig-cap":"","context":"interactive","classes":"","out-width":"700px","output":"true","read-only":"false","results":"markup","message":"true","fig-height":5,"label":"solution2"},"code":"# Boxplot with a variable mapped to `color` aesthetic and a horizontal facet\nggplot(\n  data = new_data, \n  mapping = aes(x = group, y = score, color = group)\n) + \n  facet_grid(. ~ age) + \n  geom_boxplot() "},{"id":19,"options":{"dpi":72,"fig-width":7,"comment":"","out-height":"","autorun":"false","warning":"true","fig-cap":"","context":"interactive","classes":"","out-width":"700px","output":"true","read-only":"false","results":"markup","message":"true","fig-height":5,"label":"solution3"},"code":"# Scatterplot with regression line (see `?geom_smooth`)\nggplot(\n  data = new_data, \n  mapping = aes(x = proficiency, y = score)\n) + \n  geom_point() + \n  geom_smooth(method = \"lm\", formula = \"y ~ x\")"},{"id":20,"options":{"dpi":72,"fig-width":7,"comment":"","out-height":"","autorun":"false","warning":"true","fig-cap":"","context":"interactive","classes":"","out-width":"700px","output":"true","read-only":"false","results":"markup","message":"true","fig-height":5,"label":"solution4"},"code":"# Scatterplot with regression line and categorical factor (try aesthetic `shape`)\nggplot(\n  data = new_data, \n  mapping = aes(x = proficiency, y = score)\n) + \n  geom_point(aes(shape = group)) + \n  geom_smooth(method = \"lm\", formula = \"y ~ x\")"},{"id":21,"options":{"dpi":72,"fig-width":7,"comment":"","out-height":"","autorun":"false","warning":"true","fig-cap":"","context":"interactive","classes":"","out-width":"700px","output":"true","read-only":"false","results":"markup","message":"true","fig-height":5,"label":"solution5"},"code":"# Histogram of `proficiency`\nggplot(\n  data = new_data, \n  mapping = aes(x = proficiency)\n) + \n  geom_histogram(color = \"black\", fill = \"grey\", bins = 7)"},{"id":22,"options":{"dpi":72,"fig-width":7,"comment":"","out-height":"","autorun":"false","warning":"true","fig-cap":"","context":"interactive","classes":"","out-width":"700px","output":"true","read-only":"false","results":"markup","message":"true","fig-height":5,"label":"solution6"},"code":"# `geom_violin()` (replacement for geom_boxplot)\nggplot(\n  data = new_data, \n  mapping = aes(x = group, y = score, shape = group)\n) + \n  geom_point() + \n  geom_violin(fill = NA)"}];
 
-    // Add another inner div
-    var secondInnerDivContents = document.createElement("div");
-    secondInnerDivContents.classList.add("quarto-title-meta-contents");
+</script>
+<script type="module">
+// Declare startupMessageQWebR globally
+globalThis.qwebrStartupMessage = document.createElement("p");
 
-    // Describe the WebR state
-    var startupMessageWebR = document.createElement("p");
-    startupMessageWebR.innerText = "🟡 Loading...";
-    startupMessageWebR.setAttribute("id", "startup");
 
-    // Put everything together
-    secondInnerDivContents.appendChild(startupMessageWebR);
+// Function to set the button text
+globalThis.qwebrSetInteractiveButtonState = function(buttonText, enableCodeButton = true) {
+  document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+    btn.innerHTML = buttonText;
+    btn.disabled = !enableCodeButton;
+  });
+}
 
-    // Add a status indicator for COOP and COEP Headers
-    if (showHeaderMessage) {
-      var crossOriginMessage = document.createElement("p");
-      crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
-      crossOriginMessage.setAttribute("id", "coop-coep-header");
-      secondInnerDivContents.appendChild(crossOriginMessage);
+// Function to update the status message in non-interactive cells
+globalThis.qwebrUpdateStatusMessage = function(message) {
+  document.querySelectorAll(".qwebr-status-text.qwebr-cell-needs-evaluation").forEach((elem) => {
+    elem.innerText = message;
+  });
+}
+
+// Function to update the status message
+globalThis.qwebrUpdateStatusHeader = function(message) {
+  qwebrStartupMessage.innerHTML = `
+    <i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i>
+    <span>${message}</span>`;
+}
+
+// Function that attaches the document status message and diagnostics
+function displayStartupMessage(showStartupMessage, showHeaderMessage) {
+  if (!showStartupMessage) {
+    return;
+  }
+
+  // Get references to header elements
+  const headerHTML = document.getElementById("title-block-header");
+  const headerRevealJS = document.getElementById("title-slide");
+
+  // Create the outermost div element for metadata
+  const quartoTitleMeta = document.createElement("div");
+  quartoTitleMeta.classList.add("quarto-title-meta");
+
+  // Create the first inner div element
+  const firstInnerDiv = document.createElement("div");
+  firstInnerDiv.setAttribute("id", "qwebr-status-message-area");
+
+  // Create the second inner div element for "WebR Status" heading and contents
+  const secondInnerDiv = document.createElement("div");
+  secondInnerDiv.setAttribute("id", "qwebr-status-message-title");
+  secondInnerDiv.classList.add("quarto-title-meta-heading");
+  secondInnerDiv.innerText = "WebR Status";
+
+  // Create another inner div for contents
+  const secondInnerDivContents = document.createElement("div");
+  secondInnerDivContents.setAttribute("id", "qwebr-status-message-body");
+  secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+  // Describe the WebR state
+  qwebrStartupMessage.innerText = "🟡 Loading...";
+  qwebrStartupMessage.setAttribute("id", "qwebr-status-message-text");
+  // Add `aria-live` to auto-announce the startup status to screen readers
+  qwebrStartupMessage.setAttribute("aria-live", "assertive");
+
+  // Append the startup message to the contents
+  secondInnerDivContents.appendChild(qwebrStartupMessage);
+
+  // Add a status indicator for COOP and COEP Headers if needed
+  if (showHeaderMessage) {
+    const crossOriginMessage = document.createElement("p");
+    crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+    crossOriginMessage.setAttribute("id", "qwebr-coop-coep-header");
+    secondInnerDivContents.appendChild(crossOriginMessage);
+  }
+
+  // Combine the inner divs and contents
+  firstInnerDiv.appendChild(secondInnerDiv);
+  firstInnerDiv.appendChild(secondInnerDivContents);
+  quartoTitleMeta.appendChild(firstInnerDiv);
+
+  // Determine where to insert the quartoTitleMeta element
+  if (headerHTML || headerRevealJS) {
+    // Append to the existing "title-block-header" element or "title-slide" div
+    (headerHTML || headerRevealJS).appendChild(quartoTitleMeta);
+  } else {
+    // If neither headerHTML nor headerRevealJS is found, insert after "webr-monaco-editor-init" script
+    const monacoScript = document.getElementById("qwebr-monaco-editor-init");
+    const header = document.createElement("header");
+    header.setAttribute("id", "title-block-header");
+    header.appendChild(quartoTitleMeta);
+    monacoScript.after(header);
+  }
+}
+
+displayStartupMessage(qwebrShowStartupMessage, qwebrShowHeaderMessage);
+</script>
+<script type="module">
+// Supported Evaluation Types for Context
+globalThis.EvalTypes = Object.freeze({
+  Interactive: 'interactive',
+  Setup: 'setup',
+  Output: 'output',
+});
+
+// Function that dispatches the creation request
+globalThis.qwebrCreateHTMLElement = function (
+  cellData
+) {
+
+  // Extract key components
+  const evalType = cellData.options.context;
+  const qwebrCounter = cellData.id;
+
+  // We make an assumption that insertion points are defined by the Lua filter as:
+  // qwebr-insertion-location-{qwebrCounter} 
+  const elementLocator = document.getElementById(`qwebr-insertion-location-${qwebrCounter}`);
+
+  // Figure out the routine to use to insert the element.
+  let qwebrElement;
+  switch ( evalType ) {
+    case EvalTypes.Interactive:
+      qwebrElement = qwebrCreateInteractiveElement(qwebrCounter, cellData.options);
+      break;
+    case EvalTypes.Output: 
+      qwebrElement = qwebrCreateNonInteractiveOutputElement(qwebrCounter, cellData.options);
+      break;
+    case EvalTypes.Setup: 
+      qwebrElement = qwebrCreateNonInteractiveSetupElement(qwebrCounter, cellData.options);
+      break;
+    default: 
+      qwebrElement = document.createElement('div');
+      qwebrElement.textContent = 'Error creating `quarto-webr` element';
+  }
+
+  // Insert the dynamically generated object at the document location.
+  elementLocator.appendChild(qwebrElement);
+};
+
+// Function that setups the interactive element creation
+globalThis.qwebrCreateInteractiveElement = function (qwebrCounter, qwebrOptions) {
+
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-interactive-area-' + qwebrCounter;
+  mainDiv.className = `qwebr-interactive-area`;
+  if (qwebrOptions.classes) {
+    mainDiv.className += " " + qwebrOptions.classes
+  }
+
+  // Add a unique cell identifier that users can customize
+  if (qwebrOptions.label) {
+    mainDiv.setAttribute('data-id', qwebrOptions.label);
+  }
+
+  // Create toolbar div
+  var toolbarDiv = document.createElement('div');
+  toolbarDiv.className = 'qwebr-editor-toolbar';
+  toolbarDiv.id = 'qwebr-editor-toolbar-' + qwebrCounter;
+
+  // Create a div to hold the left buttons
+  var leftButtonsDiv = document.createElement('div');
+  leftButtonsDiv.className = 'qwebr-editor-toolbar-left-buttons';
+
+  // Create a div to hold the right buttons
+  var rightButtonsDiv = document.createElement('div');
+  rightButtonsDiv.className = 'qwebr-editor-toolbar-right-buttons';
+
+  // Create Run Code button
+  var runCodeButton = document.createElement('button');
+  runCodeButton.className = 'btn btn-default qwebr-button qwebr-button-run';
+  runCodeButton.disabled = true;
+  runCodeButton.type = 'button';
+  runCodeButton.id = 'qwebr-button-run-' + qwebrCounter;
+  runCodeButton.textContent = '🟡 Loading webR...';
+  runCodeButton.title = `Run code (Shift + Enter)`;
+
+  // Append buttons to the leftButtonsDiv
+  leftButtonsDiv.appendChild(runCodeButton);
+
+  // Create Reset button
+  var resetButton = document.createElement('button');
+  resetButton.className = 'btn btn-light btn-xs qwebr-button qwebr-button-reset';
+  resetButton.type = 'button';
+  resetButton.id = 'qwebr-button-reset-' + qwebrCounter;
+  resetButton.title = 'Start over';
+  resetButton.innerHTML = '<i class="fa-solid fa-arrows-rotate"></i>';
+
+  // Create Copy button
+  var copyButton = document.createElement('button');
+  copyButton.className = 'btn btn-light btn-xs qwebr-button qwebr-button-copy';
+  copyButton.type = 'button';
+  copyButton.id = 'qwebr-button-copy-' + qwebrCounter;
+  copyButton.title = 'Copy code';
+  copyButton.innerHTML = '<i class="fa-regular fa-copy"></i>';
+
+  // Append buttons to the rightButtonsDiv
+  rightButtonsDiv.appendChild(resetButton);
+  rightButtonsDiv.appendChild(copyButton);
+
+  // Create console area div
+  var consoleAreaDiv = document.createElement('div');
+  consoleAreaDiv.id = 'qwebr-console-area-' + qwebrCounter;
+  consoleAreaDiv.className = 'qwebr-console-area';
+
+  // Create editor div
+  var editorDiv = document.createElement('div');
+  editorDiv.id = 'qwebr-editor-' + qwebrCounter;
+  editorDiv.className = 'qwebr-editor';
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append buttons to the toolbar
+  toolbarDiv.appendChild(leftButtonsDiv);
+  toolbarDiv.appendChild(rightButtonsDiv);
+
+  // Append all elements to the main div
+  mainDiv.appendChild(toolbarDiv);
+  consoleAreaDiv.appendChild(editorDiv);
+  consoleAreaDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(consoleAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+}
+
+// Function that adds output structure for non-interactive output
+globalThis.qwebrCreateNonInteractiveOutputElement = function(qwebrCounter, qwebrOptions) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = 'qwebr-noninteractive-area-' + qwebrCounter;
+  mainDiv.className = `qwebr-noninteractive-area`;
+  if (qwebrOptions.classes) {
+    mainDiv.className += " " + qwebrOptions.classes
+  }
+  
+  // Add a unique cell identifier that users can customize
+  if (qwebrOptions.label) {
+    mainDiv.setAttribute('data-id', qwebrOptions.label);
+  }
+  
+  // Create a status container div
+  var statusContainer = createLoadingContainer(qwebrCounter);
+
+  // Create output code area div
+  var outputCodeAreaDiv = document.createElement('div');
+  outputCodeAreaDiv.id = 'qwebr-output-code-area-' + qwebrCounter;
+  outputCodeAreaDiv.className = 'qwebr-output-code-area';
+  outputCodeAreaDiv.setAttribute('aria-live', 'assertive');
+
+  // Create pre element inside output code area
+  var preElement = document.createElement('pre');
+  preElement.style.visibility = 'hidden';
+  outputCodeAreaDiv.appendChild(preElement);
+
+  // Create output graph area div
+  var outputGraphAreaDiv = document.createElement('div');
+  outputGraphAreaDiv.id = 'qwebr-output-graph-area-' + qwebrCounter;
+  outputGraphAreaDiv.className = 'qwebr-output-graph-area';
+
+  // Append all elements to the main div
+  mainDiv.appendChild(statusContainer);
+  mainDiv.appendChild(outputCodeAreaDiv);
+  mainDiv.appendChild(outputGraphAreaDiv);
+
+  return mainDiv;
+};
+
+// Function that adds a stub in the page to indicate a setup cell was used.
+globalThis.qwebrCreateNonInteractiveSetupElement = function(qwebrCounter, qwebrOptions) {
+  // Create main div element
+  var mainDiv = document.createElement('div');
+  mainDiv.id = `qwebr-noninteractive-setup-area-${qwebrCounter}`;
+  mainDiv.className = `qwebr-noninteractive-setup-area`;
+  if (qwebrOptions.classes) {
+    mainDiv.className += " " + qwebrOptions.classes
+  }
+
+
+  // Add a unique cell identifier that users can customize
+  if (qwebrOptions.label) {
+    mainDiv.setAttribute('data-id', qwebrOptions.label);
+  }
+
+  // Create a status container div
+  var statusContainer = createLoadingContainer(qwebrCounter);
+
+  // Append status onto the main div
+  mainDiv.appendChild(statusContainer);
+
+  return mainDiv;
+}
+
+
+// Function to create loading container with specified ID
+globalThis.createLoadingContainer = function(qwebrCounter) {
+
+  // Create a status container
+  const container = document.createElement('div');
+  container.id = `qwebr-non-interactive-loading-container-${qwebrCounter}`;
+  container.className = 'qwebr-non-interactive-loading-container qwebr-cell-needs-evaluation';
+
+  // Create an R project logo to indicate its a code space
+  const rProjectIcon = document.createElement('i');
+  rProjectIcon.className = 'fa-brands fa-r-project fa-3x qwebr-r-project-logo';
+
+  // Setup a loading icon from font awesome
+  const spinnerIcon = document.createElement('i');
+  spinnerIcon.className = 'fa-solid fa-spinner fa-spin fa-1x qwebr-icon-status-spinner';
+
+  // Add a section for status text
+  const statusText = document.createElement('p');
+  statusText.id = `qwebr-status-text-${qwebrCounter}`;
+  statusText.className = `qwebr-status-text qwebr-cell-needs-evaluation`;
+  statusText.innerText = 'Loading webR...';
+
+  // Incorporate an inner container
+  const innerContainer = document.createElement('div');
+
+  // Append elements to the inner container
+  innerContainer.appendChild(spinnerIcon);
+  innerContainer.appendChild(statusText);
+
+  // Append elements to the main container
+  container.appendChild(rProjectIcon);
+  container.appendChild(innerContainer);
+
+  return container;
+}
+</script>
+<script type="module">
+// Function to install a single package
+async function qwebrInstallRPackage(packageName) {
+  await mainWebR.evalRVoid(`webr::install('${packageName}');`);
+}
+
+// Function to load a single package
+async function qwebrLoadRPackage(packageName) {
+  await mainWebR.evalRVoid(`require('${packageName}', quietly = TRUE)`);
+}
+
+// Generic function to process R packages
+async function qwebrProcessRPackagesWithStatus(packages, processType, displayStatusMessageUpdate = true) {
+  // Switch between contexts
+  const messagePrefix = processType === 'install' ? 'Installing' : 'Loading';
+
+  // Modify button state
+  qwebrSetInteractiveButtonState(`🟡 ${messagePrefix} package ...`, false);
+
+  // Iterate over packages
+  for (let i = 0; i < packages.length; i++) {
+    const activePackage = packages[i];
+    const formattedMessage = `${messagePrefix} package ${i + 1} out of ${packages.length}: ${activePackage}`;
+
+    // Display the update in header
+    if (displayStatusMessageUpdate) {
+      qwebrUpdateStatusHeader(formattedMessage);
     }
 
-    firstInnerDiv.appendChild(secondInnerDiv);
-    firstInnerDiv.appendChild(secondInnerDivContents);
-    quartoTitleMeta.appendChild(firstInnerDiv);
+    // Display the update in non-active areas
+    qwebrUpdateStatusMessage(formattedMessage);
 
-    // Add new element as last child in header element
-    var header = document.getElementsByTagName("header")[0];
-    header.appendChild(quartoTitleMeta);
+    // Run package installation
+    if (processType === 'install') {
+      await qwebrInstallRPackage(activePackage);
+    } else {
+      await qwebrLoadRPackage(activePackage);
+    }
   }
 
-  // Retrieve the webr.mjs
-  import { WebR } from "https://webr.r-wasm.org/v0.1.1/webr.mjs";
-  
-  // Populate WebR options with defaults or new values based on 
-  // webr meta
-  globalThis.webR = new WebR({
-    "baseURL": "",
-    "serviceWorkerUrl": "",
-    "homedir": "/home/web_user"
-  });
-
-  // Initialization WebR
-  await globalThis.webR.init();
-
-  // Setup a shelter
-  globalThis.webRCodeShelter = await new globalThis.webR.Shelter();
-
-  // Installing Packages
-  if (showStartupMessage && setupRPackages) {
-    // If initialized, but we have packages to install switch status
-    startupMessageWebR.innerText = "🟡 Installing package dependencies..."
-    // Install packages
-    await globalThis.webR.installPackages(installRPackagesList)
+  // Clean slate
+  if (processType === 'load') {
+    await mainWebR.flush();
   }
+}
 
-  // Switch to allowing code to be executed
-  document.querySelectorAll(".btn-webr").forEach((btn) => {
-    btn.innerText = "Run code";
-    btn.disabled = false;
-  });
+// Start a timer
+const initializeWebRTimerStart = performance.now();
 
-  // Stop timer
-  const initializeWebRTimerEnd = performance.now();
+// Encase with a dynamic import statement
+globalThis.qwebrInstance = import(qwebrCustomizedWebROptions.baseURL + "webr.mjs").then(
+  async ({ WebR, ChannelType }) => {
+    // Populate WebR options with defaults or new values based on `webr` meta
+    globalThis.mainWebR = new WebR(qwebrCustomizedWebROptions);
 
-  if (showStartupMessage) {
-    // If initialized, switch to a green light
-    startupMessageWebR.innerText = "🟢 Ready!"
+    // Initialization WebR
+    await mainWebR.init();
+
+    // Setup a shelter
+    globalThis.mainWebRCodeShelter = await new mainWebR.Shelter();
+
+    // Setup a pager to allow processing help documentation 
+    await mainWebR.evalRVoid('webr::pager_install()'); 
+
+    // Override the existing install.packages() to use webr::install()
+    await mainWebR.evalRVoid('webr::shim_install()'); 
+
+    // Specify the repositories to pull from
+    // Note: webR does not use the `repos` option, but instead uses `webr_pkg_repos`
+    // inside of `install()`. However, other R functions still pull from `repos`.
+    await mainWebR.evalRVoid(`
+      options(
+        webr_pkg_repos = c(${qwebrPackageRepoURLS.map(repoURL => `'${repoURL}'`).join(',')}),
+        repos = c(${qwebrPackageRepoURLS.map(repoURL => `'${repoURL}'`).join(',')})
+      )
+    `);
+
+    // Check to see if any packages need to be installed
+    if (qwebrSetupRPackages) {
+      // Obtain only a unique list of packages
+      const uniqueRPackageList = Array.from(new Set(qwebrInstallRPackagesList));
+
+      // Install R packages one at a time (either silently or with a status update)
+      await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'install', qwebrShowStartupMessage);
+
+      if (qwebrAutoloadRPackages) {
+        // Load R packages one at a time (either silently or with a status update)
+        await qwebrProcessRPackagesWithStatus(uniqueRPackageList, 'load', qwebrShowStartupMessage);
+      }
+    }
   }
-</script>  
+);
+
+// Stop timer
+const initializeWebRTimerEnd = performance.now();
+
+</script>
+<script type="module">
+// Function to verify a given JavaScript Object is empty
+globalThis.qwebrIsObjectEmpty = function (arr) {
+    return Object.keys(arr).length === 0;
+}
+
+// Global version of the Escape HTML function that converts HTML 
+// characters to their HTML entities.
+globalThis.qwebrEscapeHTMLCharacters = function(unsafe) {
+    return unsafe
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  };
+
+// Passthrough results
+globalThis.qwebrIdentity = function(x) {
+    return x;
+};
+
+// Append a comment
+globalThis.qwebrPrefixComment = function(x, comment) {
+    return `${comment}${x}`;
+};
+
+// Function to parse the pager results
+globalThis.qwebrParseTypePager = async function (msg) { 
+
+    // Split out the event data
+    const { path, title, deleteFile } = msg.data; 
+
+    // Process the pager data by reading the information from disk
+    const paged_data = await mainWebR.FS.readFile(path).then((data) => {
+        // Obtain the file content
+        let content = new TextDecoder().decode(data);
+
+        // Remove excessive backspace characters until none remain
+        while(content.match(/.[\b]/)){
+        content = content.replace(/.[\b]/g, '');
+        }
+
+        // Returned cleaned data
+        return content;
+    });
+
+    // Unlink file if needed
+    if (deleteFile) { 
+        await mainWebR.FS.unlink(path); 
+    } 
+
+    // Return extracted data with spaces
+    return paged_data;
+} 
+
+// Function to run the code using webR and parse the output
+globalThis.qwebrComputeEngine = async function(
+    codeToRun, 
+    elements, 
+    options) {
+
+    // Call into the R compute engine that persists within the document scope.
+    // To be prepared for all scenarios, the following happens: 
+    // 1. We setup a canvas device to write to by making a namespace call into the {webr} package
+    // 2. We use values inside of the options array to set the figure size.
+    // 3. We capture the output stream information (STDOUT and STERR)
+    // 4. While parsing the results, we disable image creation.
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Create a pager variable for help/file contents
+    let pager = [];
+
+    // Handle how output is processed
+    let showMarkup = options.results === "markup" && options.output !== "asis";
+    let processOutput;
+
+    if (showMarkup) {
+        processOutput = qwebrEscapeHTMLCharacters;
+    } else {
+        processOutput = qwebrIdentity;
+    }
+
+    // ---- 
+    // Convert from Inches to Pixels by using DPI (dots per inch)
+    // for bitmap devices (dpi * inches = pixels)
+    let fig_width = options["fig-width"] * options["dpi"]
+    let fig_height = options["fig-height"] * options["dpi"]
+
+    // Initialize webR
+    await mainWebR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await mainWebR.evalRVoid(`webr::canvas(width=${fig_width}, height=${fig_height})`);
+
+    const result = await mainWebRCodeShelter.captureR(codeToRun, {
+        withAutoprint: true,
+        captureStreams: true,
+        captureConditions: false//,
+        // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // -----
+
+    // Start attempting to parse the result data
+    processResultOutput:try {
+
+        // Stop creating images
+        await mainWebR.evalRVoid("dev.off()");
+        
+        // Avoid running through output processing
+        if (options.results === "hide" || options.output === "false") { 
+            break processResultOutput; 
+        }
+
+        // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+        // Require both `warning` and `message` to be true to display `STDErr`. 
+        const out = result.output
+        .filter(
+            evt => evt.type === "stdout" || 
+            ( evt.type === "stderr" && (options.warning === "true" && options.message === "true")) 
+        )
+        .map((evt, index) => {
+            const className = `qwebr-output-code-${evt.type}`;
+            const outputResult = qwebrPrefixComment(processOutput(evt.data), options.comment);
+            return `<code id="${className}-editor-${elements.id}-result-${index + 1}" class="${className}">${outputResult}</code>`;
+        })
+        .join("\n");
+
+
+        // Clean the state
+        // We're now able to process both graphics and pager events.
+        // As a result, we cannot maintain a true 1-to-1 output order 
+        // without individually feeding each line
+        const msgs = await mainWebR.flush();
+
+        // Output each image event stored
+        msgs.forEach((msg) => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+            // Add image to the current canvas
+            if (msg.data.event === 'canvasImage') {
+                canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+            } else if (msg.data.event === 'canvasNewPage') {
+
+                // Generate a new canvas element
+                canvas = document.createElement("canvas");
+                canvas.setAttribute("width", 2 * fig_width);
+                canvas.setAttribute("height", 2 * fig_height);
+                canvas.style.width = options["out-width"] ? options["out-width"] : `${fig_width}px`;
+                if (options["out-height"]) {
+                    canvas.style.height = options["out-height"];
+                }
+                canvas.style.display = "block";
+                canvas.style.margin = "auto";
+            }
+        } 
+        });
+
+        // Use `map` to process the filtered "pager" events asynchronously
+        const pager = await Promise.all(
+            msgs.filter(msg => msg.type === 'pager').map(
+                async (msg) => {
+                    return await qwebrParseTypePager(msg);
+                }
+            )
+        );
+
+        // Nullify the output area of content
+        elements.outputCodeDiv.innerHTML = "";
+        elements.outputGraphDiv.innerHTML = "";
+
+        // Design an output object for messages
+        const pre = document.createElement("pre");
+        if (/\S/.test(out)) {
+            // Display results as HTML elements to retain output styling
+            const div = document.createElement("div");
+            div.innerHTML = out;
+            pre.appendChild(div);
+        } else {
+            // If nothing is present, hide the element.
+            pre.style.visibility = "hidden";
+        }
+
+        elements.outputCodeDiv.appendChild(pre);
+
+        // Place the graphics on the canvas
+        if (canvas) {
+            // Create figure element
+            const figureElement = document.createElement('figure');
+
+            // Append canvas to figure
+            figureElement.appendChild(canvas);
+
+            if (options['fig-cap']) {
+                // Create figcaption element
+                const figcaptionElement = document.createElement('figcaption');
+                figcaptionElement.innerText = options['fig-cap'];
+                // Append figcaption to figure
+                figureElement.appendChild(figcaptionElement);    
+            }
+
+            elements.outputGraphDiv.appendChild(figureElement);
+        }
+
+        // Display the pager data
+        if (pager) {
+        // Use the `pre` element to preserve whitespace.
+        pager.forEach((paged_data, index) => {
+            let pre_pager = document.createElement("pre");
+            pre_pager.innerText = paged_data;
+            pre_pager.classList.add("qwebr-output-code-pager");
+            pre_pager.setAttribute("id", `qwebr-output-code-pager-editor-${elements.id}-result-${index + 1}`);
+            elements.outputCodeDiv.appendChild(pre_pager);
+        });
+        }
+    } finally {
+        // Clean up the remaining code
+        mainWebRCodeShelter.purge();
+    }
+}
+
+// Function to execute the code (accepts code as an argument)
+globalThis.qwebrExecuteCode = async function (
+    codeToRun,
+    id,
+    options = {}) {
+
+    // If options are not passed, we fall back on the bare minimum to handle the computation
+    if (qwebrIsObjectEmpty(options)) {
+        options = { 
+            "context": "interactive", 
+            "fig-width": 7, "fig-height": 5, 
+            "out-width": "700px", "out-height": "", 
+            "dpi": 72,
+            "results": "markup", 
+            "warning": "true", "message": "true",
+        };
+    }
+
+    // Next, we access the compute areas values
+    const elements = {
+        runButton: document.getElementById(`qwebr-button-run-${id}`),
+        outputCodeDiv: document.getElementById(`qwebr-output-code-area-${id}`),
+        outputGraphDiv: document.getElementById(`qwebr-output-graph-area-${id}`),
+        id: id,
+    }
+
+    // Disallowing execution of other code cells
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = true;
+    });
+
+    if (options.context == EvalTypes.Interactive) {
+        // Emphasize the active code cell
+        elements.runButton.innerHTML = '<i class="fa-solid fa-spinner fa-spin qwebr-icon-status-spinner"></i> <span>Run Code</span>';
+    }
+
+    // Evaluate the code and parse the output into the document
+    await qwebrComputeEngine(codeToRun, elements, options);
+
+    // Switch to allowing execution of code
+    document.querySelectorAll(".qwebr-button-run").forEach((btn) => {
+        btn.disabled = false;
+    });
+
+    if (options.context == EvalTypes.Interactive) {
+        // Revert to the initial code cell state
+        elements.runButton.innerHTML = '<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>';
+    }
+}
+
+</script>
 
 
 </head>
@@ -187,6 +960,180 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
 
 <main class="content" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs/loader.js"></script>
+<script type="module" id="qwebr-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.45.0/min/vs'
+    }
+  });
+</script>
+<script type="module">
+// Global dictionary to store Monaco Editor instances
+globalThis.qwebrEditorInstances = {};
+
+// Function that builds and registers a Monaco Editor instance    
+globalThis.qwebrCreateMonacoEditorInstance = function (cellData) {
+
+  const initialCode = cellData.code;
+  const qwebrCounter = cellData.id;
+  const qwebrOptions = cellData.options;
+
+  // Retrieve the previously created document elements
+  let runButton = document.getElementById(`qwebr-button-run-${qwebrCounter}`);
+  let resetButton = document.getElementById(`qwebr-button-reset-${qwebrCounter}`);
+  let copyButton = document.getElementById(`qwebr-button-copy-${qwebrCounter}`);
+  let editorDiv = document.getElementById(`qwebr-editor-${qwebrCounter}`);
+  
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: initialCode,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // Works wonderfully with RevealJS
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5pt',              // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true,  // Remove cursor indictor in right hand side scroll bar
+      readOnly: qwebrOptions['read-only'] ?? false
+    });
+
+    // Store the official counter ID to be used in keyboard shortcuts
+    editor.__qwebrCounter = qwebrCounter;
+
+    // Store the official div container ID
+    editor.__qwebrEditorId = `qwebr-editor-${qwebrCounter}`;
+
+    // Store the initial code value and options
+    editor.__qwebrinitialCode = initialCode;
+    editor.__qwebrOptions = qwebrOptions;
+
+    // Set at the model level the preferred end of line (EOL) character to LF.
+    // This prevent `\r\n` from being given to the webR engine if the user is on Windows.
+    // See details in: https://github.com/coatless/quarto-webr/issues/94
+    // Associated error text: 
+    // Error: <text>:1:7 unexpected input
+
+    // Retrieve the underlying model
+    const model = editor.getModel();
+    // Set EOL for the model
+    model.setEOL(monaco.editor.EndOfLineSequence.LF);
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, editor.__qwebrOptions);
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          qwebrExecuteCode(currentLine, editor.__qwebrCounter, editor.__qwebrOptions);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          qwebrExecuteCode(selectedText, editor.__qwebrCounter, editor.__qwebrOptions);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+
+    // Store the editor instance in the global dictionary
+    qwebrEditorInstances[editor.__qwebrCounter] = editor;
+
+  });
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    qwebrExecuteCode(editor.getValue(), editor.__qwebrCounter, editor.__qwebrOptions);
+  };
+
+  // Add a click event listener to the reset button
+  copyButton.onclick = function () {
+    // Retrieve current code data
+    const data = editor.getValue();
+    
+    // Write code data onto the clipboard.
+    navigator.clipboard.writeText(data || "");
+  };
+  
+  // Add a click event listener to the copy button
+  resetButton.onclick = function () {
+    editor.setValue(editor.__qwebrinitialCode);
+  };
+  
+}
+</script>
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
@@ -208,7 +1155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 1, 2024</p>
+      <p class="date">March 10, 2024</p>
     </div>
   </div>
   
@@ -220,89 +1167,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-1">Loading webR...</button>
-<div id="webr-editor-1"></div>
-<div id="webr-code-output-1"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-1");
-  const outputDiv = document.getElementById("webr-code-output-1");
-  const editorDiv = document.getElementById("webr-editor-1");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| context: setup
-
-# Get data file
-download.file(
-  "https://raw.githubusercontent.com/jvcasillas/dv4ss/main/misc/new_data.csv",
-  "new_data.csv"
-  )
-
-new_data <- read.csv("new_data.csv")`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-1"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <section id="walkthrough-with-ggplot2" class="level1">
 <h1>Walkthrough with <code>ggplot2</code> <img src="https://raw.githubusercontent.com/rstudio/hex-stickers/master/PNG/ggplot2.png" data-top="0" data-right="0" width="50" height="50"></h1>
 <p>This tutorial serves as a compliment to the <a href="https://www.jvcasillas.com/dv4ss/slides/ua/index.html">slides</a>.</p>
@@ -322,84 +1188,8 @@ new_data <- read.csv("new_data.csv")`,
 <section id="it-starts-with-data" class="level1">
 <h1>It starts with data</h1>
 <p>Let’s take a look at a data set we will use in this demo. Try using <code>head(new_data)</code> and <code>summary(new_data)</code>. What kind of information can you learn about the dataframe?</p>
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-2">Loading webR...</button>
-<div id="webr-editor-2"></div>
-<div id="webr-code-output-2"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-2");
-  const outputDiv = document.getElementById("webr-code-output-2");
-  const editorDiv = document.getElementById("webr-editor-2");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: examine-data-ex
-# Examine data
-head(new_data)
-summary(new_data)`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-2"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 <p>Let’s revist some basic plots</p>
 <ul>
 <li>Histogram</li>
@@ -413,178 +1203,12 @@ summary(new_data)`,
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Beginner</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Intermediate</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-3">Loading webR...</button>
-<div id="webr-editor-3"></div>
-<div id="webr-code-output-3"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-3");
-  const outputDiv = document.getElementById("webr-code-output-3");
-  const editorDiv = document.getElementById("webr-editor-3");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: p-histogram-ex-beg
-#| fig-asp: 1
-# Continuous variable on the x-axis
-ggplot(
-  data = new_data, 
-  mapping = aes(x = score)
-) + 
-  geom_histogram() `,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-3"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-4">Loading webR...</button>
-<div id="webr-editor-4"></div>
-<div id="webr-code-output-4"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-4");
-  const outputDiv = document.getElementById("webr-code-output-4");
-  const editorDiv = document.getElementById("webr-editor-4");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: p-histogram-ex-int
-#| fig-asp: 1
-# Streamline code and adjust options
-ggplot(new_data) + 
-  aes(x = score) + 
-  geom_histogram(
-    color = "black", 
-    fill = "grey70", 
-    bins = 9
-  ) + 
-  theme_bw(
-    base_size = 12, 
-    base_family = "Palatino"
-  )`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-4"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 </div>
 </div>
@@ -595,277 +1219,16 @@ ggplot(new_data) +
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Beginner</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Intermediate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Advanced</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-5">Loading webR...</button>
-<div id="webr-editor-5"></div>
-<div id="webr-code-output-5"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-5");
-  const outputDiv = document.getElementById("webr-code-output-5");
-  const editorDiv = document.getElementById("webr-editor-5");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: p-scatterplot-ex-beg
-#| fig-asp: 1
-# Continuous variables on both axis
-ggplot(
-  data = new_data, 
-  mapping = aes(x = proficiency, y = score)
-) + 
-  geom_point() `,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-5"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-6">Loading webR...</button>
-<div id="webr-editor-6"></div>
-<div id="webr-code-output-6"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-6");
-  const outputDiv = document.getElementById("webr-code-output-6");
-  const editorDiv = document.getElementById("webr-editor-6");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: p-scatterplot-ex-int
-#| fig-asp: 1
-# Include aesthetic mapping from inside geom_point()
-ggplot(new_data) + 
-  aes(x = proficiency, y = score) + 
-  geom_point(aes(color = group), size = 4) + 
-  theme_minimal(
-    base_size = 12, 
-    base_family = "Palatino"
-  ) + 
-  theme(
-    legend.position = "inside", 
-    legend.position.inside = c(.15, .85)
-  )`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-6"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-7">Loading webR...</button>
-<div id="webr-editor-7"></div>
-<div id="webr-code-output-7"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-7");
-  const outputDiv = document.getElementById("webr-code-output-7");
-  const editorDiv = document.getElementById("webr-editor-7");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: p-scatterplot-ex-adv
-#| fig-asp: 1
-# Adjust colors, add regression line
-ggplot(new_data) + 
-  aes(x = proficiency, y = score) + 
-  geom_point(
-    aes(fill = group), 
-    size = 4, pch = 21
-  ) + 
-  geom_smooth(method = lm, formula = "y ~ x") + 
-  scale_fill_viridis_d(
-    name = NULL, 
-    option = "E", 
-    begin = 0.4, end = 0.8
-  ) + 
-  theme_minimal(
-    base_size = 12, 
-    base_family = "Palatino"
-  ) + 
-  theme(
-    legend.position = "inside", 
-    legend.position.inside = c(.15, .85)
-  )`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-7"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 </div>
 </div>
@@ -876,268 +1239,16 @@ ggplot(new_data) +
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Beginner</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Intermediate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Advanced</a></li></ul>
 <div class="tab-content">
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-8">Loading webR...</button>
-<div id="webr-editor-8"></div>
-<div id="webr-code-output-8"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-8");
-  const outputDiv = document.getElementById("webr-code-output-8");
-  const editorDiv = document.getElementById("webr-editor-8");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: p-boxplot-ex-beg
-#| fig-asp: 1
-# Try a different geom
-ggplot(
-  data = new_data, 
-  mapping = aes(x = group, y = score)
-) + 
-  geom_boxplot() `,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-8"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-9">Loading webR...</button>
-<div id="webr-editor-9"></div>
-<div id="webr-code-output-9"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-9");
-  const outputDiv = document.getElementById("webr-code-output-9");
-  const editorDiv = document.getElementById("webr-editor-9");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: p-boxplot-ex-int
-#| fig-asp: 1
-# Adjust colors, new theme
-ggplot(new_data) + 
-  aes(x = group, y = score, fill = group) + 
-  geom_boxplot() + 
-  scale_fill_viridis_d(begin = 0.3, end = 0.8) + 
-  theme_classic(base_size = 12, base_family = "Palatino") + 
-  theme(
-    legend.position = "inside", 
-    legend.position.inside = c(0.8, 0.85)
-  )`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-9"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-10">Loading webR...</button>
-<div id="webr-editor-10"></div>
-<div id="webr-code-output-10"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-10");
-  const outputDiv = document.getElementById("webr-code-output-10");
-  const editorDiv = document.getElementById("webr-editor-10");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: p-boxplot-ex-adv
-#| fig-asp: 1
-# Overlay raw data
-ggplot(new_data) + 
-  aes(x = group, y = score) + 
-  geom_boxplot(aes(fill = group), show.legend = F) + 
-  geom_jitter(
-    height = 0, width = 0.2, 
-    size = 4, alpha = 0.4
-  ) + 
-  scale_fill_viridis_d(
-    name = NULL, 
-    begin = 0.3, end = 0.8
-  ) + 
-  labs(x = NULL) + 
-  theme_classic(base_size = 12, base_family = "Palatino") `,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-10"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 </div>
 </div>
@@ -1149,289 +1260,16 @@ ggplot(new_data) +
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Beginner</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Intermediate</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Advanced</a></li></ul>
 <div class="tab-content">
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-11">Loading webR...</button>
-<div id="webr-editor-11"></div>
-<div id="webr-code-output-11"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-11");
-  const outputDiv = document.getElementById("webr-code-output-11");
-  const editorDiv = document.getElementById("webr-editor-11");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: p-point-estimate-spread-ex-beg
-#| fig-asp: 1
-# Point estimate can be mean, median, mode, 
-# Spread can be SD, SE, 95% CI, etc.
-ggplot(
-  data = new_data, 
-  mapping = aes(x = group, y = score) 
-) + 
-  stat_summary(
-    fun.data = mean_sdl, 
-    geom = 'pointrange', 
-    size = 1, 
-    linewidth = 1
-  ) `,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-11"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-12">Loading webR...</button>
-<div id="webr-editor-12"></div>
-<div id="webr-code-output-12"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-12");
-  const outputDiv = document.getElementById("webr-code-output-12");
-  const editorDiv = document.getElementById("webr-editor-12");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: p-point-estimate-spread-ex-int
-#| fig-asp: 1
-# Customize, add caption
-ggplot(new_data) + 
-  aes(x = group, y = score) + 
-  geom_point(alpha = 0.3, size = 4) + 
-  stat_summary(
-    fun.data = mean_cl_boot, 
-    geom = 'pointrange', 
-    size = 2, 
-    linewidth = 1
-  ) + 
-  labs(caption = "Mean ±95% CI") + 
-  theme_minimal(base_size = 12, base_family = "Palatino")`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-12"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-13">Loading webR...</button>
-<div id="webr-editor-13"></div>
-<div id="webr-code-output-13"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-13");
-  const outputDiv = document.getElementById("webr-code-output-13");
-  const editorDiv = document.getElementById("webr-editor-13");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: p-point-estimate-spread-ex-adv
-#| fig-asp: 1
-# Customize points and gridlines, add jitter
-ggplot(new_data) + 
-  aes(x = group, y = score) + 
-  geom_jitter(
-    height = 0, width = 0.2, 
-    alpha = 0.3, size = 3
-  ) + 
-  stat_summary(
-    aes(fill = group), 
-    fun.data = mean_se, 
-    geom = 'pointrange', 
-    size = 1, linewidth = 1, 
-    pch = 21, show.legend = F
-  ) + 
-  labs(y = "Score", x = NULL, caption = "Mean ±SE") + 
-  scale_fill_viridis_d(
-    option = "A", begin = 0.3, end = 0.7
-  ) + 
-  theme_minimal(
-    base_size = 12, base_family = "Palatino"
-  ) + 
-  theme(
-    axis.title.y = element_text(size = rel(0.9), hjust = 0.95),
-    axis.title.x = element_text(size = rel(0.9), hjust = 0.95),
-    panel.grid.major = element_line(color = 'grey80', linewidth = 0.15),
-    panel.grid.minor = element_line(color = 'grey80', linewidth = 0.15)
-  )`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-13"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 </div>
 </div>
@@ -1443,174 +1281,12 @@ ggplot(new_data) +
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Horizontal</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Vertical</a></li></ul>
 <div class="tab-content">
 <div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-14">Loading webR...</button>
-<div id="webr-editor-14"></div>
-<div id="webr-code-output-14"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-14");
-  const outputDiv = document.getElementById("webr-code-output-14");
-  const editorDiv = document.getElementById("webr-editor-14");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: p-shapes-ex1
-#| fig-height: 3
-ggplot(
-  data = new_data, 
-  mapping = aes(x = proficiency, y = score)
-) + 
-  facet_grid(. ~ age) + 
-  geom_point()`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-14"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-15">Loading webR...</button>
-<div id="webr-editor-15"></div>
-<div id="webr-code-output-15"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-15");
-  const outputDiv = document.getElementById("webr-code-output-15");
-  const editorDiv = document.getElementById("webr-editor-15");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: p-shapes-ex2
-#| fig-height: 5
-ggplot(
-  data = new_data, 
-  mapping = aes(
-    x = age, y = score
-  )
-) + 
-  facet_grid(group ~ .) + 
-  geom_boxplot()`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-15"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 </div>
 </div>
@@ -1631,592 +1307,32 @@ ggplot(
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">Practice here</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">Solution 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">Solution 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-4" role="tab" aria-controls="tabset-6-4" aria-selected="false" href="">Solution 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-5" role="tab" aria-controls="tabset-6-5" aria-selected="false" href="">Solution 4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-6" role="tab" aria-controls="tabset-6-6" aria-selected="false" href="">Solution 5</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-7-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-7" role="tab" aria-controls="tabset-6-7" aria-selected="false" href="">Solution 6</a></li></ul>
 <div class="tab-content">
 <div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-16">Loading webR...</button>
-<div id="webr-editor-16"></div>
-<div id="webr-code-output-16"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-16");
-  const outputDiv = document.getElementById("webr-code-output-16");
-  const editorDiv = document.getElementById("webr-editor-16");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: blank-console
-ggplot(
-  data = new_data, 
-  mapping = aes()
-) + 
-
-
-
-
-`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-16"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-17">Loading webR...</button>
-<div id="webr-editor-17"></div>
-<div id="webr-code-output-17"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-17");
-  const outputDiv = document.getElementById("webr-code-output-17");
-  const editorDiv = document.getElementById("webr-editor-17");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: solution1
-# Boxplot with a variable mapped to the `fill` aesthetic
-ggplot(
-  data = new_data, 
-  mapping = aes(x = group, y = score, fill = group)
-) + 
-  geom_boxplot()`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-17"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-18">Loading webR...</button>
-<div id="webr-editor-18"></div>
-<div id="webr-code-output-18"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-18");
-  const outputDiv = document.getElementById("webr-code-output-18");
-  const editorDiv = document.getElementById("webr-editor-18");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: solution2
-# Boxplot with a variable mapped to `color` aesthetic and a horizontal facet
-ggplot(
-  data = new_data, 
-  mapping = aes(x = group, y = score, color = group)
-) + 
-  facet_grid(. ~ age) + 
-  geom_boxplot() `,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-18"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-6-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-4-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-19">Loading webR...</button>
-<div id="webr-editor-19"></div>
-<div id="webr-code-output-19"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-19");
-  const outputDiv = document.getElementById("webr-code-output-19");
-  const editorDiv = document.getElementById("webr-editor-19");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: solution3
-# Scatterplot with regression line (see `?geom_smooth`)
-ggplot(
-  data = new_data, 
-  mapping = aes(x = proficiency, y = score)
-) + 
-  geom_point() + 
-  geom_smooth(method = "lm", formula = "y ~ x")`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-19"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-6-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-5-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-20">Loading webR...</button>
-<div id="webr-editor-20"></div>
-<div id="webr-code-output-20"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-20");
-  const outputDiv = document.getElementById("webr-code-output-20");
-  const editorDiv = document.getElementById("webr-editor-20");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: solution4
-# Scatterplot with regression line and categorical factor (try aesthetic `shape`)
-ggplot(
-  data = new_data, 
-  mapping = aes(x = proficiency, y = score)
-) + 
-  geom_point(aes(shape = group)) + 
-  geom_smooth(method = "lm", formula = "y ~ x")`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-20"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-6-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-6-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-21">Loading webR...</button>
-<div id="webr-editor-21"></div>
-<div id="webr-code-output-21"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-21");
-  const outputDiv = document.getElementById("webr-code-output-21");
-  const editorDiv = document.getElementById("webr-editor-21");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: solution5
-# Histogram of `proficiency`
-ggplot(
-  data = new_data, 
-  mapping = aes(x = proficiency)
-) + 
-  geom_histogram(color = "black", fill = "grey", bins = 7)`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-21"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 <div id="tabset-6-7" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-7-tab">
-<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-22">Loading webR...</button>
-<div id="webr-editor-22"></div>
-<div id="webr-code-output-22"><pre style="visibility: hidden"></pre></div>
-<script type="module">
-  const runButton = document.getElementById("webr-run-button-22");
-  const outputDiv = document.getElementById("webr-code-output-22");
-  const editorDiv = document.getElementById("webr-editor-22");
-
-  const editor = CodeMirror((elt) => {
-    elt.style.border = "1px solid #eee";
-    elt.style.height = "auto";
-    editorDiv.append(elt);
-  },{
-    value: `#| label: solution6
-# `geom_violin()` (replacement for geom_boxplot)
-ggplot(
-  data = new_data, 
-  mapping = aes(x = group, y = score, shape = group)
-) + 
-  geom_point() + 
-  geom_violin(fill = NA)`,
-    lineNumbers: true,
-    mode: "r",
-    theme: "light default",
-    viewportMargin: Infinity,
-  });
-
-  runButton.onclick = async () => {
-    runButton.disabled = true;
-    let canvas = undefined;
-    await globalThis.webR.init();
-    await webR.evalRVoid("canvas(width=504, height=360)");
-    const result = await webRCodeShelter.captureR(editor.getValue(), {
-      withAutoprint: true,
-      captureStreams: true,
-      captureConditions: false,
-      env: webR.objs.emptyEnv,
-    });
-    try {
-      await webR.evalRVoid("dev.off()");
-      const out = result.output.filter(
-        evt => evt.type == "stdout" || evt.type == "stderr"
-      ).map((evt) => evt.data).join("\n");
-
-      const msgs = await webR.flush();
-      msgs.forEach(msg => {
-        if (msg.type === "canvasExec"){
-          if (!canvas) {
-            canvas = document.createElement("canvas");
-            canvas.setAttribute("width", 2 * 504);
-            canvas.setAttribute("height", 2 * 360);
-            canvas.style.width="700px";
-            canvas.style.display="block";
-            canvas.style.margin="auto";
-          }
-          Function(`this.getContext("2d").${msg.data}`).bind(canvas)();
-        }
-      });
-
-      outputDiv.innerHTML = "";
-      const pre = document.createElement("pre");
-      if (/\S/.test(out)) {
-        const code = document.createElement("code");
-        code.innerText = out;
-        pre.appendChild(code);
-      } else {
-        pre.style.visibility = "hidden";
-      }
-      outputDiv.appendChild(pre);
-
-      if (canvas) {
-        const p = document.createElement("p");
-        p.appendChild(canvas);
-        outputDiv.appendChild(p);
-      }
-    } finally {
-      webRCodeShelter.purge();
-      runButton.disabled = false;
-    }
-  }
-</script>
-
+<div id="qwebr-insertion-location-22"></div>
+<noscript>Please enable JavaScript to experience the dynamic code cell content on this page.</noscript>
 </div>
 </div>
 </div>
@@ -2346,7 +1462,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const onCopySuccess = function(e) {
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -2378,47 +1505,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
   });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -2453,11 +1540,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+      return note.innerHTML;
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -2732,6 +1815,118 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+<script type="module">
+// Handle cell initialization initialization
+qwebrCellDetails.map(
+  (entry) => {
+    // Handle the creation of the element
+    qwebrCreateHTMLElement(entry);
+    // In the event of interactive, initialize the monaco editor
+    if (entry.options.context == EvalTypes.Interactive) {
+      qwebrCreateMonacoEditorInstance(entry);
+    }
+  }
+);
+
+// Identify non-interactive cells (in order)
+const filteredEntries = qwebrCellDetails.filter(entry => {
+  const contextOption = entry.options && entry.options.context;
+  return ['output', 'setup'].includes(contextOption) || (contextOption == "interactive" && entry.options && entry.options.autorun === 'true');
+});
+
+// Condition non-interactive cells to only be run after webR finishes its initialization.
+qwebrInstance.then(
+  async () => {
+    const nHiddenCells = filteredEntries.length;
+    var currentHiddenCell = 0;
+
+
+    // Modify button state
+    qwebrSetInteractiveButtonState(`🟡 Running hidden code cells ...`, false);
+
+    // Begin processing non-interactive sections
+    // Due to the iteration policy, we must use a for() loop.
+    // Otherwise, we would need to switch to using reduce with an empty
+    // starting promise
+    for (const entry of filteredEntries) {
+
+      // Determine cell being examined
+      currentHiddenCell = currentHiddenCell + 1;
+      const formattedMessage = `Evaluating hidden cell ${currentHiddenCell} out of ${nHiddenCells}`;
+
+      // Update the document status header
+      if (qwebrShowStartupMessage) {
+        qwebrUpdateStatusHeader(formattedMessage);
+      }
+
+      // Display the update in non-active areas
+      qwebrUpdateStatusMessage(formattedMessage);
+
+      // Extract details on the active cell
+      const evalType = entry.options.context;
+      const cellCode = entry.code;
+      const qwebrCounter = entry.id;
+
+      if (['output', 'setup'].includes(evalType)) {
+        // Disable further global status updates
+        const activeContainer = document.getElementById(`qwebr-non-interactive-loading-container-${qwebrCounter}`);
+        activeContainer.classList.remove('qwebr-cell-needs-evaluation');
+        activeContainer.classList.add('qwebr-cell-evaluated');
+
+        // Update status on the code cell
+        const activeStatus = document.getElementById(`qwebr-status-text-${qwebrCounter}`);
+        activeStatus.innerText = " Evaluating hidden code cell...";
+        activeStatus.classList.remove('qwebr-cell-needs-evaluation');
+        activeStatus.classList.add('qwebr-cell-evaluated');
+      }
+
+      switch (evalType) {
+        case 'interactive':
+          // TODO: Make this more standardized.
+          // At the moment, we're overriding the interactive status update by pretending its
+          // output-like. 
+          const tempOptions = entry.options;
+          tempOptions["context"] = "output"
+          // Run the code in a non-interactive state that is geared to displaying output
+          await qwebrExecuteCode(`${cellCode}`, qwebrCounter, tempOptions);
+          break;
+        case 'output':
+          // Run the code in a non-interactive state that is geared to displaying output
+          await qwebrExecuteCode(`${cellCode}`, qwebrCounter, entry.options);
+          break;
+        case 'setup':
+          const activeDiv = document.getElementById(`qwebr-noninteractive-setup-area-${qwebrCounter}`);
+          // Run the code in a non-interactive state with all output thrown away
+          await mainWebR.evalRVoid(`${cellCode}`);
+          break;
+        default: 
+          break; 
+      }
+
+      if (['output', 'setup'].includes(evalType)) {
+        // Disable further global status updates
+        const activeContainer = document.getElementById(`qwebr-non-interactive-loading-container-${qwebrCounter}`);
+        // Disable visibility
+        activeContainer.style.visibility = 'hidden';
+        activeContainer.style.display = 'none';
+      }
+    }
+  }
+).then(
+  () => {
+    // Release document status as ready
+
+    if (qwebrShowStartupMessage) {
+      qwebrStartupMessage.innerText = "🟢 Ready!"
+    }
+  
+    qwebrSetInteractiveButtonState(
+      `<i class="fa-solid fa-play qwebr-icon-run-code"></i> <span>Run Code</span>`, 
+      true
+    );  
+  }
+);
+</script>
 
 
 

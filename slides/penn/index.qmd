@@ -2,7 +2,7 @@
 title: "Data visualization for linguists"
 subtitle: ""
 author: "Joseph V. Casillas | Rutgers University"
-institute: "Penn State Research Methods Workshop"
+institute: "Penn State Research Methods Workshop<br>Penn State"
 date: "2024/11/01 (Last update: `r Sys.Date()`)"
 format: rutgers-revealjs
 engine: knitr
@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
   out.width = "100%", 
   fig.retina = 2, 
   dpi = 300
-)
+  )
 
 set.seed(20230906)
 
@@ -43,7 +43,7 @@ theme_set(theme_grey(base_size = 30))
 
 ```
 
-[slido](https://wall.sli.do/event/ipmt2aXBnzydYcjtAXxr3r?section=85be5578-563d-4c51-9274-ff400b365a07)
+[slido](https://wall.sli.do/event/uJq8E28ssc3oWCkQJ9EkBL?section=e89fa587-9303-4b5a-8534-a8b000fb89e8)
 
 ## How to use this workshop
 
@@ -468,7 +468,7 @@ p_goals +
 :::
 ::::
 
-## Contrast {.smaller}
+## Contrast
 
 If two things aren't the same, make them *very* different
 
@@ -935,7 +935,7 @@ There are many types of geoms...
 
 - geom_point()
 - geom_smooth()
-- geom_histogram()
+- geom_hist()
 - geom_bar()
 - geom_boxplot()
 - etc. 
@@ -1052,10 +1052,7 @@ ggplot(new_data) +
     base_size = 30, 
     base_family = "Palatino"
   ) + 
-  theme(
-    legend.position = "inside", 
-    legend.position.inside = c(.15, .85)
-  )
+  theme(legend.position = c(.15, .85))
 ```
 
 ### Advanced
@@ -1082,10 +1079,7 @@ ggplot(new_data) +
     base_size = 30, 
     base_family = "Palatino"
   ) + 
-  theme(
-    legend.position = "inside", 
-    legend.position.inside = c(.15, .85)
-  )
+  theme(legend.position = c(.15, .85))
 ```
 
 :::
@@ -1121,10 +1115,7 @@ ggplot(new_data) +
   geom_boxplot() + 
   scale_fill_viridis_d(begin = 0.3, end = 0.8) + 
   theme_classic(base_size = 30) + 
-  theme(
-    legend.position = "inside", 
-    legend.position.inside = c(0.8, 0.85)
-  )
+  theme(legend.position = c(0.8, 0.85))
 ```
 
 ### Advanced

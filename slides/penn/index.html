@@ -420,12 +420,12 @@
   <img width="150" src="https://github.com/jvcasillas/ru_xaringan/raw/master/img/logo/ru_new.png">
   <h1 class="title">Data visualization for linguists</h1>
   <p class="author">Joseph V. Casillas | Rutgers University</p>
-  <p class="institute">Penn State Research Methods Workshop</p>
+  <p class="institute">Penn State Research Methods Workshop<br>Penn State</p>
   <p class="date">2024-11-01</p>
 </section>
 <section class="slide level2">
 
-<p><a href="https://wall.sli.do/event/ipmt2aXBnzydYcjtAXxr3r?section=85be5578-563d-4c51-9274-ff400b365a07">slido</a></p>
+<p><a href="https://wall.sli.do/event/uJq8E28ssc3oWCkQJ9EkBL?section=e89fa587-9303-4b5a-8534-a8b000fb89e8">slido</a></p>
 </section>
 <section id="how-to-use-this-workshop" class="slide level2">
 <h2>How to use this workshop</h2>
@@ -471,7 +471,7 @@
 </div><div class="column" style="width:33%;">
 <div id="qrsite" class="qrcode"></div>
 <script type="text/javascript">
-var qrcode = new QRCode("qrsite", {"text":"https://www.jvcasillas.com/dv4ss/index.html","colorLight":"#fff","colorDark":"#cc0033","height":"300","width":"300"});
+var qrcode = new QRCode("qrsite", {"text":"https://www.jvcasillas.com/dv4ss/index.html","height":"300","colorDark":"#cc0033","width":"300","colorLight":"#fff"});
 </script>
     
 </div><div class="column" style="width:33%;">
@@ -664,7 +664,7 @@ the data speaks for itself…</p>
 </div>
 </div>
 </section>
-<section id="contrast" class="slide level2 smaller">
+<section id="contrast" class="slide level2">
 <h2>Contrast</h2>
 <p>If two things aren’t the same, make them <em>very</em> different</p>
 <div class="fragment">
@@ -1134,7 +1134,7 @@ the data speaks for itself…</p>
 <ul>
 <li>geom_point()</li>
 <li>geom_smooth()</li>
-<li>geom_histogram()</li>
+<li>geom_hist()</li>
 <li>geom_bar()</li>
 <li>geom_boxplot()</li>
 <li>etc.</li>
@@ -1261,10 +1261,7 @@ the data speaks for itself…</p>
 <span id="cb13-7"><a href=""></a>    <span class="at">base_size =</span> <span class="dv">30</span>, </span>
 <span id="cb13-8"><a href=""></a>    <span class="at">base_family =</span> <span class="st">"Palatino"</span></span>
 <span id="cb13-9"><a href=""></a>  ) <span class="sc">+</span> </span>
-<span id="cb13-10"><a href=""></a>  <span class="fu">theme</span>(</span>
-<span id="cb13-11"><a href=""></a>    <span class="at">legend.position =</span> <span class="st">"inside"</span>, </span>
-<span id="cb13-12"><a href=""></a>    <span class="at">legend.position.inside =</span> <span class="fu">c</span>(.<span class="dv">15</span>, .<span class="dv">85</span>)</span>
-<span id="cb13-13"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-10"><a href=""></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">15</span>, .<span class="dv">85</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
@@ -1297,10 +1294,7 @@ the data speaks for itself…</p>
 <span id="cb14-16"><a href=""></a>    <span class="at">base_size =</span> <span class="dv">30</span>, </span>
 <span id="cb14-17"><a href=""></a>    <span class="at">base_family =</span> <span class="st">"Palatino"</span></span>
 <span id="cb14-18"><a href=""></a>  ) <span class="sc">+</span> </span>
-<span id="cb14-19"><a href=""></a>  <span class="fu">theme</span>(</span>
-<span id="cb14-20"><a href=""></a>    <span class="at">legend.position =</span> <span class="st">"inside"</span>, </span>
-<span id="cb14-21"><a href=""></a>    <span class="at">legend.position.inside =</span> <span class="fu">c</span>(.<span class="dv">15</span>, .<span class="dv">85</span>)</span>
-<span id="cb14-22"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-19"><a href=""></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(.<span class="dv">15</span>, .<span class="dv">85</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
@@ -1349,10 +1343,7 @@ the data speaks for itself…</p>
 <span id="cb16-4"><a href=""></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span> </span>
 <span id="cb16-5"><a href=""></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> <span class="fl">0.3</span>, <span class="at">end =</span> <span class="fl">0.8</span>) <span class="sc">+</span> </span>
 <span id="cb16-6"><a href=""></a>  <span class="fu">theme_classic</span>(<span class="at">base_size =</span> <span class="dv">30</span>) <span class="sc">+</span> </span>
-<span id="cb16-7"><a href=""></a>  <span class="fu">theme</span>(</span>
-<span id="cb16-8"><a href=""></a>    <span class="at">legend.position =</span> <span class="st">"inside"</span>, </span>
-<span id="cb16-9"><a href=""></a>    <span class="at">legend.position.inside =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.85</span>)</span>
-<span id="cb16-10"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-7"><a href=""></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="fu">c</span>(<span class="fl">0.8</span>, <span class="fl">0.85</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div><div class="column">
 <div class="cell-output-display">
 <div>
